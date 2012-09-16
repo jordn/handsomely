@@ -11,7 +11,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from forms import UserCreateForm
+from django.forms import UserCreateForm
 
 def index(request):
     return render_to_response('index.html', {})
