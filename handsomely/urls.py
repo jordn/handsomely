@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from handsomely.views import index, about, register, for_salons, user_login, user_logout, profile, notify_users, get_salons
+from handsomely.views import *
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin

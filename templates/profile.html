@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	<h1>My Account: {{ user.email }}</h1>
+	<br/>
+	<p>Update your details:</p> 
+	<br/>
+	<form action="profile" method="post"> {% csrf_token %}
+		<p> 
+			First name: <input type="text" name="firstName" value="{{ firstName }}"/>
+			Last name: <input type="text" name="lastName" value="{{ lastName }}"/>
+			E-mail: <input type="text" name="email" value="{{ email }}"/>
+			Mobile: <input type="text" name="email" value="{{ mobile }}"/>
+			Default city: <input type="text" name="city" value="{{ city }}" readonly="readonly"/>
+			Notification preferences: <input type="text" name="notificationPreferences"
+							value="{{ notificationPreferences }}" readonly="readonly"/>
+			<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
+			<input type="submit" value="Save" /> 
+		</p>
+{% else %} <p><b>Please <a href="../login">log in</a> or <a href="../register">register</a>!</b></p>
+{% endif %}
+{% endblock %}

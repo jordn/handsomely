@@ -34,12 +34,26 @@ def get_salons(request):
 	json_serializer.serialize(results, ensure_ascii=False, stream=response)
 	return response
 
-def request_appointment(request):
-	reqSalons = '; '.join(request.GET.getlist('salon')) # semicolon separated list of salon IDs
-	return render_to_response("request_appointment.html", {"reqSalons" : reqSalons}, context_instance=RequestContext(request))
-
 def profile(request):
-    return render_to_response('profile.html', {}, context_instance=RequestContext(request))
+     if request.method == 'POST':
+	user = request.user
+	email = request.POST['email']
+	user.email = email
+	user.save()
+     	firstName = request.POST['firstName']
+     	Customer.firstName = email
+     	lastName = request.POST['lastName']
+     	Customer.lastName = lastName
+     	defaultCity = request.POST['defaultCity']
+     	Customer.defaultCity = defaultCity
+     	mobile = request.POST['mobile']
+     	Customer.mobile = mobile
+     	notification_preferences = request.POST['notification_preferences']
+     	Customer.notification_preferences = notification_preferences
+     	Customer.save()
+	return render_to_response('profile.html', {'firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences}, context_instance=RequestContext(request))
+     else:
+	return render_to_response('profile.html', {}, context_instance=RequestContext(request)) 
 
 def user_login(request):
     username = request.POST['username']
@@ -48,7 +62,7 @@ def user_login(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-	    return render_to_response('auth.html', {'user': user}, context_instance=RequestContext(request))
+	    return render_to_response('profile', {'user': user}, context_instance=RequestContext(request))
         else:
             pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
     else:
@@ -100,15 +114,16 @@ def notify_users(request):
 def create_notification_request(request):
 	djangoUserID = request.POST.get('userID', '')
 	djangoUser = User.objects.get(id=userID) # look up salon in db to get id
-	handsomelyUser = Salon.objects.get(email=djangoUser.email) # look up handsomelyuser in db
-	salonIDList = (request.POST.get('salonIDs', '')).split('; ') # list of IDs
+	handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
+	salonID = request.POST['salonID']
+	salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
 	admin_mail = 'team@handsome.ly'
 	email = djangoUser.email
-	for salonID in salonIDList:
-		newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") # add new notification request
-		newNotifReq.save()
+	newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") # add new notification request
+	newNotifReq.save()
+	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for'+salon.salonName
 	#email user and us
-		send_mail('Handsomely submission confirmation', ' Thanks for using Handsomely, this is confirmation of your Handsome.ly request for _SALON_NAME_', admin_mail, [email, admin_mail], fail_silently=False)
+	send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
 	return render_to_response("thank_you.html", {"name" : name, "email" : email})
 
 def notify_customers(request):
