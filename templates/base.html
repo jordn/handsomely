@@ -2,11 +2,17 @@
 <html lang="en">
    <head>
    	{% block headers %}{% endblock %}
+   	<title>{% block title %}{% endblock %}</title>
    </head>
    <body>
 
-   		{% block title %}{% endblock %}
+   		
  	    {% block content %}{% endblock %}
-   	    {% block footer %}{% endblock %}
+ 	    
+   	    {% block bottom_nav %}
+   	    	{% include 'bottom_nav.html' %}
+   	    {% endblock %}
+ 	    
+ 	    {% block footer %}{% endblock %}
    </body>
   </html>
