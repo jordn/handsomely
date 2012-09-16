@@ -93,7 +93,8 @@ def create_user(request):
     return render_to_response("thank_you.html", {"name" : name}, context_instance=RequestContext(request))
 
 def notify_users(request):
-	return render_to_response('notify_users.html', {})
+	djangoUserID = request.user.id
+	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
 
 def create_notification_request(request):
 	djangoUserID = request.POST.get('userID', '')

@@ -4,7 +4,10 @@
 
 {% block content %}
 	<h1>Break glass for users</h1>
-	<br/>
 	<p>Push the big red button below to notify users</p>
-	<img src="../static/bigred.jpg" />
+	<form action="create_notification_request" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
+		<input type="image" src="../static/img/bigred.jpg" name="notify">
+	</form>
 {% endblock %}
