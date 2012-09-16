@@ -92,6 +92,9 @@ def create_user(request):
     newHandsomelyUser.save()
     return render_to_response("thank_you.html", {"name" : name}, context_instance=RequestContext(request))
 
+def notify_users(request):
+	return render_to_response('notify_users.html', {})
+
 def create_notification_request(request):
 	djangoUserID = request.POST.get('userID', '')
 	djangoUser = User.objects.get(id=userID) # look up salon in db to get id
