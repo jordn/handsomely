@@ -4,14 +4,28 @@
 
 {% block content %}
 	<h1>For Salons</h1>
+	<h2>Make every time your peak time with handsome.ly.</h2>
 	<br/>
-	<p>How Handsome.ly works for you...</p> 
-	<br/>
-	<p>Interested? enter your email address and we'll be in touch ASAP</p> 
+	<p>We can help you to balance levels of demand throughout the day by allowing you to send out
+	notifications to select customers in search of a haircut on that day.
+
+	This can help to help you optimise stylist schedules and gather insightful data about client behaviours.
+
+	As well as balancing the rate of clients, handsome.ly provides an enhanced service to
+	customers, which reduces frustration levels.
+
+	Furthermore, we are confident that you will note a marked difference in the number of lost clients due your salon being either too busy
+	or too empty.
+
+	Finally, handsome.ly will help to boost your online presence and expose you to new customers in your area.
+
+	If you would like to sign up to handsome.ly, then please enter your email address below.
+
+	We would be delighted to have you on board!</p> 
 	<br/>
 	<form action="salon_signup" method="post"> {% csrf_token %}
 		<p> 
-			e-mail: <input type="text" name="email"/>
+			E-mail: <input type="text" name="email"/>
 			<input type="submit" value="Go!" /> 
 		</p>
 {% endblock %}
