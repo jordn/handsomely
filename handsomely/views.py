@@ -155,8 +155,7 @@ def salons(request):
 def emailtest(request):
 	admin_mail = 'team@handsome.ly'
 	mail = 'team@handsome.ly'
-	salonName = 'Jim SoleTraders'
-	message = 'Hi! ' + salonName
+	message = 'Hi! Jim SoleTraders'
 	message += ' is now free, why not head down now to avoid a queue?\n'
 	message += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
 	#email user
