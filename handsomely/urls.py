@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^salons/$', for_salons), 
     url(r'^notify/$', notify_users), 
     url(r'^emailtest/$', emailtest), 
+    url(r'^privacypolicy/$', privacy_policy), 
 )
 	
 

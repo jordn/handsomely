@@ -167,3 +167,6 @@ def salon_signup(request):
 	#email us
 	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
 	return render_to_response('thank_you.html', {})
+
+def privacy_policy(request):
+    return render_to_response('privacy_policy.html', {})
