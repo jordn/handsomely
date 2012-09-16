@@ -67,7 +67,7 @@ class Request(models.Model):
 	status = models.CharField(max_length=3, choices=STATUSES)
 	noSoonerThan = models.DateTimeField(("Date"), auto_now_add=True)
 
-class Notifications(models.Model):
+class Notification(models.Model):
 	customerID = models.IntegerField() #FK
 	salonID = models.IntegerField() #FK
 	timeSent = models.DateTimeField(("Date"), auto_now_add=True)
