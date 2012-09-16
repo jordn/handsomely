@@ -1,134 +1,26 @@
-{% extends "base.html" %}
-{% block title %}Queueless haircuts{% endblock %}
-{% block content %}
-<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-<script type="text/javascript" src="../static/js/infobox.js"></script>
-<style type="text/css">
-	
-	.phoney {
-        background: -webkit-gradient(linear,left top,left bottom,color-stop(0, rgb(112,112,112)),color-stop(0.51, rgb(94,94,94)),color-stop(0.52, rgb(57,57,57)));
-        background: -moz-linear-gradient(center top,rgb(112,112,112) 0%,rgb(94,94,94) 51%,rgb(57,57,57) 52%);
-      }
+<!DOCTYPE html>
 
-      .phoneytext {
-        text-shadow: 0 -1px 0 #000;
-        color: #fff;
-        font-family: Helvetica Neue, Helvetica, arial;
-        font-size: 18px;
-        line-height: 25px;
-        padding: 4px 45px 4px 15px;
-        font-weight: bold;
-        background: url(tipbox.gif) 95% 50% no-repeat;
-      }
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+	<script type="text/javascript" src="../static/js/infobox.js"></script>
+	<script type="text/javascript" src="../static/js/maps.js"></script>
+	<script type="text/javascript" src="../static/js/getsalons.js"></script>
 	
-</style>
+	
+</head> 
 <body onload="initialize()">
-  handsome.ly
-
-  <h1>Don't queue. Get notified of the good time to get your hair cut. </h1>
-
-	
- <div id="map_canvas" style="width: 1240px; height: 480px;"></div>
-
-  <script type="text/javascript">
-
-		
-		var locations = [
-      ['Jordan','4 Silver Street Cambridge', 14],
-      ['Mansour', 'Ox3 9JA', 13],
-			['Fraser', 'Ab31 6hy', 12]
-    ];
 
 
-	var geocoder;
-	
-  //var map;
-  
-	function initialize() {
-	  geocoder = new google.maps.Geocoder();
-	  var latlng = new google.maps.LatLng(-34.397, 150.644);
-	  var mapOptions = {
-  
-	    zoom: 10,
-  
-	    center: latlng,
-  
-	    mapTypeId: google.maps.MapTypeId.ROADMAP
-  
-	  }
-  
-	  map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
- 
-	
-		var infowindow = new google.maps.InfoWindow();
-		var marker, i;
+<p>Click on the salons below to find out when they are quiet!</p>
 
-		for(i=0; i<locations.length; i++){
-		
-		marker = new google.maps.Marker({
-       position: codeAddress(locations[i][1], i),
-        map: map
-      });
-		}
-		};
-	 
-	function codeAddress(address, index) {  
-	  geocoder.geocode( { 'address': address}, function(results, status) {
-	    if (status == google.maps.GeocoderStatus.OK) {
-	      map.setCenter(results[0].geometry.location);
-	      var marker = new google.maps.Marker({
-	          map: map,
-	          position: results[0].geometry.location
-	      });
-				
-				//var infowindow = new google.maps.InfoWindow();
-				
-				var infowindow = new InfoBox();
-				
-				google.maps.event.addListener(marker, 'click', (function(marker, index) {
-        return function() {
-				//
-          //infowindow.setContent();
-					var marker_content = "Name: " + locations[index][0];
-					marker_content += "<br/>Price: £" + locations[index][2];
-					marker_content += "<br/><button type='button'>Spread my load!</button>"
-					
-					var myboxOptions = {
-								//content: '<div class="phoneytext">'locations[index][0]'</div>'
-                 content: marker_content
-                ,disableAutoPan: false
-                ,maxWidth: 1000
-                ,pixelOffset: new google.maps.Size(-140, -58)
-                ,zIndex: null
-								,shadowStyle: 1
-                ,boxStyle: { 
-                  background: "url('tipbox.gif') no-repeat"
-									,backgroundColor: 'rgb(255,255,255)'
-									,opacity: 1
-                  ,width: "280px"
-									
-                 }
-                ,closeBoxMargin: "10px 2px 2px 2px"
-                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
-                ,infoBoxClearance: new google.maps.Size(1, 1)
-                ,isHidden: false
-                ,pane: "floatPane"
-                ,enableEventPropagation: false
-        };
-					infowindow.setOptions(myboxOptions);
-					
-          infowindow.open(map, marker);
-					
-        }
-      })(marker, index));
-				
-				
-				
-				
-      } else {
-        alert("Geocode was not successful for the following reason: " + status);
-      }
-    });
-  }
 
-{% endblock %}
+<div id = "salon_list" ></div>
+<div id = "errors" ></div>
+ <div align="right"><div id="map_canvas" style="width: 90%; height: 800px;"</div></div>
+
+</body>
+</html>
