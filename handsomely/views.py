@@ -117,15 +117,3 @@ def notify_customers(request):
 		#email user
 		send_mail('Handsomely Notification', 'Hi! _SALON_NAME_ is now free, why not head down now to avoid a queue?\n', admin_mail, [email], fail_silently=False)
 	return render_to_response("thank_you.html", {})
-		
-
-################ ok
-
-def add_salons(request):
-    name = request.POST['name']
-    email = request.POST['email']
-    salon = request.POST['salon']
-    newSalon = Salon(name=salon, email=email, city=name, address=' ', price=0)
-    newSalon.save()
-    send_mail('Handsomely - New salon signup', 'A new salon has registered. Please find details below:\n', 'team@handsome.ly', ['team@handsome.ly'], fail_silently=False)
-    return render_to_response("thank_you.html", {"name" : name, "email" : email}, context_instance=RequestContext(request))
