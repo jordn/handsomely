@@ -156,10 +156,10 @@ def emailtest(request):
 	admin_mail = 'team@handsome.ly'
 	email = 'mansour@handsome.ly'
 	salonName = 'Jim SoleTraders'
-	message = '<html>Hi! ' + salonName
+	message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head>Hi! </head><body>' + salonName
 	message += ' is now free, why not head down now to avoid a queue?\n'
 	message += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
-	message += '\nThanks, the Handsome.ly team</html>'
+	message += '\nThanks, the Handsome.ly team</body></html>'
 	send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
 	return render_to_response('index.html', {})
 
