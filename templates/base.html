@@ -2,10 +2,11 @@
 <html lang="en">
    <head>
    	{% block headers %}{% endblock %}
+   	<title>{% block title %}{% endblock %}</title>
    </head>
    <body>
 
-   		{% block title %}{% endblock %}
+   		
  	    {% block content %}{% endblock %}
    	    {% block footer %}{% endblock %}
    </body>
