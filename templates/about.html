@@ -3,11 +3,75 @@
 {% block title %}About Us{% endblock %}
 
 {% block content %}
-	<h1>About Us</h1>
-	<p>Got a question? Please don't hesitate to get in touch. We can be reached on: team@handsome.ly</p>
-	<p>If you are a salon and looking to sign up to use this service, then please contact team@handsome.ly</p>
+
+<style type="text/css">
+div.img
+  {
+  margin:2px;
+  /*border:1px solid #0000ff;*/
+  height:auto;
+  width:auto;
+  float:left;
+  text-align:center;
+  }
+div.img img
+  {
+  display:inline;
+  margin:3px;
+  border:1px solid #ffffff;
+  }
+div.img a:hover img
+  {
+  border:1px solid #0000ff;
+  }
+div.desc
+  {
+  text-align:center;
+  font-weight:normal;
+  width:120px;
+  margin:2px;
+  }
+</style>
+
+<h1>About Us</h1>
+  <p>Want a haircut today? Great!</p>
+
+  <p>Fed up of waiting an hour to get your hair cut?</p>
+
+  <p>Essay due tomorrow?</p>
+
+  <p>Get notified in real-time by email of when your favourite salons are free <a href="www.handsome.ly">here.</a></p>
+
+<p>Why queue? Get on with your day!</p>
+
+<br>
+
+  <p>Got a question? Please don't hesitate to get in touch. We can be reached at team@handsome.ly</p>
+  <p>If you are a salon and looking to sign up to use this service, then please contact team@handsome.ly</p>
+
+<br>
+
+<p> Founded by three finely groomed gentlemen: </p>
+
+<div class="img">
+  <a target="_blank" href="https://twitter.com/FraserAtkins">
+  <img src="../static/img/fraser.jpg" alt="Fraser" width="110" height="90" />
+  </a>
+  <div class="desc"><b>Fraser Atkins:</b> <br>Occasionally gets his haircut.</div>
+</div>
+<div class="img">
+  <a target="_blank" href="https://twitter.com/MansourAhmed">
+  <img src="../static/img/mansour.jpg" alt="Mansour" width="110" height="90" />
+  </a>
+  <div class="desc"><b>Mansour Ahmed:</b> <br>He claims it's designer stubble.</div>
+</div>
+<div class="img">
+  <a target="_blank" href="https://twitter.com/jordnb">
+  <img src="../static/img/jordan.jpg" alt="Jordan" width="110" height="100" />
+  </a>
+  <div class="desc"><b>Jordan Burgess:</b> <br>Lovely sideburns.</div>
+</div>
 
 {% load staticfiles %}
-<img src="{% static "img/bigred.jpg" %}" alt="Hi!"/>
 
 {% endblock %}
