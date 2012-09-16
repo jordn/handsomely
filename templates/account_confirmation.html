@@ -1,7 +1,8 @@
-<html>
-<head>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Account confirmation{% endblock %}
+
+{% block content %}
 	<h1>Confirm registration</h1>
 	<br/>
 	<p>Please enter a new password below to confirm your registration and to start using your account</p> 
@@ -13,5 +14,4 @@
 			<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
 			<input type="submit" value="Go!" /> 
 		</p>
-</body>
-</html>
+{% endblock %}
