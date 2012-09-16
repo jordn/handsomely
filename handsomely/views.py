@@ -154,7 +154,7 @@ def salons(request):
 
 def emailtest(request):
 	admin_mail = 'team@handsome.ly'
-	email = 'team@handsome.ly'
+	email = 'mansour@handsome.ly'
 	salonName = 'Jim SoleTraders'
 	message = 'Hi! ' + salonName
 	message += ' is now free, why not head down now to avoid a queue?\n'
