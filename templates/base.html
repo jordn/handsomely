@@ -8,6 +8,11 @@
 
    		
  	    {% block content %}{% endblock %}
-   	    {% block footer %}{% endblock %}
+ 	    
+   	    {% block bottom_nav %}
+   	    	{% include 'bottom_nav.html' %}
+   	    {% endblock %}
+ 	    
+ 	    {% block footer %}{% endblock %}
    </body>
   </html>
