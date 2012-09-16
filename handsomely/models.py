@@ -71,7 +71,7 @@ class Notifications(models.Model):
 	customerID = models.IntegerField() #FK
 	salonID = models.IntegerField() #FK
 	timeSent = models.DateTimeField(("Date"), auto_now_add=True)
-	timeReplied = DateTimeField(("Date"), auto_now_add=True)
+	timeReplied = models.DateTimeField(("Date"), auto_now_add=True)
 	STATUSES = ( 
 		('PEN', 'Pending'),
 		('ACC', 'Accepted'),
