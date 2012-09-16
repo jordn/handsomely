@@ -1,7 +1,7 @@
 
 from django.shortcuts import render_to_response
 from datetime import datetime
-from models import Salon, Customer, HandsomelyUser, Requests, Notifications
+from models import Salon, Customer, HandsomelyUser, Request, Notification
 from django.db.models import Q
 from django.core import serializers
 from django.utils import simplejson
@@ -99,11 +99,12 @@ def create_notification_request(request):
 	handsomelyUser = Salon.objects.get(email=djangoUser.email) # look up handsomelyuser in db
 	salonIDList = (request.POST.get('salonIDs', '')).split('; ') # list of IDs
 	admin_mail = 'team@handsome.ly'
+	email = djangoUser.email
 	for salonID in salonIDList:
 		newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") # add new notification request
 		newNotifReq.save()
 	#email user and us
-	send_mail('Handsomely submission confirmation', ' Thanks for using Handsomely, please find confirmation of your submission below: \n....', admin_mail, [email, admin_mail], fail_silently=False)
+		send_mail('Handsomely submission confirmation', ' Thanks for using Handsomely, this is confirmation of your Handsome.ly request for _SALON_NAME_', admin_mail, [email, admin_mail], fail_silently=False)
 	return render_to_response("thank_you.html", {"name" : name, "email" : email})
 
 def notify_customers(request):
