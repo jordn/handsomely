@@ -156,8 +156,8 @@ def emailtest(request):
 	admin_mail = 'team@handsome.ly'
 	mail = 'team@handsome.ly'
 	message = 'Hi! ' + salonName
-	message += " is now free, why not head down now to avoid a queue?\n'
-	message += " Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>"
+	message += ' is now free, why not head down now to avoid a queue?\n'
+	message += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
 	#email user
 	send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
 	return render_to_response('index.html', {})
