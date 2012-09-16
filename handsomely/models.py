@@ -16,7 +16,7 @@ class Customer(models.Model):
 	NOTIFICATION_CHOICES = ( 
 		('EMA', 'e-mail'),
 	)
-	notification_preferences = models.CharField(max_length=3, choices=NOTIFICATIONS_CHOICES)
+	notification_preferences = models.CharField(max_length=3, choices=NOTIFICATION_CHOICES)
 
 class Salon(models.Model):
 	salonName = models.CharField(max_length=50)
