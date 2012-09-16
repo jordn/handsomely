@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from handsomely.views import index, about, register, for_salons, user_login, user_logout, profile, notify_users
+from handsomely.views import index, about, register, for_salons, user_login, user_logout, profile, notify_users, get_salons
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^profile/$', profile),
     url(r'^for_salons/$', for_salons), 
     url(r'^notify/$', notify_users), 
+    url(r'^get_salons/$', get_salons),
 )
 	
 
