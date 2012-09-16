@@ -55,18 +55,24 @@ def profile(request):
      else:
 	return render_to_response('profile.html', {}, context_instance=RequestContext(request)) 
 
+def login(request):
+	return render_to_response('login.html', {})
+
 def user_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-	    return render_to_response('profile', {'user': user}, context_instance=RequestContext(request))
-        else:
-            pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
-    else:
-        pass# Return an 'invalid login' error message.
+	if request.method == 'POST':
+	    username = request.POST['username']
+	    password = request.POST['password']
+	    user = authenticate(username=username, password=password)
+	    if user is not None:
+		if user.is_active:
+		    login(request, user)
+		    return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
+		else:
+		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
+	    else:
+		return render_to_response('login.html', {'user': user}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('login.html', {})
 
 def user_logout(request):
     logout(request)
@@ -137,3 +143,14 @@ def notify_customers(request):
 		#email user
 		send_mail('Handsomely Notification', 'Hi! _SALON_NAME_ is now free, why not head down now to avoid a queue?\n', admin_mail, [email], fail_silently=False)
 	return render_to_response("thank_you.html", {})
+
+def salons(request):
+	return render_to_response('for_salons.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+
+def salon_signup(request):
+   	email = request.POST['email']
+	message = "New salon. Their contact email: " + email
+	admin_mail = 'team@handsome.ly'
+	#email us
+	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
+	return render_to_response('thank_you.html', {})
