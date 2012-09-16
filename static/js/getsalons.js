@@ -24,5 +24,3 @@ function getSalons(city, isLoggedIn) {
 	   }); 
 }
 
-getSalons('Cambridge', true);
-
