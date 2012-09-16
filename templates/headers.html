@@ -1,13 +1,15 @@
 {% block headers %}
+{% load staticfiles %}
 
 	<!-- HTML5 Boilerplate -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="{{STATIC_URL}}/css/normalize.css">
-        <link rel="stylesheet" href="static/css/main.css">
-        <script src="js/vendor/modernizr-2.6.1.min.js"></script>
+        <link rel="stylesheet" href="{% static "css/bootstrap.css"%}">
+        <link rel="stylesheet" href="{% static "css/main.css"%}">
+
+        <script src="{% static 'js/vendor/modernizr-2.6.1.min.js'%}"></script>
 
 
 {% endblock %}
