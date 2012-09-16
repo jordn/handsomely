@@ -57,7 +57,7 @@ class PriceMenu(models.Model):
 class Request(models.Model):
 	customerID = models.IntegerField() #FK
 	salonID = models.IntegerField() #FK
-	startDate = DateField(_("Date"), auto_now_add=True)
+	startDate = DateTimeField(_("Date"), auto_now_add=True)
 	STATUSES = ( 
 		('REQ', 'Requesting'), # Pending a response
 		('FUL', 'Fulfilled'), # i.e. they get a push notification from the salon
@@ -71,7 +71,7 @@ class Notifications(models.Model):
 	customerID = models.IntegerField() #FK
 	salonID = models.IntegerField() #FK
 	timeSent = DateField(_("Date"), auto_now_add=True)
-	timeReplied = DateField(_("Date"), auto_now_add=True)
+	timeReplied = DateTimeField(_("Date"), auto_now_add=True)
 	STATUSES = ( 
 		('PEN', 'Pending'),
 		('ACC', 'Accepted'),
