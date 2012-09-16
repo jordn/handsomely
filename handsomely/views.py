@@ -137,3 +137,14 @@ def notify_customers(request):
 		#email user
 		send_mail('Handsomely Notification', 'Hi! _SALON_NAME_ is now free, why not head down now to avoid a queue?\n', admin_mail, [email], fail_silently=False)
 	return render_to_response("thank_you.html", {})
+
+def salons(request):
+	return render_to_response('for_salons.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+
+def salon_signup(request):
+   	email = request.POST['email']
+	message = "New salon. Their contact email: " + email
+	admin_mail = 'team@handsome.ly'
+	#email us
+	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
+	return render_to_response('thank_you.html', {})

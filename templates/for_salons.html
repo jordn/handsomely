@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}For salons{% endblock %}
+
+{% block content %}
+	<h1>For Salons</h1>
+	<br/>
+	<p>How Handsome.ly works for you...</p> 
+	<br/>
+	<p>Interested? enter your email address and we'll be in touch ASAP</p> 
+	<br/>
+	<form action="salon_signup" method="post"> {% csrf_token %}
+		<p> 
+			e-mail: <input type="text" name="email"/>
+			<input type="submit" value="Go!" /> 
+		</p>
+{% endblock %}
