@@ -23,7 +23,7 @@ class Salon(models.Model):
 	address = models.CharField(max_length=100)
 	city = models.CharField(max_length=50)
 	phone = models.CharField(max_length=50)
-	web address = models.CharField(max_length=50)
+	webAddress = models.CharField(max_length=50)
 	email = models.CharField(max_length=50)
 	openingHoursID = models.IntegerField()
 	review = models.CharField(max_length=50)
