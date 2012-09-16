@@ -14,13 +14,13 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', index),
     url(r'^about/$', about),
+    url(r'^get_salons/$', get_salons),
+    url(r'^register/$', register),
     url(r'^login/$', user_login),
     url(r'^logout/$', user_logout),
-    url(r'^register/$', register),
     url(r'^profile/$', profile),
     url(r'^for_salons/$', for_salons), 
     url(r'^notify/$', notify_users), 
-    url(r'^get_salons/$', get_salons),
 )
 	
 
