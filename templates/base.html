@@ -1,18 +1,28 @@
 <!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <html lang="en">
    <head>
-   	{% block headers %}{% endblock %}
+   	{% block headers %}
+   		{% include 'headers.html' %}
+    {% endblock %}
+
    	<title>{% block title %}{% endblock %}</title>
+
    </head>
    <body>
 
    		
- 	    {% block content %}{% endblock %}
+ 	    {% block content %}BASE{% endblock %}
  	    
    	    {% block bottom_nav %}
    	    	{% include 'bottom_nav.html' %}
    	    {% endblock %}
  	    
- 	    {% block footer %}{% endblock %}
+ 	    {% block footer %}
+ 	    	{% include 'footer.html' %}
+ 	    {% endblock %}
    </body>
   </html>
