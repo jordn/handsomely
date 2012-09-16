@@ -20,6 +20,6 @@
 			<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
 			<input type="submit" value="Save" /> 
 		</p>
-{% else %} <p>Please log in or register!</p>
+{% else %} <p><b>Please <a href="../login">log in</a> or <a href="../register">register</a>!</b></p>
 {% endif %}
 {% endblock %}
