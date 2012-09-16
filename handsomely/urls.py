@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^user_login/$', user_login),
     url(r'^logout/$', user_logout),
     url(r'^profile/$', profile),
-    url(r'^for_salons/$', for_salons), 
+    url(r'^salons/$', for_salons), 
     url(r'^notify/$', notify_users), 
     url(r'^emailtest/$', emailtest), 
 )

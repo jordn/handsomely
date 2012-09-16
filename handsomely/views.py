@@ -19,9 +19,6 @@ def index(request):
 def about(request):
     return render_to_response('about.html', {})
 
-def for_salons(request):
-    return render_to_response('salon_registration.html', {}, context_instance=RequestContext(request))
-
 def get_salons(request):
 	queryCity = request.GET.get('city', '')
 	if queryCity:
@@ -149,8 +146,8 @@ def notify_customers(request):
 		send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
 	return render_to_response("thank_you.html", {})
 
-def salons(request):
-	return render_to_response('for_salons.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+def for_salons(request):
+	return render_to_response('for_salons.html', {}, context_instance=RequestContext(request))
 
 def emailtest(request):
 	admin_mail = 'team@handsome.ly'
