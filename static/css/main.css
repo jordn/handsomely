@@ -2,6 +2,12 @@
  * Any css for the main (map) page that supercedes twitter bootstrap
  */
 
+/*TOP OF THE PAGE */
+
+#top-unit {
+    padding: 20px 0 20px 40px;/* top right bottom left */
+ }
+
 #top-unit h1 {
 margin-bottom: 0;
 font-size: 80px;
@@ -9,3 +15,26 @@ line-height: 1;
 letter-spacing: -1px;
 color: inherit;
 }
+
+#top-unit p {
+margin-bottom: 0;
+font-size: 24px;
+line-height: 1;
+letter-spacing: -1px;
+color: inherit;
+}
+
+
+/* LEFT OF MAP - CURRENTLY SCRAPPED */
+#salon_list {
+    width:0%; 
+    float:left;
+    padding-left: 10px;
+}
+
+
+/*  MAP - BIG */
+#map_canvas {
+    width:100%; 
+}
+
