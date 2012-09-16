@@ -55,18 +55,24 @@ def profile(request):
      else:
 	return render_to_response('profile.html', {}, context_instance=RequestContext(request)) 
 
+def login(request):
+	return render_to_response('login.html', {})
+
 def user_login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-	    return render_to_response('profile', {'user': user}, context_instance=RequestContext(request))
-        else:
-            pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
-    else:
-        pass# Return an 'invalid login' error message.
+	if request.method == 'POST':
+	    username = request.POST['username']
+	    password = request.POST['password']
+	    user = authenticate(username=username, password=password)
+	    if user is not None:
+		if user.is_active:
+		    login(request, user)
+		    return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
+		else:
+		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
+	    else:
+		return render_to_response('login.html', {'user': user}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('login.html', {})
 
 def user_logout(request):
     logout(request)
