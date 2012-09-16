@@ -136,16 +136,31 @@ def notify_customers(request):
 	djangoUser = User.objects.get(username=request.user)
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser.id)
 	salonID = handsomelyUser.salonID
+	salonName = Salon.objects.get(id=salonID).salonName
 	requestsList = Request.objects.get(salonID=salonID)
+	admin_mail = 'team@handsome.ly'
 	for request in requestsList:
 		request.status = "FUL"
 		request.save()
+		message = 'Hi! ' + salonName
+		message += " is now free, why not head down now to avoid a queue?\n'
+		message += " Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>"
 		#email user
-		send_mail('Handsomely Notification', 'Hi! _SALON_NAME_ is now free, why not head down now to avoid a queue?\n', admin_mail, [email], fail_silently=False)
+		send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
 	return render_to_response("thank_you.html", {})
 
 def salons(request):
 	return render_to_response('for_salons.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+
+def emailtest(request):
+	admin_mail = 'team@handsome.ly'
+	mail = 'team@handsome.ly'
+	message = 'Hi! ' + salonName
+	message += " is now free, why not head down now to avoid a queue?\n'
+	message += " Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>"
+	#email user
+	send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
+	return render_to_response('index.html', {})
 
 def salon_signup(request):
    	email = request.POST['email']
