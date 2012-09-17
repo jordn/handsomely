@@ -14,7 +14,17 @@ font-size: 80px;
 line-height: 1;
 letter-spacing: -1px;
 color: inherit;
+clear:both;
+margin-bottom: 20px;
 }
+
+#top-unit h1 span {
+
+background: none;
+padding:2px 5px 14px;}​
+}
+
+
 
 #top-unit p {
 margin-bottom: 0;
@@ -22,6 +32,7 @@ font-size: 24px;
 line-height: 1;
 letter-spacing: -1px;
 color: inherit;
+background: white;
 }
 
 
@@ -37,9 +48,10 @@ color: inherit;
 /*  MAP - BIG */
 #map_canvas {
     width: 100%; 
-    height: 90%;
+    height: 100%;
     position: absolute;
-    top:150px;
+    top:0px;
+    z-index: -20;
 }
 
 
@@ -48,6 +60,7 @@ color: inherit;
     bottom: 0;
     width: 100%;
     background-color: white;
+    l
 }
 
 
