@@ -3,11 +3,6 @@ from django.contrib.auth.models import User, UserManager
 
 # Django user does fancy stuff like join date
 
-class HandsomelyUser(User): # Extends User model
-	djangoUserID = models.OneToOneField(User) # Inherit from User model
-	customerID = models.IntegerField() #FK
-	salonID = models.IntegerField() # if 0, then Customer, otherwise Salon
-
 class Customer(models.Model):
 	firstName = models.CharField(max_length=50)
 	lastName = models.CharField(max_length=50)
@@ -17,6 +12,11 @@ class Customer(models.Model):
 		('EMA', 'e-mail'),
 	)
 	notification_preferences = models.CharField(max_length=3, choices=NOTIFICATION_CHOICES)
+
+class HandsomelyUser(User): # Extends User model
+	djangoUserID = models.OneToOneField(User) # Inherit from User model
+	customerID = models.IntegerField() #FK
+	salonID = models.IntegerField() # if 0, then Customer, otherwise Salon
 
 class Salon(models.Model):
 	salonName = models.CharField(max_length=50)
