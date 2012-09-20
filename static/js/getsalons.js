@@ -12,9 +12,9 @@ function getSalons(city, isLoggedIn) {
 				salon_list += "<li>" + (dat[i].fields.salonName) + "<\/li><br>";
 			 }
 			if (isLoggedIn == "true") {
-				salon_list += "\"><input type=\"submit\" value=\"Go!\" name=\"submit\"></form>";
+				salon_list += "<\/ul><input type=\"submit\" value=\"Go!\" name=\"submit\"></form>";
 			} else {
-				salon_list += "\"><p><b>Please log in or <a href=\"../register\">register</a></b></p></form>";
+				salon_list += "\/ul><p><b>Please log in or <a href=\"../register\">register</a></b></p></form>";
 			}
 			 document.getElementById("salon_list").innerHTML=result_output + salon_list;
 		} else {
