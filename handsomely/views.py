@@ -95,10 +95,14 @@ def register(request):
 
 def confirm(request): #if this point is reached, the email is real
     confCode = request.GET['code']
-    findUser = User(password == confCode)
-    email = findUser.email
-    djangoUserID = findUser.id
-    return render_to_response("confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
+    try: 
+    	findUser = User(password == confCode)
+    	email = findUser.email
+    	djangoUserID = findUser.id
+    	return render_to_response("account_confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
+    except User.DoesNotExist:
+	return render_to_response("invalid_confirmation.html", {}, context_instance=RequestContext(request))
+
 
 def create_user(request):
     newPassword = request.POST['newPassword']
