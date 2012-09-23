@@ -114,6 +114,7 @@ def create_user(request):
     newHandsomelyUser.save()
     return render_to_response("thank_you.html", {"name" : name}, context_instance=RequestContext(request))
 
+# not sure what this view does...?
 def notify_users(request):
 	djangoUserID = request.user.id
 	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
