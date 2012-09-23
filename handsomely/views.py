@@ -118,6 +118,11 @@ def notify_users(request):
 	djangoUserID = request.user.id
 	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
 
+def get_notified(request):
+	djangoUserID = request.user.id
+	salonID = request.POST['salonID']
+	return render_to_response('get_notified.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+
 def create_notification_request(request):
 	djangoUserID = request.POST.get('userID', '')
 	djangoUser = User.objects.get(id=userID) # look up salon in db to get id

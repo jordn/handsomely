@@ -22,8 +22,11 @@ urlpatterns = patterns('',
     url(r'^profile/$', profile),
     url(r'^salons/$', for_salons), 
     url(r'^notify/$', notify_users), 
-    url(r'^emailtest/$', emailtest), 
+    # url(r'^emailtest/$', emailtest), 
     url(r'^privacypolicy/$', privacy_policy), 
+    url(r'^confirm/$', confirm), 
+    url(r'^create_user/$', create_user), 
+    url(r'^create_notification_request/$', create_notification_request), 
 )
 	
 
