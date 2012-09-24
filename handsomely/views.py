@@ -110,7 +110,7 @@ def register(request):
 def confirm(request): #if this point is reached, the email is real
     confCode = request.GET['code']
     try: 
-    	findUser = User(password == confCode)
+    	findUser = User.objects.get(password = confCode)
     	email = findUser.email
     	djangoUserID = findUser.id
     	return render_to_response("account_confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
