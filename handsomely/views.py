@@ -31,6 +31,26 @@ def get_salons(request):
 	json_serializer.serialize(results, ensure_ascii=False, stream=response)
 	return response
 
+def get_salons_opening_hours(request):
+        if queryCity:
+                results = SalonOpeningHours.objects.all()
+        else:
+                results = []
+        response = HttpResponse()
+        json_serializer = serializers.get_serializer("json")()
+        json_serializer.serialize(results, ensure_ascii=False, stream=response)
+        return response
+
+def get_salons_price_menu(request):
+        if queryCity:
+                results = PriceMenu.objects.all()
+        else:
+                results = []
+        response = HttpResponse()
+        json_serializer = serializers.get_serializer("json")()
+        json_serializer.serialize(results, ensure_ascii=False, stream=response)
+        return response
+
 def profile(request):
      if request.method == 'POST':
 	user = request.user
