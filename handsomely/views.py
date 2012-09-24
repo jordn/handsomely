@@ -100,7 +100,7 @@ def register(request):
 	message = "Hi! Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code="
 	message += confCode
 	message += " \nThanks, the Handsome.ly team"
-     	newUser = User.objects.create_user(email, email, random_pass)
+     	newUser = User.objects.create_user(email, email, confCode)
      	newUser.save()
 	send_mail('Handsomely - Confirmation - Action Required', message, 'team@handsome.ly', [email], fail_silently=False)
 	return render_to_response('index.html', {}, context_instance=RequestContext(request))
