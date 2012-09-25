@@ -130,8 +130,7 @@ def create_user(request):
     email = request.POST['email']
     djangoUserID = request.POST['djangoUserID']
     djangoUser = User.objects.get(id = djangoUserID)
-    djangoUser.password = newPassword
-    djangoUser.save()
+    djangoUser.delete()
     ndu = User.objects.create_user(email, email, newPassword)
     newCustomer = Customer(firstName=" ", lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
