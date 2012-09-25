@@ -131,7 +131,7 @@ def create_user(request):
     djangoUserID = request.POST['djangoUserID']
     djangoUser = User.objects.get(id = djangoUserID)
     djangoUser.delete()
-    ndu = User.objects.create_user(email, email, newPassword)
+    ndu = User(username=email, email=email, password=newPassword)
     newCustomer = Customer(firstName=" ", lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
     newHandsomelyUser = HandsomelyUser(djangoUserID=ndu, customerID=newCustomer.id, salonID=0)
