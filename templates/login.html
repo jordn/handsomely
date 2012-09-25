@@ -9,9 +9,8 @@
 	<br/>
 	<form action="user_login" method="post"> {% csrf_token %}
 		<p> 
-			E-mail: <input type="input" name="email" />
+			E-mail: <input type="input" name="email" value="{{ emailAdd }}"/>
 			Password: <input type="password" name="newPassword"/>
-			<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
 			<input type="submit" value="Go!" /> 
 		</p>
 {% endblock %}
