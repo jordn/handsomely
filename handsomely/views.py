@@ -134,7 +134,7 @@ def create_user(request):
     djangoUser.save()
     newCustomer = Customer(firstName=" ", lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
-    newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUserID, customerID=newCustomer.id, salonID=0)
+    newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUser, customerID=newCustomer.id, salonID=0)
     newHandsomelyUser.save()
     return render_to_response("thank_you.html", {"name" : name}, context_instance=RequestContext(request))
 
