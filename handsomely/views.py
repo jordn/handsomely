@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
-    return render_to_response('index.html', {})
+    return render_to_response('index.html', {}, context_instance=RequestContext(request))
 
 def about(request):
     return render_to_response('about.html', {})
@@ -75,9 +75,9 @@ def login(request):
 
 def user_login(request):
 	if request.method == 'POST':
-	    username = request.POST['username']
+	    email = request.POST['email']
 	    password = request.POST['password']
-	    user = authenticate(username=username, password=password)
+	    user = authenticate(username=email, password=password)
 	    if user is not None:
 		if user.is_active:
 		    login(request, user)
