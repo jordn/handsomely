@@ -85,7 +85,7 @@ def user_login(request):
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
-		return render_to_response('login.html', {'emailAdd': emailAdd}, context_instance=RequestContext(request))
+		return render_to_response('login.html', {'emailAdd': email}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
