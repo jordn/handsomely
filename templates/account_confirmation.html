@@ -7,7 +7,7 @@
 	<br/>
 	<p>Please enter a new password below to confirm your registration and to start using your account</p> 
 	<br/>
-	<form action="create_user" method="post"> {% csrf_token %}
+	<form action="../create_user/" method="post"> {% csrf_token %}
 		<p> 
 			New password: <input type="password" name="newPassword"/>
 			<input type="hidden" name="email" value="{{ email }}"/>
