@@ -87,7 +87,7 @@ def user_login(request):
 	    else:
 		return render_to_response('login.html', {'user': user}, context_instance=RequestContext(request))
 	else:
-		return render_to_response('login.html', {})
+		return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 def user_logout(request):
     logout(request)
