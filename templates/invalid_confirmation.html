@@ -5,6 +5,12 @@
 {% block content %}
 	<h1>Invalid confirmation</h1>
 	<br/>
-	<p>Your confirmation code <b>{{ confCode }}</b> was invalid. Please try <a href="../register">again</a></p> 
+	<p>Your confirmation code <b>{{ confCode }}</b> was invalid. Please try again: </p> 
+	<form action="../confirm/" method="get">
+		<p> 
+			Confirmation code: <input type="text" name="confCode" value="{{ confCode }}"/>
+			<input type="submit" value="Go!" /> 
+		</p>
+	</form>
 	<br/>
 {% endblock %}
