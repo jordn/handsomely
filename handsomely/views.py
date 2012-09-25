@@ -105,6 +105,7 @@ def register(request):
 	message += confCode
 	message += " \nThanks, the Handsome.ly team"
      	newUser = User.objects.create_user(email, email, confCode)
+	newUser.first_name = confCode
      	newUser.save()
 	send_mail('Handsomely - Confirmation - Action Required', message, 'team@handsome.ly', [email], fail_silently=False)
 	return render_to_response('index.html', {}, context_instance=RequestContext(request))
@@ -114,9 +115,11 @@ def register(request):
 def confirm(request): #if this point is reached, the email is real
     confCode = request.GET['code']
     try: 
-    	findUser = User.objects.get(password = confCode)
+    	findUser = User.objects.get(first_name = confCode)
+	findUser.first_name = " "
     	email = findUser.email
     	djangoUserID = findUser.id
+	findUser.save()
     	return render_to_response("account_confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
     except ObjectDoesNotExist:
 	return render_to_response("invalid_confirmation.html", {"confCode" : confCode}, context_instance=RequestContext(request))
@@ -126,6 +129,9 @@ def create_user(request):
     newPassword = request.POST['newPassword']
     email = request.POST['email']
     djangoUserID = request.POST['djangoUserID']
+    djangoUser = User.objects.get(id = djangoUserID)
+    djangoUser.password = newPassword
+    djangoUser.save()
     newCustomer = Customer(firstName=" ", lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
     newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUserID, customerID=newCustomer.id, salonID=0)
