@@ -6,11 +6,13 @@
 
 #top-unit {
     padding: 20px 0 20px 40px;/* top right bottom left */
+
+   
  }
 
 #top-unit h1 {
 margin-bottom: 0;
-font-size: 80px;
+font-size: 70px;
 line-height: 1;
 letter-spacing: -1px;
 color: inherit;
@@ -18,21 +20,27 @@ clear:both;
 margin-bottom: 20px;
 }
 
-#top-unit h1 span {
-
-background: none;
-padding:2px 5px 14px;}​
-}
-
-
-
 #top-unit p {
 margin-bottom: 0;
 font-size: 24px;
 line-height: 1;
 letter-spacing: -1px;
 color: inherit;
-background: white;
+}
+
+.jumbotron {
+position: relative;
+padding: 15px 0;
+color: white;
+text-align: left;
+text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+background: #020031;
+background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6D3353));
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
+-webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
+-moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
+
 }
 
 
