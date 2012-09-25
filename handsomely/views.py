@@ -117,8 +117,8 @@ def confirm(request): #if this point is reached, the email is real
     	email = findUser.email
     	djangoUserID = findUser.id
     	return render_to_response("account_confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
-    except User.DoesNotExist:
-	return render_to_response("invalid_confirmation.html", {}, context_instance=RequestContext(request))
+    except ObjectDoesNotExist:
+	return render_to_response("invalid_confirmation.html", {"confCode" : confCode}, context_instance=RequestContext(request))
 
 
 def create_user(request):
