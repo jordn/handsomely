@@ -72,16 +72,16 @@
 
 <div id="popupbox"> 
 
-<form name="login" action="../user_login/" method="post">
+<form name="login" action="../user_login/" method="post"> {% csrf_token %}
 <center>Email:</center>
 <center><input type="input" name="email" size="14" /></center>
 <center>Password:</center>
-<center><input type="password" name="newPassword" size="14" />
+<center><input type="password" name="password" size="14" />
 <input type="hidden" name="djangoUserID" value="">
 </center>
 <center><input type="submit" name="submit" value="login" /></center>
 </form>
-<center><a href="http://www.handsome.ly/register">Don't have an account? Sign up here!</a></center> 
+<center><a href="../register/">Don't have an account? Sign up here!</a></center> 
 <center><a href="javascript:login('hide');">close</a></center> 
 </div> 
 
