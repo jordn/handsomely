@@ -1,7 +1,7 @@
 
 from django.shortcuts import render_to_response
 from datetime import datetime
-from models import Salon, Customer, HandsomelyUser, Request, Notification
+from models import *
 from django.db.models import Q
 from django.core import serializers
 from django.utils import simplejson
@@ -32,13 +32,16 @@ def get_salons(request):
 	return response
 
 def get_salons_opening_hours(request):
-        results = SalonOpeningHours.objects.all()
+	salonID = request.get['salonID']
+        results = SalonOpeningHours.objects.get(salonID=salonID)
         response = HttpResponse()
         json_serializer = serializers.get_serializer("json")()
         json_serializer.serialize(results, ensure_ascii=False, stream=response)
         return response
 
 def get_salons_price_menu(request):
+	salonID = request.get['salonID']
+        results = PriceMenu.objects.get(salonID=salonID)
         results = PriceMenu.objects.all()
         response = HttpResponse()
         json_serializer = serializers.get_serializer("json")()
