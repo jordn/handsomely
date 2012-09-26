@@ -4,7 +4,7 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-	<h1>My Account: {{ user.email }}, django_user_id: {{ djangoUserID }}</h1>
+	<h1>My Account: {{ user.email }}, django_user_id: {{ user.id }}</h1>
 	<br/>
 	<p>Update your details:</p> 
 	<br/>
