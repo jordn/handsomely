@@ -177,7 +177,7 @@ def notify_customers(request):
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser.id)
 	salonID = handsomelyUser.salonID
 	salonName = Salon.objects.get(id=salonID).salonName
-	requestsList = Request.objects.filter(salonID=salonID)
+	requestsList = Request.objects.filter(salonID=salonID).filter(status="REQ")
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	for req in requestsList:
