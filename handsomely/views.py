@@ -131,11 +131,13 @@ def create_user(request):
     djangoUserID = request.POST['djangoUserID']
     djangoUser = User.objects.get(id = djangoUserID)
     #djangoUser.delete()
-    ndu = User(username=email, email=email, password=newPassword)
+    #ndu = User(username=email, email=email, password=newPassword)
     newCustomer = Customer(firstName=email, lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
     newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUser, customerID=newCustomer.id, salonID=0)
     newHandsomelyUser.save()
+    djangoUser.username = email
+    djangoUser.save()
     #ndu.save()
     return render_to_response("thank_you.html", {"name" : email}, context_instance=RequestContext(request))
 
