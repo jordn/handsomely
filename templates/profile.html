@@ -7,7 +7,6 @@
 	<h1>My Account: {{ user.email }}</h1>
 	<b>method: {{ method }}</b>
 	<br/>
-	<b>user prof cust id: {{ user.get_profile.customerID }}</b>
 	<p>Update your details:</p> 
 	<br/>
 	<form action="profile" method="post"> {% csrf_token %}
