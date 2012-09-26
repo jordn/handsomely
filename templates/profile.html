@@ -11,7 +11,7 @@
 	<form action="../update_profile/" method="post"> {% csrf_token %}
 		<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
 		<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ cust.lastName }}"/></p>
-		<p>E-mail: &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="email" value="{{ email }}" readonly="readonly"/></p>
+		<p>E-mail: &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="email" value="{{ user.email }}" readonly="readonly"/></p>
 		<p>Mobile: &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" name="mobile" value="{{ cust.mobile }}"/></p>
 		<p>Default city:&nbsp; <input type="text" name="city" value="{{ cust.defaultCity }}" readonly="readonly"/></p>
 		<p>Notifications: <input type="text" name="notificationPreferences"

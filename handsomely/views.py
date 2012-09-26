@@ -60,7 +60,7 @@ def update_profile(request):
 	user = request.user
 	handUser = HandsomelyUser.objects.get(id=user.id)
 	cust = Customer.objects.get(id=handUser.customerID)
-	salonID = handsomelyUser.salonID
+	salonID = handUser.salonID
 	email = request.POST['email']
 	user.email = email
 	user.save()
@@ -75,7 +75,7 @@ def update_profile(request):
 	notification_preferences = request.POST['notification_preferences']
 	cust.notification_preferences = notification_preferences
 	cust.save()
-	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust}, context_instance=RequestContext(request))
+	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID}, context_instance=RequestContext(request))
 
 def login_page(request):
 	return render_to_response('login.html', {})
