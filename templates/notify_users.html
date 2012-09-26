@@ -7,7 +7,7 @@
 	<p>Push the big red button below to notify users</p>
 	<form action="../notify_customers/" method="post">
 		{% csrf_token %}
-		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
+		<input type="hidden" name="djangoUserID" value="44">
 		<input type="image" src="../static/img/bigred.jpg" name="notify">
 	</form>
 {% endblock %}
