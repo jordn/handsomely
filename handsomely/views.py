@@ -85,7 +85,8 @@ def user_login(request):
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
-		return render_to_response('login.html', {'emailAdd': email}, context_instance=RequestContext(request))
+	    	errorMessage = "Wrong username or password"
+		return render_to_response('login.html', {'emailAdd': email, 'message' : errorMessage}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
@@ -159,7 +160,8 @@ def create_notification_request(request):
 	salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
 	admin_mail = 'team@handsome.ly'
 	email = djangoUser.email
-	newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") # add new notification request
+	# add new notification request
+	newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") 
 	newNotifReq.save()
 	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for'+salon.salonName
 	#email user and us
