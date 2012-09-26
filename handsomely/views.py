@@ -183,7 +183,7 @@ def notify_customers(request):
 	for req in requestsList:
 		req.status = "FUL"
 		req.save()
-		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = request.customerID)
+		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID)
 		#email user
 		to_email = recipientDjangoUser.email
