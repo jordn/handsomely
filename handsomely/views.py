@@ -134,9 +134,9 @@ def create_user(request):
     ndu = User(username=email, email=email, password=newPassword)
     newCustomer = Customer(firstName=email, lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
-    newHandsomelyUser = HandsomelyUser(djangoUserID=ndu, customerID=newCustomer.id, salonID=0)
+    newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUser, customerID=newCustomer.id, salonID=0)
     newHandsomelyUser.save()
-    ndu.save()
+    #ndu.save()
     return render_to_response("thank_you.html", {"name" : email}, context_instance=RequestContext(request))
 
 # not sure what this view does...?
