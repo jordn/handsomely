@@ -182,12 +182,21 @@ def notify_customers(request):
 	for request in requestsList:
 		request.status = "FUL"
 		request.save()
+		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = request.customerID)
+		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID)
 		#email user
-		to_email = 'to@example.com'
-		text_content = 'Hi! ' + salonName
+		to_email = recipientDjangoUser.email
+		text_content = 'Hi! ' + recipientDjangoUser.first_name
+		text_content += salonName
 		text_content += ' is now free, why not head down now to avoid a queue?\n'
-		text_content += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
-		html_content = text_content
+		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES -- No: http://www.handsome.ly/response?ans=NO -- Cancel: http://www.handsome.ly/response?ans=CANCEL'
+		# html email
+		html_content = 'Hi! ' + recipientDjangoUser.first_name
+		html_content += '<br/>' salonName
+		html_content = ' is now free, why not head down now to avoid a queue?<br/>'
+		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL\">CANCEL</a> <br/>'
+		html_content += 'Thanks, the Handsomely team.'
+		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
@@ -195,20 +204,6 @@ def notify_customers(request):
 
 def for_salons(request):
 	return render_to_response('for_salons.html', {}, context_instance=RequestContext(request))
-
-def emailtest(request):
-	from_email = 'team@handsome.ly'
-	to_email = 'mansour@handsome.ly'
-	salonName = 'Jim SoleTraders'
-	subject = 'handsomely notification'
-	text_content = 'Hi! ' + salonName
-	text_content += ' is now free, why not head down now to avoid a queue?\n'
-	text_content += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
-	html_content = text_content
-	msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
-	msg.attach_alternative(html_content, "text/html")
-	msg.send()
-	return render_to_response('index.html', {})
 
 def salon_signup(request):
    	email = request.POST['email']
