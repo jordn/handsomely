@@ -11,10 +11,10 @@
 	<form action="profile" method="post"> {% csrf_token %}
 		<p>First name: <input type="text" name="firstName" value="{{ firstName }}"/></p>
 		<p>Last name: <input type="text" name="lastName" value="{{ lastName }}"/></p>
-		<p>E-mail: <input type="text" name="email" value="{{ email }}" readonly="readonly"/></p>
-		<p>Mobile: <input type="text" name="email" value="{{ mobile }}"/></p>
+		<p>E-mail: &nbsp;&nbsp; &nbsp; <input type="text" name="email" value="{{ email }}" readonly="readonly"/></p>
+		<p>Mobile:&nbsp; &nbsp; &nbsp; <input type="text" name="email" value="{{ mobile }}"/></p>
 		<p>Default city: <input type="text" name="city" value="{{ city }}" readonly="readonly"/></p>
-		<p>Notification preferences: <input type="text" name="notificationPreferences"
+		<p>Notifications: <input type="text" name="notificationPreferences"
 			value="{{ notificationPreferences }}" readonly="readonly"/></p>
 		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
 		</p><input type="submit" value="Save" /> </p>
