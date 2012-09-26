@@ -87,7 +87,9 @@ def user_login(request):
 	    if user is not None:
 		if user.is_active:
 		    login(request, user)
-		    return render_to_response('profile.html', {'user': user}, context_instance=RequestContext(request))
+		    handUser = HandsomelyUser.objects.get(id=user.id)
+		    cust = Customer.objects.get(id=handUser.customerID)
+		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust}, context_instance=RequestContext(request))
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
