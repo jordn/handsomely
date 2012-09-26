@@ -5,6 +5,7 @@
 {% block content %}
 {% if user.is_authenticated %}
 	<h1>My Account: {{ user.email }}</h1>
+	<b>method: {{ method }}</b>
 	<br/>
 	<p>Update your details:</p> 
 	<br/>
@@ -19,7 +20,7 @@
 		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
 		</p><input type="submit" value="Save" /> </p>
 	</form>
-{% if salonID != "-1" %}
+{% if salonID != -1 %}
 	<a href="../notify_users/">Salon Page - Click here to notify customers</a>
 {% endif %}
 {% else %} <p><b>Please <a href="../login">log in</a> or <a href="../register">register</a>!</b></p>
