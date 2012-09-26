@@ -70,7 +70,7 @@ def profile(request):
      else:
 	return render_to_response('profile.html', {}, context_instance=RequestContext(request)) 
 
-def login(request):
+def login_page(request):
 	return render_to_response('login.html', {})
 
 def user_login(request):
