@@ -138,6 +138,7 @@ def create_user(request):
     newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUser, customerID=newCustomer.id, salonID=0)
     newHandsomelyUser.save()
     djangoUser.username = email
+    djangoUser.set_password(newPassword)
     djangoUser.save()
     #ndu.save()
     return render_to_response("thank_you.html", {"name" : email}, context_instance=RequestContext(request))
