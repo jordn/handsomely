@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^confirm/$', confirm), 
     url(r'^create_user/$', create_user), 
     url(r'^create_notification_request/$', create_notification_request), 
+    url(r'^notify_users/$', notify_users), 
 )
 	
 
