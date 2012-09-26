@@ -197,7 +197,7 @@ def for_salons(request):
 	return render_to_response('for_salons.html', {}, context_instance=RequestContext(request))
 
 def emailtest(request):
-	from_mail = 'team@handsome.ly'
+	from_email = 'team@handsome.ly'
 	to_email = 'mansour@handsome.ly'
 	salonName = 'Jim SoleTraders'
 	subject = 'handsomely notification'
