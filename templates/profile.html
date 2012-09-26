@@ -4,11 +4,11 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-	<h1>My Account: {{ user.email }}</h1>
+	<h1>My Account: {{ user.email }}, django_user_id: {{ djangoUserID }}</h1>
 	<br/>
 	<p>Update your details:</p> 
 	<br/>
-	<form action="profile" method="post"> {% csrf_token %}
+	<form action="../update_profile/" method="post"> {% csrf_token %}
 		<p>First name: &nbsp; <input type="text" name="firstName" value="{{ firstName }}"/></p>
 		<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ lastName }}"/></p>
 		<p>E-mail: &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="email" value="{{ email }}" readonly="readonly"/></p>

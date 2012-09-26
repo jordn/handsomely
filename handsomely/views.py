@@ -50,30 +50,31 @@ def get_salons_price_menu(request):
         return response
 
 def profile(request):
-     if request.method == 'POST':
+	user = request.user
+	djangoUserID = user.id
+	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
+	salonID = handsomelyUser.salonID
+	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, ''firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences, 'salonID' : salonID, 'method' : reqmethod}, context_instance=RequestContext(request))
+	
+def update_profile(request):
 	user = request.user
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
 	salonID = handsomelyUser.salonID
 	email = request.POST['email']
 	user.email = email
 	user.save()
-     	firstName = request.POST['firstName']
-     	Customer.firstName = email
-     	lastName = request.POST['lastName']
-     	Customer.lastName = lastName
-     	defaultCity = request.POST['defaultCity']
-     	Customer.defaultCity = defaultCity
-     	mobile = request.POST['mobile']
-     	Customer.mobile = mobile
-     	notification_preferences = request.POST['notification_preferences']
-     	Customer.notification_preferences = notification_preferences
-     	Customer.save()
+	firstName = request.POST['firstName']
+	Customer.firstName = email
+	lastName = request.POST['lastName']
+	Customer.lastName = lastName
+	defaultCity = request.POST['defaultCity']
+	Customer.defaultCity = defaultCity
+	mobile = request.POST['mobile']
+	Customer.mobile = mobile
+	notification_preferences = request.POST['notification_preferences']
+	Customer.notification_preferences = notification_preferences
+	Customer.save()
 	return render_to_response('profile.html', {'firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences, 'salonID' : salonID, 'method' : reqmethod}, context_instance=RequestContext(request))
-     else:
-     	user = request.user
-	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
-	salonID = handsomelyUser.salonID
-	return render_to_response('profile.html', { 'email' : user.email, 'firstName' : user.first_name, 'salonID' : salonID, 'method' : reqmethod }, context_instance=RequestContext(request)) 
 
 def login_page(request):
 	return render_to_response('login.html', {})
