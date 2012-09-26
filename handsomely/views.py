@@ -52,6 +52,8 @@ def get_salons_price_menu(request):
 def profile(request):
      if request.method == 'POST':
 	user = request.user
+	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
+	salonID = handsomelyUser.salonID
 	email = request.POST['email']
 	user.email = email
 	user.save()
@@ -66,9 +68,9 @@ def profile(request):
      	notification_preferences = request.POST['notification_preferences']
      	Customer.notification_preferences = notification_preferences
      	Customer.save()
-	return render_to_response('profile.html', {'firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences}, context_instance=RequestContext(request))
+	return render_to_response('profile.html', {'firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences, 'salonID' : salonID}, context_instance=RequestContext(request))
      else:
-	return render_to_response('profile.html', {}, context_instance=RequestContext(request)) 
+	return render_to_response('profile.html', { 'salonID' : salonID }, context_instance=RequestContext(request)) 
 
 def login_page(request):
 	return render_to_response('login.html', {})
