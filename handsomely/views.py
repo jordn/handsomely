@@ -58,23 +58,24 @@ def profile(request):
 	
 def update_profile(request):
 	user = request.user
-	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
+	handUser = HandsomelyUser.objects.get(id=user.id)
+	cust = Customer.objects.get(id=handUser.customerID)
 	salonID = handsomelyUser.salonID
 	email = request.POST['email']
 	user.email = email
 	user.save()
 	firstName = request.POST['firstName']
-	Customer.firstName = email
+	cust.firstName = firstName
 	lastName = request.POST['lastName']
-	Customer.lastName = lastName
+	custr.lastName = lastName
 	defaultCity = request.POST['defaultCity']
-	Customer.defaultCity = defaultCity
+	cust.defaultCity = defaultCity
 	mobile = request.POST['mobile']
-	Customer.mobile = mobile
+	cust.mobile = mobile
 	notification_preferences = request.POST['notification_preferences']
-	Customer.notification_preferences = notification_preferences
-	Customer.save()
-	return render_to_response('profile.html', {'firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences, 'salonID' : salonID, 'method' : reqmethod}, context_instance=RequestContext(request))
+	cust.notification_preferences = notification_preferences
+	cust.save()
+	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust}, context_instance=RequestContext(request))
 
 def login_page(request):
 	return render_to_response('login.html', {})
