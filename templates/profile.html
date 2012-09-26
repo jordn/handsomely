@@ -4,9 +4,9 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-	<h1>My Account: {{ user.email }}, django_user_id: {{ user.id }}</h1>
+	<h1>My Account: {{ user.email }}</h1>
 	<br/>
-	<p>Update your details:</p> 
+	<h2>Your details:</h2> 
 	<br/>
 	<form action="../update_profile/" method="post"> {% csrf_token %}
 		<p>First name: &nbsp; <input type="text" name="firstName" value="{{ firstName }}"/></p>
@@ -16,11 +16,11 @@
 		<p>Default city:&nbsp; <input type="text" name="city" value="{{ city }}" readonly="readonly"/></p>
 		<p>Notifications: <input type="text" name="notificationPreferences"
 			value="{{ notificationPreferences }}" readonly="readonly"/></p>
-		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"/>
+		<input type="hidden" name="djangoUserID" value="{{ user.id }}"/>
 		</p><input type="submit" value="Save" /> </p>
 	</form>
 {% if salonID != "-1" %}
-	<a href="../notify_users/">Salon Page - Click here to notify customers</a>
+	<h2><a href="../notify_users/">Salon Page - Click here to notify customers</a></h2>
 {% endif %}
 {% else %} <p><b>Please <a href="../login">log in</a> or <a href="../register">register</a>!</b></p>
 {% endif %}
