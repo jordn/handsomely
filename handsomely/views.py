@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.core import serializers
 from django.utils import simplejson
 from django.template import RequestContext
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django import forms
@@ -51,7 +51,6 @@ def get_salons_price_menu(request):
 
 def profile(request):
      if request.method == 'POST':
-        reqmethod = "POST"
 	user = request.user
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
 	salonID = handsomelyUser.salonID
@@ -71,7 +70,6 @@ def profile(request):
      	Customer.save()
 	return render_to_response('profile.html', {'firstName' : firstName, 'lastName' : lastName, 'email' : email, 'defaultCity' : defaultCity, 'mobile' : mobile, 'notification_preferences' : notification_preferences, 'salonID' : salonID, 'method' : reqmethod}, context_instance=RequestContext(request))
      else:
-        reqmethod = "NOT-POST"
      	user = request.user
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
 	salonID = handsomelyUser.salonID
@@ -138,8 +136,6 @@ def create_user(request):
     email = request.POST['email']
     djangoUserID = request.POST['djangoUserID']
     djangoUser = User.objects.get(id = djangoUserID)
-    #djangoUser.delete()
-    #ndu = User(username=email, email=email, password=newPassword)
     newCustomer = Customer(firstName=email, lastName=" ", defaultCity=" ", mobile=" ", notification_preferences="EMA")
     newCustomer.save()
     newHandsomelyUser = HandsomelyUser(djangoUserID=djangoUser, customerID=newCustomer.id, salonID=0)
@@ -147,7 +143,6 @@ def create_user(request):
     djangoUser.username = email
     djangoUser.set_password(newPassword)
     djangoUser.save()
-    #ndu.save()
     return render_to_response("thank_you.html", {"name" : email}, context_instance=RequestContext(request))
 
 # not sure what this view does...?
@@ -182,29 +177,37 @@ def notify_customers(request):
 	salonID = handsomelyUser.salonID
 	salonName = Salon.objects.get(id=salonID).salonName
 	requestsList = Request.objects.get(salonID=salonID)
-	admin_mail = 'team@handsome.ly'
+	subject = 'Handsomely Notification'
+	from_email = 'team@handsome.ly' 
 	for request in requestsList:
 		request.status = "FUL"
 		request.save()
-		message = 'Hi! ' + salonName
-		message += ' is now free, why not head down now to avoid a queue?\n'
-		message += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
 		#email user
-		send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
-	return render_to_response("thank_you.html", {})
+		to_email = 'to@example.com'
+		text_content = 'Hi! ' + salonName
+		text_content += ' is now free, why not head down now to avoid a queue?\n'
+		text_content += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
+		html_content = text_content
+		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
+	return render_to_response("thank_you.html", {'name' : djangoUser.email})
 
 def for_salons(request):
 	return render_to_response('for_salons.html', {}, context_instance=RequestContext(request))
 
 def emailtest(request):
-	admin_mail = 'team@handsome.ly'
-	email = 'mansour@handsome.ly'
+	from_mail = 'team@handsome.ly'
+	to_email = 'mansour@handsome.ly'
 	salonName = 'Jim SoleTraders'
-	message = '<html><head>Hi! </head><body>\n' + salonName
-	message += ' is now free, why not head down now to avoid a queue?\n'
-	message += 'Your response: \n   <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> \n   <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> \n   <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a> <br/>'
-	message += '\nThanks, \nthe Handsome.ly team</body></html>'
-	send_mail('Handsomely Notification', message, admin_mail, [email], fail_silently=False)
+	subject = 'handsomely notification'
+	text_content = 'Hi! ' + salonName
+	text_content += ' is now free, why not head down now to avoid a queue?\n'
+	text_content += ' Your response: <a href=\"http://www.handsome.ly/response?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response?ans=CANCEL\">CANCEL</a>'
+	html_content = text_content
+	msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+	msg.attach_alternative(html_content, "text/html")
+	msg.send()
 	return render_to_response('index.html', {})
 
 def salon_signup(request):
