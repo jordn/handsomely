@@ -180,9 +180,9 @@ def notify_customers(request):
 	requestsList = Request.objects.get(salonID=salonID)
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
-	for request in requestsList:
-		request.status = "FUL"
-		request.save()
+	for req in requestsList:
+		req.status = "FUL"
+		req.save()
 		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = request.customerID)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID)
 		#email user
