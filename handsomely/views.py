@@ -67,7 +67,7 @@ def update_profile(request):
 	firstName = request.POST['firstName']
 	cust.firstName = firstName
 	lastName = request.POST['lastName']
-	custr.lastName = lastName
+	cust.lastName = lastName
 	defaultCity = request.POST['defaultCity']
 	cust.defaultCity = defaultCity
 	mobile = request.POST['mobile']
