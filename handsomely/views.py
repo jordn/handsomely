@@ -172,7 +172,8 @@ def create_notification_request(request):
 	return render_to_response("thank_you.html", {"name" : name, "email" : email})
 
 def notify_customers(request):
-	djangoUser = User.objects.get(username=request.user)
+	userIDFromForm = request.POST['djangoUserID']
+	djangoUser = User.objects.get(id=userIDFromForm)
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser.id)
 	salonID = handsomelyUser.salonID
 	salonName = Salon.objects.get(id=salonID).salonName
