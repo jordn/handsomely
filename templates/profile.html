@@ -9,7 +9,7 @@
 	<h2>Your details:</h2> 
 	<br/>
 	<form action="../update_profile/" method="post"> {% csrf_token %}
-		<p>First name: &nbsp; <input type="text" name="firstName" value="{{ firstName }}"/></p>
+		<p>First name: &nbsp; <input type="text" name="firstName" value="{{ user.get_profile.first_name }}"/></p>
 		<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ lastName }}"/></p>
 		<p>E-mail: &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; <input type="text" name="email" value="{{ email }}" readonly="readonly"/></p>
 		<p>Mobile: &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" name="mobile" value="{{ mobile }}"/></p>
