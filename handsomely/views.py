@@ -73,7 +73,7 @@ def profile(request):
      	user = request.user
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user.id)
 	salonID = handsomelyUser.salonID
-	return render_to_response('profile.html', { 'email' : user.email, 'salonID' : salonID, 'method' : reqmethod }, context_instance=RequestContext(request)) 
+	return render_to_response('profile.html', { 'email' : user.email, 'firstName' : user.first_name, 'salonID' : salonID, 'method' : reqmethod }, context_instance=RequestContext(request)) 
 
 def login_page(request):
 	return render_to_response('login.html', {})
