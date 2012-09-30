@@ -19,8 +19,8 @@
 		<input type="hidden" name="djangoUserID" value="{{ user.id }}"/>
 		</p><input type="submit" value="Save" /> </p>
 	</form>
-{% if salonID != 1 %}
-	<h2><a href="../notify_users/">1 Salon Page - Click here to notify customers</a></h2>
+{% if salonID != -1 %}
+	<h2><a href="/big_red_button/">Salon Page - Click here to notify customers</a></h2>
 {% endif %}
 {% else %} <p><b>Please <a href="../login">log in</a> or <a href="../register">register</a>!</b></p>
 {% endif %}

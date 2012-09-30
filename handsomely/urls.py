@@ -30,7 +30,7 @@ urlpatterns = patterns('',
     url(r'^confirm/$', confirm), 
     url(r'^create_user/$', create_user), 
     url(r'^create_notification_request/$', create_notification_request), 
-    url(r'^notify_users/$', notify_users), # big red button page
+    url(r'^big_red_buttons/$', big_red_button), # big red button page
     url(r'^notify_customers/$', notify_customers), # page that process the notification
 )
 	

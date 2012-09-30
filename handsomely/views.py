@@ -150,8 +150,7 @@ def create_user(request):
     djangoUser.save()
     return render_to_response("thank_you.html", {"name" : email}, context_instance=RequestContext(request))
 
-# not sure what this view does...?
-def notify_users(request):
+def big_red_button(request):
 	djangoUserID = request.user.id
 	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
 
