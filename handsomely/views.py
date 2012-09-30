@@ -50,7 +50,7 @@ def get_salons_price_menu(request):
         return response
 
 def profile(request):
-	#user = request.user
+	user = request.user
 	djangoUserID = user.id
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handsomelyUser.salonID
@@ -88,9 +88,10 @@ def user_login(request):
 	    if user is not None:
 		if user.is_active:
 		    login(request, user)
-		    handUser = HandsomelyUser.objects.get(id=user.id)
+		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
+		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
-		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust}, context_instance=RequestContext(request))
+		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID}, context_instance=RequestContext(request))
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
