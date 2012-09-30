@@ -50,7 +50,7 @@ def get_salons_price_menu(request):
         return response
 
 def profile(request):
-	user = request.user
+	#user = request.user
 	djangoUserID = user.id
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handsomelyUser.salonID
