@@ -24,13 +24,12 @@ urlpatterns = patterns('',
     url(r'^profile/$', profile),
     url(r'^update_profile/$', update_profile),
     url(r'^salons/$', for_salons), 
-    url(r'^notify/$', notify_users), 
     url(r'^get_notified/$', get_notified),
     url(r'^privacypolicy/$', privacy_policy), 
     url(r'^confirm/$', confirm), 
     url(r'^create_user/$', create_user), 
     url(r'^create_notification_request/$', create_notification_request), 
-    url(r'^big_red_buttons/$', big_red_button), # big red button page
+    url(r'^notify/$', big_red_button), # big red button page
     url(r'^notify_customers/$', notify_customers), # page that process the notification
 )
 	
