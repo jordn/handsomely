@@ -54,7 +54,7 @@ def profile(request):
 	djangoUserID = user.id
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handsomelyUser.salonID
-	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'method' : reqmethod}, context_instance=RequestContext(request))
+	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID}, context_instance=RequestContext(request))
 	
 def update_profile(request):
 	user = request.user
