@@ -171,7 +171,7 @@ def create_notification_request(request):
 	# add new notification request
 	newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") 
 	newNotifReq.save()
-	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for'+salon.salonName
+	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for '+salon.salonName
 	#email user and us
 	send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
 	return render_to_response("thank_you.html", {"name" : djangoUser.email})
@@ -179,9 +179,9 @@ def create_notification_request(request):
 def notify_customers(request):
 	userIDFromForm = request.POST['djangoUserID']
 	djangoUser = User.objects.get(id=userIDFromForm)
-	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser.id)
+	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser)
 	salonID = handsomelyUser.salonID
-	salonName = Salon.objects.get(id=salonID).salonName
+	salon = Salon.objects.get(id=salonID)
 	requestsList = Request.objects.filter(salonID=salonID).filter(status="REQ")
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
@@ -193,7 +193,7 @@ def notify_customers(request):
 		#email user
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
-		text_content += salonName
+		text_content += salon.salonName
 		text_content += ' is now free, why not head down now to avoid a queue?\n'
 		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES -- No: http://www.handsome.ly/response?ans=NO -- Cancel: http://www.handsome.ly/response?ans=CANCEL'
 		# html email
