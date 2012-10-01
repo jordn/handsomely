@@ -52,9 +52,10 @@ def get_salons_price_menu(request):
 def profile(request):
 	user = request.user
 	djangoUserID = user.id
-	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = user)
+	handUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handsomelyUser.salonID
-	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID}, context_instance=RequestContext(request))
+	cust = Customer.objects.get(id=handUser.customerID)
+	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser}, context_instance=RequestContext(request))
 	
 def update_profile(request):
 	user = request.user
