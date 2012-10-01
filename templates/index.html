@@ -19,7 +19,7 @@
 {% block content %}
  
 <!--Calls the javascript function-->
-<body onload="initializeme('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated == \"True\" %} {{ user.id }} {% else %} -1 {% endif %});">	
+<body onload="initializeme('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }} {% else %} -1 {% endif %});">	
   <div class="jumbotron">
   	<div id="top-unit">
   	    <h1>Why queue?</h1>
