@@ -41,7 +41,7 @@ def get_salons_opening_hours(request):
         return response
 
 def get_salons_price_menu(request):
-	salonID = request.get['salonID']
+	salonID = request.GET['salonID']
         results = PriceMenu.objects.get(salonID=salonID)
         results = PriceMenu.objects.all()
         response = HttpResponse()
