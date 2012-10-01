@@ -117,7 +117,7 @@
 			function tellUsers(salonID){
 				if (LoggedInStatus == true){
 					if (djangoUserID != -1) {
-						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID" + djangoUserID, function(data){ alert("We will let you know if times are free!");
+						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 						});
 					}	
   				}
