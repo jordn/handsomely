@@ -174,7 +174,7 @@ def create_notification_request(request):
 	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for'+salon.salonName
 	#email user and us
 	send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
-	return render_to_response("thank_you.html", {"name" : name, "email" : email})
+	return render_to_response("thank_you.html", {"name" : djangoUser.email})
 
 def notify_customers(request):
 	userIDFromForm = request.POST['djangoUserID']
