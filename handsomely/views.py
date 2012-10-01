@@ -53,7 +53,7 @@ def profile(request):
 	user = request.user
 	djangoUserID = user.id
 	handUser = HandsomelyUser.objects.get(djangoUserID = user)
-	salonID = handsomelyUser.salonID
+	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
 	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser}, context_instance=RequestContext(request))
 	
