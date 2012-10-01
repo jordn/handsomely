@@ -162,7 +162,7 @@ def get_notified(request):
 
 def create_notification_request(request):
 	djangoUserID = request.GET.get('djangoUserID', '')
-	djangoUser = User.objects.get(id=userID) # look up salon in db to get id
+	djangoUser = User.objects.get(id=djangoUserID) # look up salon in db to get id
 	handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
 	salonID = request.GET.get('salonID', '')
 	salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
