@@ -19,7 +19,7 @@
 {% block content %}
  
 <!--Calls the javascript function-->
-<body onload="initializeme('Cambridge', false);">	
+<body onload="initializeme('Cambridge', {{ user.is_authenticated }});">	
   <div class="jumbotron">
   	<div id="top-unit">
   	    <h1>Why queue?</h1>
