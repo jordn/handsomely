@@ -33,7 +33,7 @@ def get_salons(request):
 	return response
 
 def get_salons_opening_hours(request):
-	salonID = request.get['salonID']
+	salonID = request.GET['salonID']
         results = SalonOpeningHours.objects.filter(salonID=salonID)
         response = HttpResponse()
         json_serializer = serializers.get_serializer("json")()
