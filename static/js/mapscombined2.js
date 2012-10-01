@@ -69,8 +69,9 @@
 
 
 
-			function initializeme(city, isLoggedIn) {
+			function initializeme(city, isLoggedIn, djangoUserID) {
 				window.LoggedInStatus = isLoggedIn
+				window.djangoUserID = djangoUserID
 				jQuery.get("../get_salons?city="+city, function(data){
 				//give these arguments, return Jason object
 				var dat = JSON.parse(data);
@@ -106,23 +107,26 @@
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 				for(var i = 0; i < names.length; i++){
 					var marker = new google.maps.Marker({
-		       			position: codeAddress(addresses[i], i),
+		       			position: codeAddress(addresses[i], i, dat[i].pk),
 		        		map: map
 		      		});
 				}
 				});
 			};
 
-			function tellUsers(){
+			function tellUsers(salonID){
 				if (LoggedInStatus == true){
-					alert("We will let you know if times are free!");	
+					if (djangoUserID != -1) {
+						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID" + djangoUserID, function(data){ alert("We will let you know if times are free!");
+						});
+					}	
   				}
   				else{
   					login("show");
   				}
 			}
 			 
-			function codeAddress(address, index) {
+			function codeAddress(address, index, salonID) {
 				var geocoder = new google.maps.Geocoder();  
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
@@ -189,7 +193,7 @@
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
 
-								marker_content += "<br><input type = \"button\" onClick=\"tellUsers()\" value = \"Email me when they are free!\">";
+								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(salonID)\" value = \"Email me when they are free!\">";
 								var myboxOptions = {
 		                 			content: marker_content 
 					                ,disableAutoPan: false

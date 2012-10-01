@@ -5,9 +5,10 @@
 {% block content %}
 	<h1>Get notified</h1>
 	<p>Get notified by this salon</p>
-	<form action="create_notification_request" method="post">
+	<form action="/create_notification_request/" method="post">
 		{% csrf_token %}
-		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
-		<input type="hidden" name="salonID" value="{{ salonID }}">
+		<p><input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"></p>
+		<p><input type="hidden" name="salonID" value="{{ salonID }}"></p>
+		<p><input type="submit" value="Go"></p>
 	</form>
 {% endblock %}

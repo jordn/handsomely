@@ -161,10 +161,10 @@ def get_notified(request):
 	return render_to_response('get_notified.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
 
 def create_notification_request(request):
-	djangoUserID = request.POST.get('userID', '')
+	djangoUserID = request.GET('djangoUserID')
 	djangoUser = User.objects.get(id=userID) # look up salon in db to get id
 	handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
-	salonID = request.POST['salonID']
+	salonID = request.GET['salonID']
 	salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
 	admin_mail = 'team@handsome.ly'
 	email = djangoUser.email
