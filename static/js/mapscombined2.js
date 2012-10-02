@@ -245,9 +245,10 @@
 
 			function cachedAddress(address, index, salonID) {
 				var dat_latlng;
+				var lat_lng;
 				jQuery.get("../get_salon_latlng?salonID=" + salonID, function(data){
 					dat_latlng = JSON.parse(data);
-					var lat_lng = dat_latlng[0].fields.address.split(",");
+					lat_lng = dat_latlng[0].fields.address.split(",");
 				});
 				var location = LatLng(lat_lng[0], lat_lng[1], false)
 		      		var marker = new google.maps.Marker({
