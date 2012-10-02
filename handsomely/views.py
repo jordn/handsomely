@@ -220,11 +220,11 @@ def response(request):
 	answer = request.GET['ans']
 	notifID = request.GET['notifID']
 	notif = Notification.objects.get(id=notifID)
-	if answer = "YES":
+	if answer == "YES":
 		notif.status = 'ACC'
-	if answer = "NO":
+	if answer == "NO":
 		notif.status = 'POS' 
-	if answer = "CANCEL":
+	if answer == "CANCEL":
 		notif.status = 'CAN'
 	notif.save()
 	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
