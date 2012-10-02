@@ -24,8 +24,8 @@
 			function parseHours(key, index){
 				jQuery.get("../get_salons_opening_hours?salonID=" + key, function(data){
 				dat_hours = JSON.parse(data);
-				k = (key-1)*7	
-					while (k<key*7){		
+				k = 0
+					while (k<7){		
 						if ((dat_hours[k].fields.dayOfTheWeek = "MON") && (dat_hours[k].fields.salonID = key)){
 								mon[index]= [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]
 								k = k+1
@@ -89,8 +89,8 @@
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(dat[i].pk, i)
-						parseHours(dat[i].pk, i)
+						parsePrice(i+1, i)//(dat[i].pk, i)		//taking the primary key, but this is not compatible with the salonID.
+						parseHours(i+1, i)//(dat[i].pk, i)
 					}
 				} 
 				else {
