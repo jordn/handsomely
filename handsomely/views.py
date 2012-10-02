@@ -189,7 +189,7 @@ def notify_customers(request):
 		req.status = "FUL"
 		req.save()
 		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
-		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID.id)
+		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID)
 		#email user
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
@@ -200,12 +200,13 @@ def notify_customers(request):
 		# html email
 		html_content = 'Hi! ' + recipientDjangoUser.first_name
 		html_content += '<br/>'
-		html_content = 'The salon <b>salon.salonName<b/>' + ' is now free, why not head down now to avoid a queue?<br/>'
+		html_content += 'The salon <b>' + salon.salonName 
+		html_content += '</b> is now free, why not head down now to avoid a queue?<br/>'
 		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&reqID=' + str(req.id) 
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&reqID=' + str(req.id) 
 		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&reqID=' + str(req.id) 
 		html_content += '\">CANCEL</a> <br/>'
-		html_content += 'Thanks, the Handsomely team.'
+		html_content += 'Thanks, <br/>the Handsomely team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
