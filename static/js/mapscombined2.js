@@ -16,7 +16,12 @@
 			function parsePrice(key, index){
 				jQuery.get("../get_salons_price_menu?salonID=" + key, function(data){
 				dat_price = JSON.parse(data);
-				return prices[index] = dat_price[index].fields.servicePrice, cut[index] = dat_price[index].fields.serviceName
+				for (var a = 0; a < dat_price.length; a++){
+					if (dat_price[a].fields.salonID == index +1) {
+						prices[index] = dat_price[a].fields.servicePrice, cut[a] = dat_price[index].fields.serviceName
+					}
+				}
+				return prices
 				});
 			}
 
@@ -83,9 +88,6 @@
 					var salon_addresses = "<br><ul>";
 					var dat_price
 					for (var i = 0; i < dat.length; i++) {
-						salon_list += "<li>" + (dat[i].fields.salonName) + "<\/li><br>";
-						salon_prices += "<li>" + (dat[i].fields.phone) + "<\/li><br>";
-						salon_addresses += "<li>" + (dat[i].fields.address) + "<\/li><br>";
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
