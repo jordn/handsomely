@@ -110,7 +110,7 @@
 			  	var markerPosition;
 				for(var i = 0; i < names.length; i++){
 					if (dat[i].pk == 18) {
-						markerPosition = cachedAddress(addresses[i], i, dat[i].pk)
+						markerPosition = cachedAddress(dat[i].fields.address, i, dat[i].pk)
 					} else {
 						markerPosition = codeAddress(addresses[i], i, dat[i].pk)
 					}
@@ -246,10 +246,10 @@
 			function cachedAddress(address, index, salonID) {
 				var dat_latlng;
 				var lat_lng;
-				jQuery.get("../get_salon_latlng?salonID=" + salonID, function(data){
-					dat_latlng = JSON.parse(data);
-					lat_lng = dat_latlng[0].fields.address.split(",");
-				});
+				//jQuery.get("../get_salon_latlng?salonID=" + salonID, function(data){
+				//	dat_latlng = JSON.parse(data);
+					lat_lng = address.split(",");
+				//});
 				var location = LatLng(lat_lng[0], lat_lng[1], false)
 		      		var marker = new google.maps.Marker({
 		          		map: map,
