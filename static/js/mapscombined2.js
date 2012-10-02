@@ -213,7 +213,7 @@
 					                ,zIndex: null
 									,shadowStyle: 1
 					                ,boxStyle: { 
-					                  	background: "url('../static/img/tipbox.gif') no-repeat"
+					                  	background: "url('tipbox.gif') no-repeat"
 					                  	,border: "1px solid black"
 
 										,backgroundColor: 'rgb(255,255,255)'
@@ -250,7 +250,7 @@
 					dat_latlng = JSON.parse(data);
 					lat_lng = dat_latlng[0].fields.address.split(",");
 				});
-				var location = LatLng(lat: lat_lng[0], lng: lat_lng[1], noWrap?: false)
+				var location = LatLng(lat_lng[0], lat_lng[1], false)
 		      		var marker = new google.maps.Marker({
 		          		map: map,
 		          		position: results[0].geometry.location
@@ -323,7 +323,7 @@
 			                ,zIndex: null
 							,shadowStyle: 1
 			                ,boxStyle: { 
-			                  	background: "url('../static/img/tipbox.gif') no-repeat"
+			                  	background: "url('tipbox.gif') no-repeat"
 			                  	,border: "1px solid black"
 
 								,backgroundColor: 'rgb(255,255,255)'
