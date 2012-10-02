@@ -102,7 +102,7 @@
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.20535,0.123635);
 			  	var mapOptions = {
-		  			zoom: 15,
+		  			zoom: 16,
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
@@ -140,7 +140,7 @@
 				var geocoder = new google.maps.Geocoder();  
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
-			      		map.setCenter(results[0].geometry.location);
+			      		map.setCenter(new google.maps.LatLng(52.205029,0.121279));
 			      		var marker = new google.maps.Marker({
 			          		map: map,
 			          		position: results[0].geometry.location
