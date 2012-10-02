@@ -81,7 +81,6 @@
 				//give these arguments, return Jason object
 				var dat = JSON.parse(data);
 				if (dat.length > 0) {
-					//document.getElementById("salon_list").innerHTML="";
 					var result_output = "<b>Salons:</b>";
 					var salon_list = "<br><ul>";
 					var salon_prices = "<br><ul>";
@@ -91,7 +90,7 @@
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(dat[i].pk, i)		//taking the primary key, but this is not compatible with the salonID, cannot call with first argument PK as PKs do not reset
+						parsePrice(dat[i].pk, i)		
 						parseHours(dat[i].pk, i)
 					}
 				} 
@@ -102,7 +101,7 @@
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.205277,0.121945);
 			  	var mapOptions = {
-		  			zoom: 15,
+		  			zoom: 16,
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
@@ -140,7 +139,7 @@
 				var geocoder = new google.maps.Geocoder();  
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
-			      		map.setCenter(results[0].geometry.location);
+			      		map.setCenter(new google.maps.LatLng(52.205029,0.121279));
 			      		var marker = new google.maps.Marker({
 			          		map: map,
 			          		position: results[0].geometry.location
@@ -150,7 +149,7 @@
 						var infowindow = new InfoBox();
 						google.maps.event.addListener(marker, 'click', (function(marker, index) {
 		        			return function() {
-								var marker_content = names[index];
+								var marker_content = "<b>" + names[index] + "</b>";
 								marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
 								marker_content += "<br>" + phones[index];
 
@@ -203,7 +202,6 @@
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
 
-								//marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
 								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -213,7 +211,6 @@
 					                ,zIndex: null
 									,shadowStyle: 1
 					                ,boxStyle: { 
-					                  	//background: "url('tipbox.gif') no-repeat"
 					                  	border: "1px solid black"
 
 										,backgroundColor: 'rgb(255,255,255)'

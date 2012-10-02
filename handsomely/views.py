@@ -250,3 +250,10 @@ def salon_signup(request):
 
 def privacy_policy(request):
     return render_to_response('privacy_policy.html', {})
+
+
+def new_main(request):
+    return render_to_response('new_main.html', {})
+
+def new_about(request):
+    return render_to_response('new_about.html', {})
