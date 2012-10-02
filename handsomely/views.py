@@ -43,7 +43,7 @@ def get_salons_opening_hours(request):
 def get_salons_price_menu(request):
 	salonID = request.GET['salonID']
         results = PriceMenu.objects.get(salonID=salonID)
-        #results = PriceMenu.objects.all()
+        results = PriceMenu.objects.all()
         response = HttpResponse()
         json_serializer = serializers.get_serializer("json")()
         json_serializer.serialize(results, ensure_ascii=False, stream=response)
