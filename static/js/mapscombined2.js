@@ -102,7 +102,7 @@
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.20535,0.123635);
 			  	var mapOptions = {
-		  			zoom: 16,
+		  			zoom: 15,
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
