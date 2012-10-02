@@ -100,7 +100,7 @@
 					document.getElementById("salon_list").innerHTML="<b>No salons found</b>";
 				}
 			  	var geocoder = new google.maps.Geocoder();
-			  	var latlng = new google.maps.LatLng(52.20535,0.123635);
+			  	var latlng = new google.maps.LatLng(52.205277,0.121945);
 			  	var mapOptions = {
 		  			zoom: 15,
 			    	center: latlng,
