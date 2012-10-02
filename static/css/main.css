@@ -5,14 +5,24 @@
 /*TOP OF THE PAGE */
 
 #top-unit {
+    height:100px;
     padding: 20px 0 20px 40px;/* top right bottom left */
-
-   
+    position: relative;
+    color: white;
+    text-align: left;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+    background: #020031;
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6D3353));
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
+    -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
+    -moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
+    box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
+    border-bottom: 5px;
+    border-color: white;
  }
 
 #top-unit h1 {
-margin-bottom: 0;
-font-size: 70px;
+font-size: 400%;
 line-height: 1;
 letter-spacing: -1px;
 color: inherit;
@@ -28,19 +38,12 @@ letter-spacing: -1px;
 color: inherit;
 }
 
-.jumbotron {
-position: relative;
-padding: 15px 0;
-color: white;
-text-align: left;
-text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
-background: #020031;
-background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#020031), color-stop(100%,#6D3353));
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#020031', endColorstr='#6d3353',GradientType=1 );
--webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
--moz-box-shadow: inset 0 3px 7px rgba(0,0,0,.2), inset 0 -3px 7px rgba(0,0,0,.2);
-box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2);
+.top-unit-left {
+    float:left;
+}
 
+.top-bar-nav {
+    float:right;
 }
 
 
@@ -62,13 +65,15 @@ box-shadow: inset 0 3px 7px rgba(0, 0, 0, .2), inset 0 -3px 7px rgba(0, 0, 0, .2
     z-index: -20;
 }
 
+.top-bar-nav {
+    float: right;
+}
+
 
 #bottom_nav {
-    position: absolute;
     bottom: 0;
     width: 100%;
     background-color: white;
-    l
 }
 
 

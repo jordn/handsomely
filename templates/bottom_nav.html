@@ -2,13 +2,6 @@
 <div id='bottom_nav'>
 
 
-<ul class="nav nav-pills" style="display: inline">
-	<li{% if request.get_full_path = "/" %}class="active"{% endif %}><a href="/">Main page</a></li>
-	<li{% if request.get_full_path = "/about/" %}class="active"{% endif %}><a href="/about/">About us</a></li>
-	<li><a href="http://blog.handsome.ly">Blog</a></li>
-	<li><a href="/privacypolicy/">Privacy Policy</a></li>
-	{% if user.is_authenticated %} <li><a href="/profile/">My Account</a></li> {% endif %}
-
 <strong id="copyright">&copy; 2012 Handsome.ly</strong>
 </div>
 {% endblock %}
