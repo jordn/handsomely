@@ -12,18 +12,45 @@
   </head>
   <body>
     <div class="container">
-      <h1>Heya, world!</h1>
+      <h1>handsome.ly</h1>
+
+
+      <ul class="nav nav-tabs">
+        <li class="active">
+        <a href="/new_main">For Customers</a>
+        </li>
+        <li>
+        <a href="/forsalons">For Salons</a>
+        </li>
+        <li>
+        <a href="/new_about">About Us</a>
+        </li>
+        <li>
+        <a href="/profile">Profile</a>
+        </li>
+      </ul>
+
+      <p class="lead">Choose your favourite Cambridge haircutterie and get notified by email when they're not busy</p>
 
       <div class="row-fluid">
         <div class="span4" style="background-color: #df123a;">
-          Side bar</br></br></br></br></br></br></br></br>
+          <form class="form">
+          <div class="input-append">
+            <input type="text" class="span12" placeholder="Search for a salon..." id=" focusedInput">
+           </div>
+          </br></br></br></br></br></br>
         </div>
         <div class="span7 offset1" style="background-color: #a212a2;">
           MAP
-          </br></br></br></br></br>         </br></br></br></br>     </br></br></br></br></br>
+          </br></br></br></br></br></br></br></br></br></br></br></br></br></br>
         </div>
-
+      <small class="muted">*Not all salons are currently active on our system.</small></br>
+      <small><strong>&copy; 2012 handsome.ly</strong></small>
     </div>
+
+
+
+
 
     <script src="{% static 'js/vendor/jquery-1.8.2.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.js' %}"></script>
