@@ -193,20 +193,23 @@ def notify_customers(request):
 		#email user
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
-		text_content += salon.salonName
-		text_content += ' is now free, why not head down now to avoid a queue?\n'
-		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES -- No: http://www.handsome.ly/response?ans=NO -- Cancel: http://www.handsome.ly/response?ans=CANCEL'
+		text_content += 'The salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
+		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES&reqID=' + req.id + ' -- No: http://www.handsome.ly/response?ans=NO&reqID=' + req.id + ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&reqID=' + req.id
 		# html email
 		html_content = 'Hi! ' + recipientDjangoUser.first_name
-		html_content += '<br/>'+  salon.salonName
-		html_content = ' is now free, why not head down now to avoid a queue?<br/>'
-		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL\">CANCEL</a> <br/>'
+		html_content += '<br/>'
+		html_content = 'The salon <b>salon.salonName<b/>' + ' is now free, why not head down now to avoid a queue?<br/>'
+		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&reqID=' + req.id + '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&reqID=' + req.id + '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&reqID=' + req.id + '\">CANCEL</a> <br/>'
 		html_content += 'Thanks, the Handsomely team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
 	return render_to_response("thank_you.html", {'name' : djangoUser.email})
+
+def response(request):
+	answer = request.GET['ans']
+	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
 
 def for_salons(request):
 	return render_to_response('for_salons.html', {}, context_instance=RequestContext(request))
