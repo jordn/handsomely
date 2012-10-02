@@ -89,8 +89,8 @@
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(i+1, i)//(dat[i].pk, i)		//taking the primary key, but this is not compatible with the salonID.
-						parseHours(i+1, i)//(dat[i].pk, i)
+						parsePrice(dat[i].pk, i)		//taking the primary key, but this is not compatible with the salonID.
+						parseHours(dat[i].pk, i)
 					}
 				} 
 				else {
