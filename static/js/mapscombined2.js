@@ -250,7 +250,7 @@
 				//	dat_latlng = JSON.parse(data);
 					lat_lng = address.split(",");
 				//});
-				var location = LatLng(lat_lng[0], lat_lng[1], false)
+				var location = new google.maps.LatLng(lat_lng[0], lat_lng[1], false)
 		      		var marker = new google.maps.Marker({
 		          		map: map,
 		          		position: location
