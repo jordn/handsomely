@@ -139,7 +139,7 @@
 				var geocoder = new google.maps.Geocoder();  
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
-			      		map.setCenter(new google.maps.LatLng(52.205277,0.121945));
+			      		map.setCenter(new google.maps.LatLng(52.207383,0.124013));
 			      		var marker = new google.maps.Marker({
 			          		map: map,
 			          		position: results[0].geometry.location
