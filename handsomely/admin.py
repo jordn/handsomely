@@ -8,5 +8,8 @@ admin.site.register(SalonOpeningHours)
 admin.site.register(HandsomelyUser)
 admin.site.register(Customer)
 admin.site.register(Request)
-admin.site.register(Notification)
+
+Class NotificationAdmin(admin.ModelAdmin):
+	date_hierarchy = 'timeSent'
+admin.site.register(Notification, NotificationAdmin)
 
