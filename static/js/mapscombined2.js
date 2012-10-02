@@ -107,9 +107,15 @@
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-				for(var i = 0; i < names.length; i++){
+				for(var i = 0; i < 9; i++){
 					var marker = new google.maps.Marker({
 		       			position: codeAddress(addresses[i], i, dat[i].pk),
+		        		map: map
+		      		});
+				}
+				for(var i = 10; i < names.length; i++){
+					var marker = new google.maps.Marker({
+		       			position: cachedAddress(addresses[i], i, dat[i].pk),
 		        		map: map
 		      		});
 				}
@@ -236,4 +242,109 @@
 		      		}
 		    	});
 		  	}
+
+			function cachedAddress(address, index, salonID) {
+				var dat_latlng;
+				var lat_lng;
+				jQuery.get("../get_salon_latlng?salonID=" + salonID, function(data){
+					dat_latlng = JSON.parse(data);
+					lat_lng = dat_latlng[0].fields.address.split(",");
+				});
+				var location = LatLng(lat: lat_lng[0], lng: lat_lng[1], noWrap?: false)
+		      		var marker = new google.maps.Marker({
+		          		map: map,
+		          		position: results[0].geometry.location
+		      		});
+
+				//This code does the infoboxes
+				var infowindow = new InfoBox();
+				google.maps.event.addListener(marker, 'click', (function(marker, index) {
+        			return function() {
+						var marker_content = names[index];
+						marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
+						marker_content += "<br>" + phones[index];
+
+						if (mon[index][0] == mon[index][1]){
+							marker_content += "<br>" + "Monday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Monday: " + mon[index][0] + "-" + mon[index][1];
+						}
+
+						if (tue[index][0] == tue[index][1]){
+							marker_content += "<br>" + "Tuesday: CLOSED "
+						}
+						else{
+						marker_content += "<br>" + "Tuesday: " + tue[index][0] + "-" + tue[index][1];
+						}
+
+						if (wed[index][0] == wed[index][1]){
+							marker_content += "<br>" + "Wednesday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Wednesday: " + wed[index][0] + "-" + wed[index][1];
+						}
+
+						if (thu[index][0] == thu[index][1]){
+							marker_content += "<br>" + "Thursday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Thursday: " + thu[index][0] + "-" + thu[index][1];
+						}
+
+						if (fri[index][0] == fri[index][1]){
+							marker_content += "<br>" + "Friday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Friday: " + fri[index][0] + "-" + fri[index][1];
+						}
+
+						if (sat[index][0] == sat[index][1]){
+							marker_content += "<br>" + "Saturday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Saturday: " + sat[index][0] + "-" + sat[index][1];
+						}
+
+						if (sund[index][0] == sund[index][1]){
+							marker_content += "<br>" + "Sunday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
+						}
+
+						//marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
+						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
+						var myboxOptions = {
+                 			content: marker_content 
+			                ,disableAutoPan: false
+			                ,maxWidth: 1000
+			                ,pixelOffset: new google.maps.Size(-100, -110)
+			                ,zIndex: null
+							,shadowStyle: 1
+			                ,boxStyle: { 
+			                  	background: "url('../static/img/tipbox.gif') no-repeat"
+			                  	,border: "1px solid black"
+
+								,backgroundColor: 'rgb(255,255,255)'
+								,opacity: 1
+			                  	,width: "210px"
+			                  	,textAlign: "center"
+			                  	,borderRadius: "10px"
+						,paddingBottom: "3px"				
+                 			}
+			                ,closeBoxMargin: "2px 2px 2px 2px"
+			                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+			                ,infoBoxClearance: new google.maps.Size(1, 1)
+			                ,isHidden: false
+			                ,pane: "floatPane"
+			                ,enableEventPropagation: false
+        				};
+						infowindow.setOptions(myboxOptions);
+          				infowindow.open(map, marker);
+          				}
+      			})(marker, index));	
+
+		  	}
+
 
