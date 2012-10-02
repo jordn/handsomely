@@ -99,7 +99,7 @@
 					document.getElementById("salon_list").innerHTML="<b>No salons found</b>";
 				}
 			  	var geocoder = new google.maps.Geocoder();
-			  	var latlng = new google.maps.LatLng(52.20535,0.123635);
+			  	var latlng = new google.maps.LatLng(52.205277,0.121945);
 			  	var mapOptions = {
 		  			zoom: 16,
 			    	center: latlng,
@@ -139,7 +139,7 @@
 				var geocoder = new google.maps.Geocoder();  
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
-			      		map.setCenter(new google.maps.LatLng(52.205029,0.121279));
+			      		map.setCenter(new google.maps.LatLng(52.206153,0.123022));
 			      		var marker = new google.maps.Marker({
 			          		map: map,
 			          		position: results[0].geometry.location
