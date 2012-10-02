@@ -198,7 +198,7 @@ def notify_customers(request):
 		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES -- No: http://www.handsome.ly/response?ans=NO -- Cancel: http://www.handsome.ly/response?ans=CANCEL'
 		# html email
 		html_content = 'Hi! ' + recipientDjangoUser.first_name
-		html_content += '<br/>'+  salonName
+		html_content += '<br/>'+  salon.salonName
 		html_content = ' is now free, why not head down now to avoid a queue?<br/>'
 		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL\">CANCEL</a> <br/>'
 		html_content += 'Thanks, the Handsomely team.'
