@@ -213,8 +213,8 @@
 					                ,zIndex: null
 									,shadowStyle: 1
 					                ,boxStyle: { 
-					                  	background: "url('tipbox.gif') no-repeat"
-					                  	,border: "1px solid black"
+					                  	//background: "url('tipbox.gif') no-repeat"
+					                  	border: "1px solid black"
 
 										,backgroundColor: 'rgb(255,255,255)'
 										,opacity: 1
@@ -323,8 +323,8 @@
 			                ,zIndex: null
 							,shadowStyle: 1
 			                ,boxStyle: { 
-			                  	background: "url('tipbox.gif') no-repeat"
-			                  	,border: "1px solid black"
+			                  	//background: "url('tipbox.gif') no-repeat"
+			                  	border: "1px solid black"
 
 								,backgroundColor: 'rgb(255,255,255)'
 								,opacity: 1
