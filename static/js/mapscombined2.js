@@ -108,7 +108,7 @@
 			  		}
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 			  	var markerPosition;
-				for(var i = 0; i < 11; i++){
+				for(var i = 0; i < names.length; i++){
 					if (dat[i].pk == 18) {
 						markerPosition = cachedAddress(addresses[i], i, dat[i].pk)
 					} else {
