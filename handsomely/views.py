@@ -194,12 +194,17 @@ def notify_customers(request):
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
 		text_content += 'The salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
-		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES&reqID=' + req.id + ' -- No: http://www.handsome.ly/response?ans=NO&reqID=' + req.id + ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&reqID=' + req.id
+		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES&reqID=' + req.id 
+		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&reqID=' + req.id 
+		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&reqID=' + req.id
 		# html email
 		html_content = 'Hi! ' + recipientDjangoUser.first_name
 		html_content += '<br/>'
 		html_content = 'The salon <b>salon.salonName<b/>' + ' is now free, why not head down now to avoid a queue?<br/>'
-		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&reqID=' + req.id + '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&reqID=' + req.id + '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&reqID=' + req.id + '\">CANCEL</a> <br/>'
+		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&reqID=' + req.id 
+		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&reqID=' + req.id 
+		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&reqID=' + req.id 
+		html_content += '\">CANCEL</a> <br/>'
 		html_content += 'Thanks, the Handsomely team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
@@ -209,6 +214,7 @@ def notify_customers(request):
 
 def response(request):
 	answer = request.GET['ans']
+	requestID = request.GET['reqID']
 	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
 
 def for_salons(request):
