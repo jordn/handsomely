@@ -17,7 +17,7 @@
 				jQuery.get("../get_salons_price_menu?salonID=" + key, function(data){
 				dat_price = JSON.parse(data);
 				for (var a = 0; a < dat_price.length; a++){
-					if (dat_price[a].fields.salonID == (index + 1)) {
+					if (dat_price[a].fields.salonID == key) {
 						prices[index] = dat_price[a].fields.servicePrice, cut[index] = dat_price[a].fields.serviceName
 					}
 				}
@@ -81,7 +81,6 @@
 				//give these arguments, return Jason object
 				var dat = JSON.parse(data);
 				if (dat.length > 0) {
-					//document.getElementById("salon_list").innerHTML="";
 					var result_output = "<b>Salons:</b>";
 					var salon_list = "<br><ul>";
 					var salon_prices = "<br><ul>";
@@ -91,8 +90,8 @@
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(1, i)		//taking the primary key, but this is not compatible with the salonID, cannot call with first argument PK as PKs do not reset
-						parseHours(i+1, i)//(dat[i].pk, i)
+						parsePrice(dat[i].pk, i)		
+						parseHours(dat[i].pk, i)
 					}
 				} 
 				else {
@@ -100,16 +99,22 @@
 					document.getElementById("salon_list").innerHTML="<b>No salons found</b>";
 				}
 			  	var geocoder = new google.maps.Geocoder();
-			  	var latlng = new google.maps.LatLng(52.205, 0.175);
+			  	var latlng = new google.maps.LatLng(52.20535,0.123635);
 			  	var mapOptions = {
 		  			zoom: 16,
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+			  	var markerPosition;
 				for(var i = 0; i < names.length; i++){
+					if (dat[i].pk > 17) {
+						markerPosition = cachedAddress(dat[i].fields.address, i, dat[i].pk)
+					} else {
+						markerPosition = codeAddress(addresses[i], i, dat[i].pk)
+					}
 					var marker = new google.maps.Marker({
-		       			position: codeAddress(addresses[i], i, dat[i].pk),
+		       			position: markerPosition,
 		        		map: map
 		      		});
 				}
@@ -134,7 +139,7 @@
 				var geocoder = new google.maps.Geocoder();  
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
-			      		map.setCenter(results[0].geometry.location);
+			      		map.setCenter(new google.maps.LatLng(52.205029,0.121279));
 			      		var marker = new google.maps.Marker({
 			          		map: map,
 			          		position: results[0].geometry.location
@@ -144,7 +149,7 @@
 						var infowindow = new InfoBox();
 						google.maps.event.addListener(marker, 'click', (function(marker, index) {
 		        			return function() {
-								var marker_content = names[index];
+								var marker_content = "<b>" + names[index] + "</b>";
 								marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
 								marker_content += "<br>" + phones[index];
 
@@ -197,7 +202,6 @@
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
 
-								//marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
 								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -207,14 +211,14 @@
 					                ,zIndex: null
 									,shadowStyle: 1
 					                ,boxStyle: { 
-					                  	background: "url('tipbox.gif') no-repeat"
-					                  	,border: "1px solid black"
+					                  	border: "1px solid black"
 
 										,backgroundColor: 'rgb(255,255,255)'
 										,opacity: 1
-					                  	,width: "200px"
+					                  	,width: "210px"
 					                  	,textAlign: "center"
-					                  	,borderRadius: "10px"				
+					                  	,borderRadius: "10px"
+								,paddingBottom: "3px"				
 		                 			}
 					                ,closeBoxMargin: "2px 2px 2px 2px"
 					                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
@@ -235,4 +239,109 @@
 		      		}
 		    	});
 		  	}
+
+			function cachedAddress(address, index, salonID) {
+				var dat_latlng;
+				var lat_lng;
+				//jQuery.get("../get_salon_latlng?salonID=" + salonID, function(data){
+				//	dat_latlng = JSON.parse(data);
+					lat_lng = address.split(",");
+				//});
+				var location = new google.maps.LatLng(lat_lng[0], lat_lng[1], false)
+		      		var marker = new google.maps.Marker({
+		          		map: map,
+		          		position: location
+		      		});
+
+				//This code does the infoboxes
+				var infowindow = new InfoBox();
+				google.maps.event.addListener(marker, 'click', (function(marker, index) {
+        			return function() {
+						var marker_content = names[index];
+						marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
+						marker_content += "<br>" + phones[index];
+
+						if (mon[index][0] == mon[index][1]){
+							marker_content += "<br>" + "Monday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Monday: " + mon[index][0] + "-" + mon[index][1];
+						}
+
+						if (tue[index][0] == tue[index][1]){
+							marker_content += "<br>" + "Tuesday: CLOSED "
+						}
+						else{
+						marker_content += "<br>" + "Tuesday: " + tue[index][0] + "-" + tue[index][1];
+						}
+
+						if (wed[index][0] == wed[index][1]){
+							marker_content += "<br>" + "Wednesday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Wednesday: " + wed[index][0] + "-" + wed[index][1];
+						}
+
+						if (thu[index][0] == thu[index][1]){
+							marker_content += "<br>" + "Thursday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Thursday: " + thu[index][0] + "-" + thu[index][1];
+						}
+
+						if (fri[index][0] == fri[index][1]){
+							marker_content += "<br>" + "Friday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Friday: " + fri[index][0] + "-" + fri[index][1];
+						}
+
+						if (sat[index][0] == sat[index][1]){
+							marker_content += "<br>" + "Saturday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Saturday: " + sat[index][0] + "-" + sat[index][1];
+						}
+
+						if (sund[index][0] == sund[index][1]){
+							marker_content += "<br>" + "Sunday: CLOSED "
+						}
+						else{
+							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
+						}
+
+						//marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
+						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
+						var myboxOptions = {
+                 			content: marker_content 
+			                ,disableAutoPan: false
+			                ,maxWidth: 1000
+			                ,pixelOffset: new google.maps.Size(-100, -110)
+			                ,zIndex: null
+							,shadowStyle: 1
+			                ,boxStyle: { 
+			                  	//background: "url('tipbox.gif') no-repeat"
+			                  	border: "1px solid black"
+
+								,backgroundColor: 'rgb(255,255,255)'
+								,opacity: 1
+			                  	,width: "210px"
+			                  	,textAlign: "center"
+			                  	,borderRadius: "10px"
+						,paddingBottom: "3px"				
+                 			}
+			                ,closeBoxMargin: "2px 2px 2px 2px"
+			                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
+			                ,infoBoxClearance: new google.maps.Size(1, 1)
+			                ,isHidden: false
+			                ,pane: "floatPane"
+			                ,enableEventPropagation: false
+        				};
+						infowindow.setOptions(myboxOptions);
+          				infowindow.open(map, marker);
+          				}
+      			})(marker, index));	
+
+		  	}
+
 
