@@ -32,7 +32,8 @@ urlpatterns = patterns('',
     url(r'^create_notification_request/$', create_notification_request), 
     url(r'^notify/$', big_red_button), # big red button page
     url(r'^notify_customers/$', notify_customers), # page that process the notification
-)
+    url(r'^new_main/$', new_main), # page that process the notification
+    )
 	
 
 # # #this is to try and get local static files to be served. might not be needed.
