@@ -18,12 +18,16 @@
 				dat_price = JSON.parse(data);
 				for (var a = 0; a < dat_price.length; a++){
 					if (dat_price[a].fields.salonID == (index + 1)) {
-						prices[index] = dat_price[a].fields.servicePrice, cut[index] = dat_price[a].fields.serviceName
+						prices[a] = dat_price[a].fields.servicePrice, cut[a] = dat_price[a].fields.serviceName
 					}
 				}
 				return prices
 				});
 			}
+
+
+
+
 
 
 			function parseHours(key, index){
