@@ -10,5 +10,5 @@ admin.site.register(Customer)
 # the following models don't display the datetime fields in the admin
 # this is a known problem in django (auto_now feature :| )
 admin.site.register(Request)
-admin.site.register(Notification, NotificationAdmin)
+admin.site.register(Notification)
 
