@@ -16,8 +16,13 @@
 			function parsePrice(key, index){
 				jQuery.get("../get_salons_price_menu?salonID=" + key, function(data){
 				dat_price = JSON.parse(data);
-				return prices[index] = dat_price[index].fields.servicePrice, cut[index] = dat_price[index].fields.serviceName
+				for (var a = 0; a < dat_price.length; a++){
+					if (dat_price[a].fields.salonID == (index + 1)) {
+						prices[index] = dat_price[a].fields.servicePrice, cut[index] = dat_price[a].fields.serviceName
+					}
+				}
 				});
+				return prices
 			}
 
 
@@ -27,8 +32,8 @@
 				k = 0
 					while (k<7){		
 						if ((dat_hours[k].fields.dayOfTheWeek = "MON") && (dat_hours[k].fields.salonID = key)){
-								mon[index]= [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]
-								k = k+1
+							mon[index]= [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]
+							k = k+1
 							
 						}
 						if ((dat_hours[k].fields.dayOfTheWeek = "TUE") && (dat_hours[k].fields.salonID = key)){
@@ -57,8 +62,8 @@
 						
 						}
 						if ((dat_hours[k].fields.dayOfTheWeek = "SUN") && (dat_hours[k].fields.salonID = key)){
-								sund[index] = [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]	
-								k = k+1
+							sund[index] = [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]	
+							k = k+1
 						}
 
 					}
@@ -83,13 +88,10 @@
 					var salon_addresses = "<br><ul>";
 					var dat_price
 					for (var i = 0; i < dat.length; i++) {
-						salon_list += "<li>" + (dat[i].fields.salonName) + "<\/li><br>";
-						salon_prices += "<li>" + (dat[i].fields.phone) + "<\/li><br>";
-						salon_addresses += "<li>" + (dat[i].fields.address) + "<\/li><br>";
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(i+1, i)//(dat[i].pk, i)		//taking the primary key, but this is not compatible with the salonID.
+						parsePrice(1, i)		//taking the primary key, but this is not compatible with the salonID, cannot call with first argument PK as PKs do not reset
 						parseHours(i+1, i)//(dat[i].pk, i)
 					}
 				} 
@@ -117,9 +119,11 @@
 			function tellUsers(salonID){
 				if (LoggedInStatus == true){
 					if (djangoUserID != -1) {
+                        document.getElementById('getNotifiedButton').innerHTML = "Loading..."; 
 						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 						});
-					}	
+                        document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
+					}		
   				}
   				else{
   					login("show");
@@ -193,7 +197,8 @@
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
 
-								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
+								//marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
+								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
 								var myboxOptions = {
 		                 			content: marker_content 
 					                ,disableAutoPan: false
