@@ -109,7 +109,7 @@
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 			  	var markerPosition;
 				for(var i = 0; i < names.length; i++){
-					if (dat[i].pk == 18) {
+					if (dat[i].pk > 17) {
 						markerPosition = cachedAddress(dat[i].fields.address, i, dat[i].pk)
 					} else {
 						markerPosition = codeAddress(addresses[i], i, dat[i].pk)
