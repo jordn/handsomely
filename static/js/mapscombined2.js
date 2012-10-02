@@ -107,13 +107,13 @@
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-				for(var i = 0; i < 12; i++){
+				for(var i = 0; i < 11; i++){
 					var marker = new google.maps.Marker({
 		       			position: codeAddress(addresses[i], i, dat[i].pk),
 		        		map: map
 		      		});
 				}
-				for(var i = 18; i < names.length; i++){
+				for(var i = 11; i < names.length; i++){
 					var marker = new google.maps.Marker({
 		       			position: cachedAddress(addresses[i], i, dat[i].pk),
 		        		map: map
