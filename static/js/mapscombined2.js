@@ -17,8 +17,8 @@
 				jQuery.get("../get_salons_price_menu?salonID=" + key, function(data){
 				dat_price = JSON.parse(data);
 				for (var a = 0; a < dat_price.length; a++){
-					if (dat_price[a].fields.salonID == index +1) {
-						prices[index] = dat_price[a].fields.servicePrice, cut[a] = dat_price[index].fields.serviceName
+					if (dat_price[a].fields.salonID == (index + 1)) {
+						prices[index] = dat_price[a].fields.servicePrice, cut[index] = dat_price[a].fields.serviceName
 					}
 				}
 				return prices
@@ -91,7 +91,7 @@
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(1, i)//(dat[i].pk, i)		//taking the primary key, but this is not compatible with the salonID.
+						parsePrice(1, i)		//taking the primary key, but this is not compatible with the salonID, cannot call with first argument PK as PKs do not reset
 						parseHours(i+1, i)//(dat[i].pk, i)
 					}
 				} 
