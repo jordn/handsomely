@@ -51,7 +51,7 @@ def get_salons_price_menu(request):
        
 def get_salon_latlng(request):
 	salonID = request.GET['salonID']
-        results = Salon.objects.get(ID=salonID)
+        results = Salon.objects.get(id=salonID)
         response = HttpResponse()
         json_serializer = serializers.get_serializer("json")()
         json_serializer.serialize(results, ensure_ascii=False, stream=response)
