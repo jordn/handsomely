@@ -107,15 +107,15 @@
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+			  	var markerPosition;
 				for(var i = 0; i < 11; i++){
+					if (dat[i].pk == 18) {
+						markerPosition = cachedAddress(addresses[i], i, dat[i].pk)
+					} else {
+						markerPosition = codeAddress(addresses[i], i, dat[i].pk)
+					}
 					var marker = new google.maps.Marker({
-		       			position: codeAddress(addresses[i], i, dat[i].pk),
-		        		map: map
-		      		});
-				}
-				for(var i = 18; i < names.length; i++){
-					var marker = new google.maps.Marker({
-		       			position: cachedAddress(addresses[i], i, dat[i].pk),
+		       			position: markerPosition,
 		        		map: map
 		      		});
 				}
