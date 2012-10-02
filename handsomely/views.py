@@ -191,7 +191,7 @@ def notify_customers(request):
 		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID.id)
 		custID = recipientHandsomelyUser.customerID
-		notif = Notification(customerID = custID, salonID = salonID, timeSent = datetime.now(), timeReplied = date.max, status = 'PEN')
+		notif = Notification(customerID = custID, salonID = salonID, timeSent = datetime.now(), timeReplied = datetime.max, status = 'PEN')
 		notif.save()
 		#email user
 		to_email = recipientDjangoUser.email
