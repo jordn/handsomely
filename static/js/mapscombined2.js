@@ -102,7 +102,7 @@
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.205, 0.175);
 			  	var mapOptions = {
-		  			zoom: 16,
+		  			zoom: 15,
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
@@ -207,14 +207,15 @@
 					                ,zIndex: null
 									,shadowStyle: 1
 					                ,boxStyle: { 
-					                  	background: "url('tipbox.gif') no-repeat"
+					                  	background: "url('../static/img/tipbox.gif') no-repeat"
 					                  	,border: "1px solid black"
 
 										,backgroundColor: 'rgb(255,255,255)'
 										,opacity: 1
-					                  	,width: "200px"
+					                  	,width: "210px"
 					                  	,textAlign: "center"
-					                  	,borderRadius: "10px"				
+					                  	,borderRadius: "10px"
+								,paddingBottom: "3px"				
 		                 			}
 					                ,closeBoxMargin: "2px 2px 2px 2px"
 					                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
