@@ -194,16 +194,16 @@ def notify_customers(request):
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
 		text_content += 'The salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
-		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES&reqID=' + req.id 
-		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&reqID=' + req.id 
-		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&reqID=' + req.id
+		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES&reqID=' + str(req.id) 
+		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&reqID=' + str(req.id) 
+		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&reqID=' + str(req.id)
 		# html email
 		html_content = 'Hi! ' + recipientDjangoUser.first_name
 		html_content += '<br/>'
 		html_content = 'The salon <b>salon.salonName<b/>' + ' is now free, why not head down now to avoid a queue?<br/>'
-		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&reqID=' + req.id 
-		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&reqID=' + req.id 
-		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&reqID=' + req.id 
+		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&reqID=' + str(req.id) 
+		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&reqID=' + str(req.id) 
+		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&reqID=' + str(req.id) 
 		html_content += '\">CANCEL</a> <br/>'
 		html_content += 'Thanks, the Handsomely team.'
 		# send email
