@@ -162,7 +162,7 @@
 					}		
   				}
   				else{
-  					login("show");
+  					ajax_login("show");
   				}
 			}
 			 
