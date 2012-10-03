@@ -15,7 +15,7 @@
 {% block content %}
  
 <!--Calls the javascript function-->
-<body onload="initializeme('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});ajax_login('hide');">	
+<body onload="initializeme('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});">	
 
   <div class="jumbotron">
   	<div id="top-unit">
@@ -82,7 +82,21 @@
   visibility: hidden; 
   }
 
-
+  #popupbox3{
+  margin: 0; 
+  margin-left: 40%; 
+  margin-right: 40%;
+  margin-top: 50px; 
+  padding-top: 10px; 
+  width: 20%; 
+  height: 200px; 
+  position: absolute; 
+  background: #FBFBF0; 
+  border: solid #000000 2px; 
+  z-index: 9; 
+  font-family: arial; 
+  visibility: hidden; 
+  }
 
 .align_right {
     float: right; 
@@ -106,10 +120,8 @@
   function ajax_login(showhide){
     if(showhide == "show"){
         document.getElementById('popupbox3').style.visibility="visible";
-        document.getElementById('popupbox3').style.display="block"; 
     }else if(showhide == "hide"){
         document.getElementById('popupbox3').style.visibility="hidden"; 
-        document.getElementById('popupbox3').style.display="none"; 
     }
   }
 
