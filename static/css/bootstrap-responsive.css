@@ -1061,7 +1061,7 @@
   }
 }
 
-@media (min-width: 760px) {
+@media (min-width: 768px) {
 /* UNCOLLAPSE NAVBAR STUFF CHANGED FROM 980 TO 768 above */
   .nav-collapse.collapse {
     height: auto !important;
