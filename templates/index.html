@@ -82,7 +82,21 @@
   visibility: hidden; 
   }
 
-
+  #popupbox3{
+  margin: 0; 
+  margin-left: 40%; 
+  margin-right: 40%;
+  margin-top: 50px; 
+  padding-top: 10px; 
+  width: 20%; 
+  height: 200px; 
+  position: absolute; 
+  background: #FBFBF0; 
+  border: solid #000000 2px; 
+  z-index: 9; 
+  font-family: arial; 
+  visibility: hidden; 
+  }
 
 .align_right {
     float: right; 
@@ -102,6 +116,14 @@
         document.getElementById('popupbox').style.visibility="hidden"; 
     }
   }
+  
+  function ajax_login(showhide){
+    if(showhide == "show"){
+        document.getElementById('popupbox3').style.visibility="visible";
+    }else if(showhide == "hide"){
+        document.getElementById('popupbox3').style.visibility="hidden"; 
+    }
+  }
 
   function login2(showhide){
     if(showhide == "show"){
@@ -111,6 +133,21 @@
     }
   }
 
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 
   </script>
@@ -145,6 +182,20 @@
 <center><a href="javascript:login2('hide');">close</a></center> 
 </div> 
 
+<div id="popupbox3"> 
+<form name="ajaxLogin" action="" method="POST"> 
+{% csrf_token %}
+<center>Email:</center>
+<center><input type="input" name="email" id="email_ajaxLogin" size="14" /></center>
+<center>Password:</center>
+<center><input type="password" name="password" id="password_ajaxLogin" size="14" />
+<input type="hidden" name="djangoUserID" value="">
+</center>
+<center><button type="button" name="submit" value="login" onclick="var pass = document.getElementById('password_ajaxLogin').value; var mail = document.getElementById('email_ajaxLogin').value; var csrftoken = getCookie('csrftoken'); jQuery.post('/ajax_user_login/', {email : mail, password: pass, csrfmiddlewaretoken : csrftoken}, function(data){var dat = JSON.parse(data); djangoUserID = dat}); LoggedInStatus = true; tellUsers(Ajax_salonID);" />login</button></center>
+</form>
+<center><a href="javascript:ajax_login('hide'); javascript:login2('show');">Don't have an account? Sign up here!</a></center> 
+<center><a href="javascript:ajax_login('hide');">close</a></center> 
+</div> 
 
 
 <!-- THE BIG MAP -->

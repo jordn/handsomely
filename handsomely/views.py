@@ -109,6 +109,30 @@ def user_login(request):
 	else:
 		return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
+def ajax_user_login(request):
+	if request.method == 'POST':
+	    email = request.POST['email']
+	    password = request.POST['password']
+	    user = authenticate(username=email, password=password)
+	    if user is not None:
+		if user.is_active:
+		    login(request, user)
+		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
+		    salonID = handUser.salonID
+		    cust = Customer.objects.get(id=handUser.customerID)
+		    result = user
+		    response = HttpResponse()
+        	    json_serializer = serializers.get_serializer("json")()
+        	    json_serializer.serialize(result, ensure_ascii=False, stream=response)
+		    return response
+		else:
+		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
+	    else:
+	    	errorMessage = "Wrong username or password"
+		return render_to_response('login.html', {'emailAdd': email, 'message' : errorMessage}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('login.html', {}, context_instance=RequestContext(request))
+
 def user_logout(request):
     logout(request)
     return render_to_response('index.html', context_instance=RequestContext(request)) 

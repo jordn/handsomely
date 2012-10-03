@@ -162,7 +162,14 @@
 					}		
   				}
   				else{
-  					login("show");
+  					ajax_login("show");
+  					window.Ajax_salonID = salonID;
+  					if (djangoUserID != -1) {
+						document.getElementById('getNotifiedButton').innerHTML = "Loading..."; 
+									jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
+									});
+						document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
+					}
   				}
 			}
 			 
