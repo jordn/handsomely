@@ -121,7 +121,7 @@ def ajax_user_login(request):
 		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
 		    response = handUser
-		    return handUser
+		    return HttpResponse()
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
