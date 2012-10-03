@@ -120,7 +120,7 @@ def ajax_user_login(request):
 		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
 		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
-		    result = user.id
+		    result = user
 		    response = HttpResponse()
         	    json_serializer = serializers.get_serializer("json")()
         	    json_serializer.serialize(result, ensure_ascii=False, stream=response)
