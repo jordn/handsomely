@@ -15,7 +15,7 @@
 {% block content %}
  
 <!--Calls the javascript function-->
-<body onload="initializeme('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});">	
+<body onload="initializeme('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});ajax_login('hide');">	
 
   <div class="jumbotron">
   	<div id="top-unit">
@@ -156,7 +156,7 @@
 </div> 
 
 <div id="popupbox3"> 
-<form name="ajaxLogin" action="" method="POST" onload="ajax_login('hide');"> 
+<form name="ajaxLogin" action="" method="POST"> 
 {% csrf_token %}
 <center>Email:</center>
 <center><input type="input" name="email" id="email_ajaxLogin" size="14" /></center>
