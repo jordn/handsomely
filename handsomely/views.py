@@ -277,12 +277,11 @@ def privacy_policy(request):
 
 
 def new_main(request):
-    return render_to_response('new_main.html', {})
+    return render_to_response('new_main.html', {}, context_instance=RequestContext(request))
 
 def new_about(request):
-    return render_to_response('new_about.html', {})
-
+    return render_to_response('new_about.html', {}, context_instance=RequestContext(request))
 
 #Sandbox to try out things. Remember to delete this before it's live.
 def test(request):
-    return render_to_response('test.html', {})
+    return render_to_response('test.html', {}, context_instance=RequestContext(request))

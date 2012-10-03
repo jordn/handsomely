@@ -128,7 +128,7 @@
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.205277,0.121945);
 			  	var mapOptions = {
-					zoom: 14,
+					zoom: 15,
 					minZoom: 10,
 					maxZoom: 20,
 			    	center: latlng,
@@ -166,7 +166,14 @@
 					}		
   				}
   				else{
-  					login("show");
+  					ajax_login("show");
+  					window.Ajax_salonID = salonID;
+  					if (djangoUserID != -1) {
+						document.getElementById('getNotifiedButton').innerHTML = "Loading..."; 
+									jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
+									});
+						document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
+					}
   				}
 			}
 			 
