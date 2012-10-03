@@ -1,3 +1,7 @@
+//-----------------Description--------------
+//This file accesses the salon database and displays the map with salon details on it
+
+
 //These are global variables: defined such because they are used in various functions		
 			var names = new Array();
 			var phones = new Array();
