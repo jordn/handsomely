@@ -1,4 +1,4 @@
-		
+//These are global variables: defined such because they are used in various functions		
 			var names = new Array();
 			var phones = new Array();
 			var addresses = new Array();
@@ -12,29 +12,42 @@
 			var sat = new Array();
 			var sund = new Array();
 
-//this extracts the data from the PriceMenu model and is called from the initializeme loop
+//-------------------------Javascript origin starts further down-----------------------------------
+
+
+//this extracts the data from the PriceMenu model and is called from the initializeme loop. Arguments are salon PK (identifier), and index for list.
 			function parsePrice(key, index){
+				//extracts data in a same way as that done in initializeme from http://handsome.ly/get_salons_price_menu/?salonID=6
 				jQuery.get("../get_salons_price_menu?salonID=" + key, function(data){
+				//define this data as dat_price
 				dat_price = JSON.parse(data);
+				//for each data set in dat_price
 				for (var a = 0; a < dat_price.length; a++){
+					//if the salonID (defined by the user in handsome.ly/admin) is the same as the primary key then 
 					if (dat_price[a].fields.salonID == key) {
+						//update this element of the price array and the cut array (what type of haircut it is)
 						prices[index] = dat_price[a].fields.servicePrice, cut[index] = dat_price[a].fields.serviceName
 					}
 				}
 				});
-				return prices
 			}
 
 
+//called from initializeme  with arguments of salon primary key (basically identifier) and index for lists
 			function parseHours(key, index){
+				//does same data extraction from eg http://handsome.ly/get_salons_opening_hours/?salonID=6
 				jQuery.get("../get_salons_opening_hours?salonID=" + key, function(data){
+				//define this data as dat_hours (this is the data for just one salon)
 				dat_hours = JSON.parse(data);
 				k = 0
-					while (k<7){		
+					//for each day of the week
+					while (k<7){	
+						//if the day from this element is monday and the user-defined salonID is the same as the automatically-defined primary key then	
 						if ((dat_hours[k].fields.dayOfTheWeek = "MON") && (dat_hours[k].fields.salonID = key)){
+							//add to the monday array of opening and closing hours
 							mon[index]= [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]
 							k = k+1
-							
+						//etc............up until sunday. All days of the week must be defined otherwise you will never escape this loop, which is a downside.	
 						}
 						if ((dat_hours[k].fields.dayOfTheWeek = "TUE") && (dat_hours[k].fields.salonID = key)){
 							tue[index]=[dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]
@@ -61,6 +74,7 @@
 							k = k+1
 						
 						}
+						//Note that sunday array is called sund as sun is something else in JS
 						if ((dat_hours[k].fields.dayOfTheWeek = "SUN") && (dat_hours[k].fields.salonID = key)){
 							sund[index] = [dat_hours[k].fields.openingTime, dat_hours[k].fields.closingTime]	
 							k = k+1
@@ -73,31 +87,39 @@
 
 
 
-
+//This is where the javascript is first called from the index.html file. Hence the name, initializeme. ;)
+//city is, in this instance Cambridge.
 			function initializeme(city, isLoggedIn, djangoUserID) {
-				window.LoggedInStatus = isLoggedIn
+				window.LoggedInStatus = isLoggedIn		//global variable isLoggedIn
 				window.djangoUserID = djangoUserID
+				//This uses the data at http://handsome.ly/get_salons/?city=cambridge 
 				jQuery.get("../get_salons?city="+city, function(data){
-				//give these arguments, return Jason object
+				//This extracts the data in a useful form. Try putting it in http://json.parser.online.fr/ and see what the output is.
 				var dat = JSON.parse(data);
+				//define this extracted data as dat. If there actually is some data
 				if (dat.length > 0) {
+					//this is not actually necessary, but will be useful later when we list salons down the LHS
 					var result_output = "<b>Salons:</b>";
 					var salon_list = "<br><ul>";
 					var salon_prices = "<br><ul>";
 					var salon_addresses = "<br><ul>";
-					var dat_price
+					//for each salon, extract the name, phone no etc from the parsed data
 					for (var i = 0; i < dat.length; i++) {
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
-						parsePrice(dat[i].pk, i)		
+						//call the function parsePrice with the arguments of salons primary key (identifier) and index
+						parsePrice(dat[i].pk, i)
+						//call the function parseHours with the arguments of salons primary key (identifier) and index		
 						parseHours(dat[i].pk, i)
 					}
 				} 
 				else {
+					//If there is nothing there then let them know
 					document.getElementById("salon_list").innerHTML="";
 					document.getElementById("salon_list").innerHTML="<b>No salons found</b>";
 				}
+				//taken from google maps API documentation. Need to use the geocoder definition, which converts addressed into lat/long
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.205277,0.121945);
 			  	var mapOptions = {
@@ -105,14 +127,19 @@
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
+			  	//create a new google maps
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 			  	var markerPosition;
+			  	//if the primary key is more than 17 then call cachedAddress, otherwise call codeAddress. This is because the google maps API only allows geocoding of 
+			  	//10 data points. Beyond this, we have to manually input the latitude and longitude in the address field in handsome.ly/admin
+			  	//It starts at 17, because our first PK is 6 and not 1.
 				for(var i = 0; i < names.length; i++){
 					if (dat[i].pk > 17) {
 						markerPosition = cachedAddress(dat[i].fields.address, i, dat[i].pk)
 					} else {
 						markerPosition = codeAddress(addresses[i], i, dat[i].pk)
 					}
+					//create a marker with the position as extracted from cached or code Address.
 					var marker = new google.maps.Marker({
 		       			position: markerPosition,
 		        		map: map
@@ -135,24 +162,30 @@
   				}
 			}
 			 
+
 			function codeAddress(address, index, salonID) {
-				var geocoder = new google.maps.Geocoder();  
+				//geocoder needs to be loaded from maps API
+				var geocoder = new google.maps.Geocoder(); 
+				//geocode the address 
 			  	geocoder.geocode( { 'address': address}, function(results, status) {
 			   		if (status == google.maps.GeocoderStatus.OK) {
+			   			//set the centre of the map in the centre of cambridge
 			      		map.setCenter(new google.maps.LatLng(52.206153,0.123022));
 			      		var marker = new google.maps.Marker({
 			          		map: map,
 			          		position: results[0].geometry.location
 			      		});
 
-						//This code does the infoboxes
+						//This code does the infoboxes. Infobox allows for greater flexibility that infowindow
 						var infowindow = new InfoBox();
+						//listener is the click.
 						google.maps.event.addListener(marker, 'click', (function(marker, index) {
 		        			return function() {
+		        				//add all the content that has been generated in HTML format
 								var marker_content = "<b>" + names[index] + "</b>";
 								marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
 								marker_content += "<br>" + phones[index];
-
+								//if the opening and closing hours are the same then it is closed.
 								if (mon[index][0] == mon[index][1]){
 									marker_content += "<br>" + "Monday: CLOSED "
 								}
@@ -201,8 +234,9 @@
 								else{
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
-
+								//this is the "let me know" button
 								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
+								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
 					                ,disableAutoPan: false
@@ -227,6 +261,7 @@
 					                ,pane: "floatPane"
 					                ,enableEventPropagation: false
 		        				};
+		        				//sets the infobox
 								infowindow.setOptions(myboxOptions);
 		          				infowindow.open(map, marker);
 		          				}
@@ -240,6 +275,7 @@
 		    	});
 		  	}
 
+		  	//same as codeAddres but uses lat and long instead of geocoding
 			function cachedAddress(address, index, salonID) {
 				var dat_latlng;
 				var lat_lng;
@@ -310,7 +346,6 @@
 							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 						}
 
-						//marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" value = \"Email me when they are free!\">";
 						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
 						var myboxOptions = {
                  			content: marker_content 
@@ -322,7 +357,6 @@
 			                ,boxStyle: { 
 			                  	//background: "url('tipbox.gif') no-repeat"
 			                  	border: "1px solid black"
-
 								,backgroundColor: 'rgb(255,255,255)'
 								,opacity: 1
 			                  	,width: "210px"
