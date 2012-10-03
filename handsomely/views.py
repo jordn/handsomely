@@ -279,3 +279,8 @@ def new_main(request):
 
 def new_about(request):
     return render_to_response('new_about.html', {})
+
+
+#Sandbox to try out things. Remember to delete this before it's live.
+def test(request):
+    return render_to_response('test.html', {})

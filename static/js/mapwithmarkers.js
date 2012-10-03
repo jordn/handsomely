@@ -93,7 +93,7 @@
 
 //This is where the javascript is first called from the index.html file. Hence the name, initializeme. ;)
 //city is, in this instance Cambridge.
-			function initializeme(city, isLoggedIn, djangoUserID) {
+			function initialize_map_with_markers(city, isLoggedIn, djangoUserID) {
 				window.LoggedInStatus = isLoggedIn		//global variable isLoggedIn
 				window.djangoUserID = djangoUserID
 				//This uses the data at http://handsome.ly/get_salons/?city=cambridge 
@@ -123,16 +123,20 @@
 					document.getElementById("salon_list").innerHTML="";
 					document.getElementById("salon_list").innerHTML="<b>No salons found</b>";
 				}
+				//GOOGLE CODE
 				//taken from google maps API documentation. Need to use the geocoder definition, which converts addressed into lat/long
 			  	var geocoder = new google.maps.Geocoder();
 			  	var latlng = new google.maps.LatLng(52.205277,0.121945);
 			  	var mapOptions = {
-		  			zoom: 16,
+					zoom: 14,
+					minZoom: 10,
+					maxZoom: 20,
 			    	center: latlng,
 			    	mapTypeId: google.maps.MapTypeId.ROADMAP
 			  		}
-			  	//create a new google maps
+			  	//create a new map variable and shove it in the map_canvas id element.
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+			  	//END GOOGLE CODE
 			  	var markerPosition;
 			  	//if the primary key is more than 17 then call cachedAddress, otherwise call codeAddress. This is because the google maps API only allows geocoding of 
 			  	//10 data points. Beyond this, we have to manually input the latitude and longitude in the address field in handsome.ly/admin
