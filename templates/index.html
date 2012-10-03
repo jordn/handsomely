@@ -189,7 +189,7 @@ function getCookie(name) {
 <center><input type="input" name="email" id="email_ajaxLogin" size="14" /></center>
 <center>Password:</center>
 <center><input type="password" name="password" id="password_ajaxLogin" size="14" />
-<input type="hidden" name="djangoUserID_ajaxLogin" value="">
+<input type="hidden" name="djangoUserID_ajaxLogin" id="djangoUserID_ajaxLogin" value="">
 </center>
 <center><button type="button" name="submit" value="login" onclick="var pass = document.getElementById('password_ajaxLogin').value; var mail = document.getElementById('email_ajaxLogin').value; var csrftoken = getCookie('csrftoken'); jQuery.post('/ajax_user_login/', {email : mail, password: pass, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('djangoUserID_ajaxLogin').value = data }); LoggedInStatus = true; tellUsers(Ajax_salonID);" />login</button></center>
 </form>
