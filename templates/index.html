@@ -106,8 +106,10 @@
   function ajax_login(showhide){
     if(showhide == "show"){
         document.getElementById('popupbox3').style.visibility="visible";
+        document.getElementById('popupbox3').style.display="block"; 
     }else if(showhide == "hide"){
         document.getElementById('popupbox3').style.visibility="hidden"; 
+        document.getElementById('popupbox3').style.display="none"; 
     }
   }
 
@@ -154,7 +156,7 @@
 </div> 
 
 <div id="popupbox3"> 
-<form name="ajaxLogin" action="" method="POST"> 
+<form name="ajaxLogin" action="" method="POST" onLoad="ajax_login('hide')"> 
 {% csrf_token %}
 <center>Email:</center>
 <center><input type="input" name="email" id="email_ajaxLogin" size="14" /></center>
