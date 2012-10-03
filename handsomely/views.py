@@ -120,8 +120,11 @@ def ajax_user_login(request):
 		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
 		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
-		    response = handUser
-		    return HttpResponse()
+		    result = user.id
+		    response = HttpResponse()
+        	    json_serializer = serializers.get_serializer("json")()
+        	    json_serializer.serialize(result, ensure_ascii=False, stream=response)
+		    return response
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
