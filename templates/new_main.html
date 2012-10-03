@@ -13,12 +13,14 @@
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBu3mqa90Iwx2hx4EKpzfUj2kp6y6TC_4Y&sensor=false">
     </script>
 
-    <!--- Customising the map -->
-      <script type="text/javascript" src="{% static "js/mapwithmarkers.js"%}"></script>
+    <!--- Creating, loading and customising the map with markers-->
+    <script type="text/javascript" src="{% static "js/mapwithmarkers.js"%}"></script>
+    <script type="text/javascript" src="{% static "js/infobox.js"%}"></script>
+
 
   </head>
 
-  <body onload="initialize_map_with_markers('Cambridge', false, -1)">
+  <body onload="initialize_map_with_markers('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});"> 
       <div class="navbar navbar-static-top">
         <div class="navbar-inner" style="padding-top: 10px; margin-bottom: 20px;">
         <div class="container">  
@@ -84,11 +86,10 @@
         </div>
 
 
-        <div id="map_canvas" class="span8" style="background-color: #a212a2; height:550px">
-          MAP <!-- can't get this to show map :( -->
-
-          </br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-        </div>
+        <div id="map_canvas" class="span8" style="background-color: #efefef; height:550px">
+          <h1 style="text-align:center; color: #999; padding-top:100px;">LOADING MAP</h1>
+          <p style="text-align:center; color: #999; padding-left:20%; padding-right:20%;">If you're still able to read this, I hate to break it to you, but the map probably isn't coming :(</br> Give us a slap at team@handomsome.ly and we can try to screw up less in future.</small>
+        </div> 
 
       <small class="muted">*Not all salons are currently active on our system.</small> </br>
 
