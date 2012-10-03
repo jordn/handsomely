@@ -176,7 +176,7 @@
 <center><input type="password" name="password" id="password_ajaxLogin" size="14" />
 <input type="hidden" name="djangoUserID" value="">
 </center>
-<center><button type="button" name="submit" value="login" onclick="var pass =  document.getElementById('password_ajaxLogin').value; var mail = document.getElementById('email_ajaxLogin').value; jquery.post('/ajax_user_login/', {email : mail, password: pass});" />login</button></center>
+<center><button type="button" name="submit" value="login" onclick="var pass =  document.getElementById('password_ajaxLogin').value; var mail = document.getElementById('email_ajaxLogin').value; jQuery.post('/ajax_user_login/', {email : mail, password: pass});" />login</button></center>
 </form>
 <center><a href="javascript:ajax_login('hide'); javascript:login2('show');">Don't have an account? Sign up here!</a></center> 
 <center><a href="javascript:ajax_login('hide');">close</a></center> 
