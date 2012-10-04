@@ -164,6 +164,7 @@
   				else{
   					ajax_login("show");
   					window.Ajax_salonID = salonID;
+  					tellUsers(salonID);
   				}
 			}
 			 
