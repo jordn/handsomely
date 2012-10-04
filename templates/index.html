@@ -153,9 +153,10 @@
     var pass = document.getElementById('password_ajaxLogin').value; 
     var mail = document.getElementById('email_ajaxLogin').value; 
     var csrftoken = getCookie('csrftoken'); 
-    jQuery.post('/ajax_user_login/', {email : mail, password: pass, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('djangoUserID_ajaxLogin').value = data }); 
+    var djuid;
+    jQuery.post('/ajax_user_login/', {email : mail, password: pass, csrfmiddlewaretoken : csrftoken}, function(data){ window.djuid = data }); 
     LoggedInStatus = true; 
-    djangoUserID = document.getElementById('djangoUserID_ajaxLogin').value; 
+    window.djangoUserID = djuid; 
   }
 
 
