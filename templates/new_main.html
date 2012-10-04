@@ -16,6 +16,7 @@
     <!--- Creating, loading and customising the map with markers-->
     <script type="text/javascript" src="{% static "js/mapwithmarkers.js"%}"></script>
     <script type="text/javascript" src="{% static "js/infobox.js"%}"></script>
+    <link href="{% static 'css/map.css' %}" rel="stylesheet">
 
 
   </head>
@@ -77,16 +78,17 @@
 
 
       <div class="row-fluid" style="height:same-as-width;">
-        <div class="span4" style="background-color: #df123a;">
+        <div class="span3" style="background-color: #df123a;">
           <form class="form">
-          <div class="input-append">
-            <input type="text" class="span12" placeholder="Search for a salon..." id=" focusedInput">
+          <div class="input-prepend">
+            <span class="add-on"><i class="icon-search"></i></span>
+            <input type="text" class="" placeholder="Search for a salon..." id="prependedInput focusedInput">
           </div>
           </br></br></br></br></br></br>
         </div>
 
 
-        <div id="map_canvas" class="span8" style="background-color: #efefef; height:550px">
+        <div id="map_canvas" class="span9" style="background-color: #efefef; height:550px">
           <h1 style="text-align:center; color: #999; padding-top:100px;">LOADING MAP</h1>
           <p style="text-align:center; color: #999; padding-left:20%; padding-right:20%;">If you're still able to read this, I hate to break it to you, but the map probably isn't coming :(</br> Give us a slap at team@handomsome.ly and we can try to screw up less in future.</small>
         </div> 

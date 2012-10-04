@@ -40,7 +40,7 @@
 //called from initializeme  with arguments of salon primary key (basically identifier) and index for lists
 			function parseHours(key, index){
 				//does same data extraction from eg http://handsome.ly/get_salons_opening_hours/?salonID=6
-				jQuery.get("../get_salons_opening_hours?salonID=" + key, function(data){
+				jQuery.get("/get_salons_opening_hours?salonID=" + key, function(data){
 				//define this data as dat_hours (this is the data for just one salon)
 				dat_hours = JSON.parse(data);
 				k = 0
@@ -97,7 +97,7 @@
 				window.LoggedInStatus = isLoggedIn		//global variable isLoggedIn
 				window.djangoUserID = djangoUserID
 				//This uses the data at http://handsome.ly/get_salons/?city=cambridge 
-				jQuery.get("../get_salons?city="+city, function(data){
+				jQuery.get("/get_salons?city="+city, function(data){
 				//This extracts the data in a useful form. Try putting it in http://json.parser.online.fr/ and see what the output is.
 				var dat = JSON.parse(data);
 				//define this extracted data as dat. If there actually is some data
@@ -197,9 +197,10 @@
 						google.maps.event.addListener(marker, 'click', (function(marker, index) {
 		        			return function() {
 		        				//add all the content that has been generated in HTML format
-								var marker_content = "<b>" + names[index] + "</b>";
-								marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
-								marker_content += "<br>" + phones[index];
+								var marker_content = "<span class='salon_name'>" + names[index] + "</span>";
+								marker_content += "<i class='icon-tag'></i><span class='haircut'>" + cut[index] + "</span> <span class='price'>&pound" + prices[index] + "</span>"; 
+								marker_content += "<span class='phone_number'>" + phones[index] + "</span>";
+								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
 								if (mon[index][0] == mon[index][1]){
 									marker_content += "<br>" + "Monday: CLOSED "
@@ -249,8 +250,9 @@
 								else{
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
+								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
+								marker_content += "<br><i class='icon-envelope'></i><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\">"; 
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -259,16 +261,6 @@
 					                ,pixelOffset: new google.maps.Size(-100, -110)
 					                ,zIndex: null
 									,shadowStyle: 1
-					                ,boxStyle: { 
-					                  	border: "1px solid black"
-
-										,backgroundColor: 'rgb(255,255,255)'
-										,opacity: 1
-					                  	,width: "210px"
-					                  	,textAlign: "center"
-					                  	,borderRadius: "10px"
-								,paddingBottom: "3px"				
-		                 			}
 					                ,closeBoxMargin: "2px 2px 2px 2px"
 					                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
 					                ,infoBoxClearance: new google.maps.Size(1, 1)
@@ -288,107 +280,4 @@
 		        		alert("Geocode was not successful for the following reason: " + status);
 		      		}
 		    	});
-		  	}
-
-		  	//same as codeAddres but uses lat and long instead of geocoding
-			function cachedAddress(address, index, salonID) {
-				var dat_latlng;
-				var lat_lng;
-				//jQuery.get("../get_salon_latlng?salonID=" + salonID, function(data){
-				//	dat_latlng = JSON.parse(data);
-					lat_lng = address.split(",");
-				//});
-				var location = new google.maps.LatLng(lat_lng[0], lat_lng[1], false)
-		      		var marker = new google.maps.Marker({
-		          		map: map,
-		          		position: location
-		      		});
-
-				//This code does the infoboxes
-				var infowindow = new InfoBox();
-				google.maps.event.addListener(marker, 'click', (function(marker, index) {
-        			return function() {
-						var marker_content = names[index];
-						marker_content += "<br>" + cut[index] + ": &pound" + prices[index]; 
-						marker_content += "<br>" + phones[index];
-
-						if (mon[index][0] == mon[index][1]){
-							marker_content += "<br>" + "Monday: CLOSED "
-						}
-						else{
-							marker_content += "<br>" + "Monday: " + mon[index][0] + "-" + mon[index][1];
-						}
-
-						if (tue[index][0] == tue[index][1]){
-							marker_content += "<br>" + "Tuesday: CLOSED "
-						}
-						else{
-						marker_content += "<br>" + "Tuesday: " + tue[index][0] + "-" + tue[index][1];
-						}
-
-						if (wed[index][0] == wed[index][1]){
-							marker_content += "<br>" + "Wednesday: CLOSED "
-						}
-						else{
-							marker_content += "<br>" + "Wednesday: " + wed[index][0] + "-" + wed[index][1];
-						}
-
-						if (thu[index][0] == thu[index][1]){
-							marker_content += "<br>" + "Thursday: CLOSED "
-						}
-						else{
-							marker_content += "<br>" + "Thursday: " + thu[index][0] + "-" + thu[index][1];
-						}
-
-						if (fri[index][0] == fri[index][1]){
-							marker_content += "<br>" + "Friday: CLOSED "
-						}
-						else{
-							marker_content += "<br>" + "Friday: " + fri[index][0] + "-" + fri[index][1];
-						}
-
-						if (sat[index][0] == sat[index][1]){
-							marker_content += "<br>" + "Saturday: CLOSED "
-						}
-						else{
-							marker_content += "<br>" + "Saturday: " + sat[index][0] + "-" + sat[index][1];
-						}
-
-						if (sund[index][0] == sund[index][1]){
-							marker_content += "<br>" + "Sunday: CLOSED "
-						}
-						else{
-							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
-						}
-
-						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" id=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
-						var myboxOptions = {
-                 			content: marker_content 
-			                ,disableAutoPan: false
-			                ,maxWidth: 1000
-			                ,pixelOffset: new google.maps.Size(-100, -110)
-			                ,zIndex: null
-							,shadowStyle: 1
-			                ,boxStyle: { 
-			                  	//background: "url('tipbox.gif') no-repeat"
-			                  	border: "1px solid black"
-								,backgroundColor: 'rgb(255,255,255)'
-								,opacity: 1
-			                  	,width: "210px"
-			                  	,textAlign: "center"
-			                  	,borderRadius: "10px"
-						,paddingBottom: "3px"				
-                 			}
-			                ,closeBoxMargin: "2px 2px 2px 2px"
-			                ,closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif"
-			                ,infoBoxClearance: new google.maps.Size(1, 1)
-			                ,isHidden: false
-			                ,pane: "floatPane"
-			                ,enableEventPropagation: false
-        				};
-						infowindow.setOptions(myboxOptions);
-          				infowindow.open(map, marker);
-          				}
-      			})(marker, index));	
-
 		  	}

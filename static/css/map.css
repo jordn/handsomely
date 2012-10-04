@@ -1,0 +1,31 @@
+.infoBox {
+  	font-size: 18px;	
+ 	border: 1px solid black;
+ 	background-color:white;
+ 	width: 210px;
+    border-radius: 5px;
+    padding-bottom: 3px;
+    text-align: center;
+ }
+
+
+
+ 
+ .infoBox .salon_name {
+ 	font-weight: bold;
+ 	float:left;
+ }
+ .infoBox .haircut {
+
+ }
+ .infoBox .price {
+ 	float: right;
+ }
+ .infoBox .phone_number {
+
+ }
+ .infoBox > .timetable {
+ 	font-size: 12px; 	
+ 	text-align: left;
+ 	line-height: 10px;
+ }
