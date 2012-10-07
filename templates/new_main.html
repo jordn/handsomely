@@ -10,7 +10,7 @@
 
     <!-- Google Maps API -->
     <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBu3mqa90Iwx2hx4EKpzfUj2kp6y6TC_4Y&sensor=false">
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBu3mqa90Iwx2hx4EKpzfUj2kp6y6TC_4Y&amp;sensor=false">
     </script>
 
     <!--- Creating, loading and customising the map with markers-->
@@ -88,37 +88,40 @@
       <div class="row-fluid" style="height:same-as-width;">
         <div class="span3" style="background-color: #a5bfdd;">
           <form class="form">
-          <div class="input-prepend">
-            <span class="add-on"><i class="icon-search"></i></span>
-            <input type="text" class="" placeholder="Search for a salon..." id="prependedInput focusedInput">
-          </div>
+            <div class="input-prepend">
+              <span class="add-on"><i class="icon-search"></i></span>
+              <input type="text"class="prependedInput focusedInput" placeholder="Search for a salon...">
+            </div>
+          </form>
           <p>[Search not working yet]</p>
         </div>
 
 
         <div id="map_canvas" class="span9" style="background-color: #efefef; height:500px">
           <h1 style="text-align:center; color: #999; padding-top:100px;">LOADING MAP</h1>
-          <p style="text-align:center; color: #999; padding-left:20%; padding-right:20%;">If you're still able to read this, I hate to break it to you, but the map probably isn't coming :(</br> Give us a slap at team@handomsome.ly and we can try to screw up less in future.</p>
+          <p style="text-align:center; color: #999; padding-left:20%; padding-right:20%;">If you're still able to read this, I hate to break it to you, but the map probably isn't coming :(<br> Give us a slap at team@handomsome.ly and we can try to screw up less in future.</p>
         </div> 
+      </div> <!--/maprow-->
 
-      <small class="muted">*Not all salons are currently active on our system.</small> </br>
+      <div class="row-fluid">
+        <small class="muted">*Not all salons are currently active on our system.</small> <br>
 
-      <small>
-      <ul class="nav nav-pills pull-right">
-        <li>
-          <a href="http://blog.handsome.ly">Blog</a>
-        </li>
-        <li>
-          <a href="/privacy/">Privacy Policy</a>
-        </li>
-        <li class="disabled">
-          <a href="/cookies/">Cookie Policy</a>
-        </li>
-        <li class="disabled">
-          <a>&copy; 2012 handsome.ly</a></>
-        </li>
-      </ul>
-    </small>
+        <ul class="nav nav-pills pull-right" style="font-size:12px;">
+          <li>
+            <a href="http://blog.handsome.ly">Blog</a>
+          </li>
+          <li>
+            <a href="/privacy/">Privacy Policy</a>
+          </li>
+          <li class="disabled">
+            <a href="/cookies/">Cookie Policy</a>
+          </li>
+          <li class="disabled">
+            <a>&copy; 2012 handsome.ly</a>
+          </li>
+        </ul>
+      </div>
+
     </div> <!--/container-->
 
 
