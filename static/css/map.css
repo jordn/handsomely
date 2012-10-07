@@ -7,25 +7,27 @@
     padding-bottom: 3px;
     text-align: center;
  }
-
-
-
  
  .infoBox .salon_name {
  	font-weight: bold;
- 	float:left;
+
  }
  .infoBox .haircut {
-
+    padding:0;
+    margin:0;
  }
  .infoBox .price {
- 	float: right;
+
+ 	padding:0;
+ 	margin:0;
  }
  .infoBox .phone_number {
-
+    font-size:14px;
  }
  .infoBox > .timetable {
- 	font-size: 12px; 	
- 	text-align: left;
- 	line-height: 10px;
+ 	font-size: 13px; 	
+ 	text-align: right;
+ 	float:right;
+ 	line-height: 14px;
+ 	margin:10px;
  }

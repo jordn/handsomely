@@ -198,61 +198,61 @@
 		        			return function() {
 		        				//add all the content that has been generated in HTML format
 								var marker_content = "<span class='salon_name'>" + names[index] + "</span>";
-								marker_content += "<i class='icon-tag'></i><span class='haircut'>" + cut[index] + "</span> <span class='price'>&pound" + prices[index] + "</span>"; 
-								marker_content += "<span class='phone_number'>" + phones[index] + "</span>";
+								marker_content += "<br><span class='haircut'>" + cut[index] + ":</span><span class='price'>&pound" + prices[index] + "<i class='icon-tag'></i></span>"; 
+								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
 								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
-								if (mon[index][0] == mon[index][1]){
-									marker_content += "<br>" + "Monday: CLOSED "
+								if (mon[index][0] == mon[index][1]){  
+									marker_content += "<br>" + "Monday:   CLOSED "
 								}
 								else{
 									marker_content += "<br>" + "Monday: " + mon[index][0] + "-" + mon[index][1];
 								}
 
 								if (tue[index][0] == tue[index][1]){
-									marker_content += "<br>" + "Tuesday: CLOSED "
+									marker_content += "<br>" + "Tuesday:   CLOSED "
 								}
 								else{
 								marker_content += "<br>" + "Tuesday: " + tue[index][0] + "-" + tue[index][1];
 								}
 
 								if (wed[index][0] == wed[index][1]){
-									marker_content += "<br>" + "Wednesday: CLOSED "
+									marker_content += "<br>" + "Wednesday:   CLOSED "
 								}
 								else{
 									marker_content += "<br>" + "Wednesday: " + wed[index][0] + "-" + wed[index][1];
 								}
 
 								if (thu[index][0] == thu[index][1]){
-									marker_content += "<br>" + "Thursday: CLOSED "
+									marker_content += "<br>" + "Thursday:   CLOSED "
 								}
 								else{
 									marker_content += "<br>" + "Thursday: " + thu[index][0] + "-" + thu[index][1];
 								}
 
 								if (fri[index][0] == fri[index][1]){
-									marker_content += "<br>" + "Friday: CLOSED "
+									marker_content += "<br>" + "Friday:   CLOSED "
 								}
 								else{
 									marker_content += "<br>" + "Friday: " + fri[index][0] + "-" + fri[index][1];
 								}
 
 								if (sat[index][0] == sat[index][1]){
-									marker_content += "<br>" + "Saturday: CLOSED "
+									marker_content += "<br>" + "Saturday:   CLOSED "
 								}
 								else{
 									marker_content += "<br>" + "Saturday: " + sat[index][0] + "-" + sat[index][1];
 								}
 
 								if (sund[index][0] == sund[index][1]){
-									marker_content += "<br>" + "Sunday: CLOSED "
+									marker_content += "<br>" + "Sunday:   CLOSED "
 								}
 								else{
 									marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								marker_content += "<br><i class='icon-envelope'></i><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\">"; 
+								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\">"; 
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -273,8 +273,6 @@
 		          				infowindow.open(map, marker);
 		          				}
 		      			})(marker, index));	
-
-
 		      		} 
 		      		else {
 		        		alert("Geocode was not successful for the following reason: " + status);
@@ -285,7 +283,7 @@
 
 
 
-			  	//same as codeAddres but uses lat and long instead of geocoding
+			//same as codeAddres but uses lat and long instead of geocoding
 			function cachedAddress(address, index, salonID) {
 				var dat_latlng;
 				var lat_lng;
@@ -385,6 +383,5 @@
           				infowindow.open(map, marker);
           				}
       			})(marker, index));	
-
 		  	}
 
