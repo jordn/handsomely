@@ -14,7 +14,7 @@
   font-family: arial; 
   visibility: hidden; 
   }
-/**/
+/* COLOURED THEM TO SITINGUISH WHAT'S WHAT */
    #popupbox2{
   margin: 0; 
   margin-left: 40%; 
@@ -28,7 +28,7 @@
   border: solid #000000 2px; 
   z-index: 9; 
   font-family: arial; 
-  visibility: visible; 
+  visibility: hidden; 
   }
 
   #popupbox3{

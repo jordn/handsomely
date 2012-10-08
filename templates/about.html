@@ -1,36 +1,28 @@
+{% extends "base.html" %}{% block nav-about-active %}active{% endblock %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Queueless haircuts - handsome.ly</title>
-    <!-- Bootstrap -->
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
 
+{% block title %}Hairwhat? - Handsome.ly{% endblock %}
 
-  </head>
+  {% block page_specific_headers %}
+    <!-- Google Maps API -->
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBu3mqa90Iwx2hx4EKpzfUj2kp6y6TC_4Y&amp;sensor=false">
+    </script>
+
+    <!--- Creating, loading and customising the map with markers-->
+    <script type="text/javascript" src="{% static "js/mapwithmarkers.js"%}"></script>
+    <script type="text/javascript" src="{% static "js/infobox.js"%}"></script>
+    <link href="{% static 'css/map.css' %}" rel="stylesheet">
+
+    <!--- Popup styling etc -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static "js/main.js"%}"></script>
+  {% endblock %}
+
+  {% block content %}
+
   <body>
     <div class="container">
-      <h1>handsome.ly</h1>
-
-      <ul class="nav nav-tabs">
-        <li>
-        <a href="/new_main">For Customers</a>
-        </li>
-        <li class="disabled">
-        <a href="/forsalons">For Salons</a>
-        </li>
-        <li  class="active">
-        <a href="/new_about">About Us</a>
-        </li>
-        <li class="disabled">
-        <a href="/profile">My Profile</a>
-        </li>
-      </ul>
-
-
-      <p class="lead">Choose your favourite Cambridge haircutterie and get notified by email when they're not busy</p>
 
       <div class="row-fluid">
         <p>Founded by these three finely groomed gentlemen</p>
@@ -75,10 +67,4 @@
     </div>
 
 
-
-
-
-    <script src="{% static 'js/vendor/jquery-1.8.2.min.js' %}"></script>
-    <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
-  </body>
-</html>
+  {% endblock %}

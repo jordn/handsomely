@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', index),
     url(r'^about/$', about),
+    url(r'^salons/$', salons),
     url(r'^get_salons/$', get_salons),
     url(r'^get_salons_price_menu/$', get_salons_price_menu),
     url(r'^get_salons_opening_hours/$', get_salons_opening_hours),
@@ -25,7 +26,6 @@ urlpatterns = patterns('',
     url(r'^ajax_user_login/$', ajax_user_login),
     url(r'^profile/$', profile),
     url(r'^update_profile/$', update_profile),
-    url(r'^salons/$', for_salons), 
     url(r'^get_notified/$', get_notified),
     url(r'^response/$', response),
     url(r'^privacypolicy/$', privacy_policy), 
@@ -34,8 +34,6 @@ urlpatterns = patterns('',
     url(r'^create_notification_request/$', create_notification_request), 
     url(r'^notify/$', big_red_button), # big red button page
     url(r'^notify_customers/$', notify_customers), # page that process the notification
-    url(r'^new_main/$', new_main),
-    url(r'^new_about/$', new_about), 
     url(r'^test/$', test), #sandbox to try out tings 
     )
 	
