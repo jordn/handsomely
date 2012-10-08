@@ -259,8 +259,8 @@ def response(request):
 	notif.save()
 	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
 
-def for_salons(request):
-	return render_to_response('for_salons.html', {}, context_instance=RequestContext(request))
+def salons(request):
+	return render_to_response('salons.html', {}, context_instance=RequestContext(request))
 
 def salon_signup(request):
    	email = request.POST['email']
