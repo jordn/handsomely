@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}   {% block nav-index-active %}active{% endblock %}
 {% load staticfiles %}
 
 {% block title %}Queueless haircuts - Handsome.ly{% endblock %}
@@ -19,11 +19,9 @@
     <script type="text/javascript" src="{% static "js/main.js"%}"></script>
   {% endblock %}
   
-  {% block nav-index-active %}active{% endblock %}
-
   {% block content %}
-  <body> 
-    <!-- Get the map going -->
+  
+     <!-- Get the map going -->
     <script type="text/javascript">
       window.onload = function () {
         initialize_map_with_markers('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});
@@ -99,6 +97,9 @@
 
       <div class="row-fluid">
         <small class="muted">*Not all salons are currently active on our system.</small> <br>
+      </div>
+
+      <div class="row-fluid">
 
         <ul class="nav nav-pills pull-right" style="font-size:12px;">
           <li>
