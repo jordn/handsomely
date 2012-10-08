@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}   {% block nav-index-active %}active{% endblock %}
 {% load staticfiles %}
 
 {% block title %}Queueless haircuts - Handsome.ly{% endblock %}
@@ -19,18 +19,15 @@
     <script type="text/javascript" src="{% static "js/main.js"%}"></script>
   {% endblock %}
   
-  {% block nav-index-active %}active{% endblock %}
-
   {% block content %}
-  <body> 
-    <!-- Get the map going -->
+
+     <!-- Get the map going -->
     <script type="text/javascript">
       window.onload = function () {
         initialize_map_with_markers('Cambridge', {{ user.is_authenticated|lower }}, {% if user.is_authenticated %} {{ user.id }}{% else %} -1{% endif %});
       }
     </script>
 
-    <div class="container-fluid">
       <div class="row-fluid">
         <p class="lead">Choose your favourite Cambridge haircutterie and get notified by email when they're not busy</p>
       </div>
@@ -99,23 +96,6 @@
 
       <div class="row-fluid">
         <small class="muted">*Not all salons are currently active on our system.</small> <br>
-
-        <ul class="nav nav-pills pull-right" style="font-size:12px;">
-          <li>
-            <a href="http://blog.handsome.ly">Blog</a>
-          </li>
-          <li>
-            <a href="/privacy/">Privacy Policy</a>
-          </li>
-          <li class="disabled">
-            <a href="/cookies/">Cookie Policy</a>
-          </li>
-          <li class="disabled">
-            <a>&copy; 2012 handsome.ly</a>
-          </li>
-        </ul>
       </div>
-
-    </div> <!--/container-->
 
   {% endblock %}

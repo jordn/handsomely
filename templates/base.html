@@ -59,6 +59,11 @@
       </div>
       </div> {% endblock %}
 
-   {% block content %} {% endblock %}
+   <!-- THE GOOD STUFF -->
+       <div class="container-fluid">
+         {% block content %} {% endblock %}
+       </div> <!--/container-->
+       {% block bottom_navigation %}{% include 'bottom_navigation.html' %}{% endblock %}
+    {% block footer %}{% include 'footer.html' %}{% endblock %}
   </body>
 </html>
