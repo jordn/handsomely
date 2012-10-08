@@ -63,7 +63,7 @@ def profile(request):
 	handUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
-	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startedDate')[:10]
+	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
 	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs}, context_instance=RequestContext(request))
 	
 def update_profile(request):
