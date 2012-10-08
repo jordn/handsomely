@@ -26,7 +26,7 @@
 		{% if reqs %}
 			<table border="1" cellpadding="5">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th></tr>
-			{% for req in reqs|slice:":-10" %}
+			{% for req in reqs|slice:":-10:" %}
 				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_status_display }}</td></tr>
 			{% endfor %}
 			</table>
