@@ -19,6 +19,17 @@
 		<input type="hidden" name="djangoUserID" value="{{ user.id }}"/>
 		</p><input type="submit" value="Save" /> </p>
 	</form>
+	<br/>
+	<h2>Requests</h2>
+	{% if reqs %}
+		{% for req in reqs %}
+			req.salonID  - req.startDate -  req.status
+		{% endfor %}
+	{% else %}
+		<b>No requests</b>
+	{% endif %}
+	
+
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
 	<h2><a href="/notify/">Salon Page - Click here to notify customers</a></h2>
 {% endif %}
