@@ -26,19 +26,18 @@
 		{% if reqs %}
 			<table border="1" cellpadding="5">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th></tr>
-			{% for req in reqs reversed %}
+			{% for req in reqs %}
 				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_status_display }}</td></tr>
 			{% endfor %}
 			</table>
-			<b>...</b>
 		{% else %}
 			<b>None</b>
 		{% endif %}
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
 	<div style="float:left; width:20%;">
-		<h2>Salon Page</h2>
-		<p><a href="/notify/">Click here to notify customers</a></p>
+		<h2>Salon page</h2>
+		<p><b><a href="/notify/">Click here to notify customers</a></b></p>
 	</div>
 {% endif %}
 	</div>
