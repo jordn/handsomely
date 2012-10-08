@@ -7,7 +7,7 @@
 	<h2>My Account: {{ user.email }}</h2>
 	<br/>
 	<div>
-		<div style="float:left; width:40%;">
+		<div style="float:left; width:40%; width:35%; border-right: solid black 1px;">
 		<h3>Your details:</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
@@ -21,12 +21,12 @@
 			</p><input type="submit" value="Save" /> </p>
 		</form>
 		</div>
-		<div style="float:left; width:40%;">
+		<div style="float:left; width:35%; border-right: solid black 1px; padding-left: 4%">
 		<h3>Recent requests</h3>
 		{% if reqs %}
 			<table border="1" cellpadding="5">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th></tr>
-			{% for req in reqs %}
+			{% for req in reqs reversed %}
 				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_status_display }}</td></tr>
 			{% endfor %}
 			</table>
