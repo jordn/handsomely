@@ -7,7 +7,7 @@
 	<h2>My Account: {{ user.email }}</h2>
 	<br/>
 	<div>
-		<div style="float:left; width:40%; width:35%; border-right: solid black 1px;">
+		<div style="float:left; width:40%; width:30%; border-right: solid black 1px;">
 		<h3>Your details:</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
@@ -21,7 +21,7 @@
 			</p><input type="submit" value="Save" /> </p>
 		</form>
 		</div>
-		<div style="float:left; width:35%; border-right: solid black 1px; padding-left: 4%">
+		<div style="float:left; width:30%; border-right: solid black 1px; padding-left: 9%">
 		<h3>Recent requests</h3>
 		{% if reqs %}
 			<table border="1" cellpadding="5">
@@ -35,7 +35,7 @@
 		{% endif %}
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-	<div style="float:left; width:20%;">
+	<div style="float:left; width:10%; padding-left: 9%">
 		<h2>Salon page</h2>
 		<p><b><a href="/notify/">Click here to notify customers</a></b></p>
 	</div>
