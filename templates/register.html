@@ -8,7 +8,7 @@
 	<p>Please enter your e-mail address below to register.</p>
 	 <p> We'll email you a confirmation link straight away. Please click on it to get started</p> 
 	<br/>
-	<form action="../register/" method="post"> {% csrf_token %}
+	<form action="/register/" method="post"> {% csrf_token %}
 		<p> 
 			e-mail: <input type="text" name="email"/>
 			<input type="submit" value="Go!" /> 
