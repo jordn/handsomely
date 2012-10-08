@@ -137,6 +137,8 @@
 			  	//create a new map variable and shove it in the map_canvas id element.
 			  	map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 			  	//END GOOGLE CODE
+
+			  	
 			  	var markerPosition;
 			  	//if the primary key is more than 17 then call cachedAddress, otherwise call codeAddress. This is because the google maps API only allows geocoding of 
 			  	//10 data points. Beyond this, we have to manually input the latitude and longitude in the address field in handsome.ly/admin

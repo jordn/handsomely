@@ -1,77 +1,84 @@
-{% extends "base.html" %}
-
-{% block title %}About Us{% endblock %}
-
-{% block content %}
-
-<style type="text/css">
-div.img
-  {
-  margin:2px;
-  /*border:1px solid #0000ff;*/
-  height:auto;
-  width:auto;
-  float:left;
-  text-align:center;
-  }
-div.img img
-  {
-  display:inline;
-  margin:3px;
-  border:1px solid #ffffff;
-  }
-div.img a:hover img
-  {
-  border:1px solid #0000ff;
-  }
-div.desc
-  {
-  text-align:center;
-  font-weight:normal;
-  width:120px;
-  margin:2px;
-  }
-</style>
-
-<h1>About Us</h1>
-  <p>Want a haircut today? Great!</p>
-
-  <p>Fed up of waiting an hour to get your hair cut? So are we!</p>
-
-  <p>Essay due tomorrow?</p>
-
-  <p>Get notified in real-time by email of when your favourite salons are free <a href="www.handsome.ly">here.</a></p>
-
-<p>Why queue? Get on with your day!</p>
-
-<br>
-
-  <p>Got a question? Please don't hesitate to get in touch. We can be reached at team@handsome.ly</p>
-  <p>If you are a salon and looking to sign up to use this service, then please contact team@handsome.ly</p>
-
-<br>
-
-<p> Founded by three finely groomed gentlemen: </p>
-
-<div class="img">
-  <a target="_blank" href="https://twitter.com/FraserAtkins">
-  <img src="../static/img/Fraser.jpg" alt="Fraser" width="110" height="90" />
-  </a>
-  <div class="desc"><b>Fraser Atkins:</b> <br>Occasionally gets his haircut.</div>
-</div>
-<div class="img">
-  <a target="_blank" href="https://twitter.com">
-  <img src="../static/img/M.jpg" alt="" width="110" height="90" />
-  </a>
-  <div class="desc"><b>M Ahmed:</b> <br>He claims it's designer stubble.</div>
-</div>
-<div class="img">
-  <a target="_blank" href="https://twitter.com/jordnb">
-  <img src="../static/img/Jordan.jpg" alt="Jordan" width="110" height="100" />
-  </a>
-  <div class="desc"><b>Jordan Burgess:</b> <br>Lovely sideburns.</div>
-</div>
-
 {% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Queueless haircuts - handsome.ly</title>
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/bootstrap-responsive.css' %}" rel="stylesheet">
 
-{% endblock %}
+
+  </head>
+  <body>
+    <div class="container">
+      <h1>handsome.ly</h1>
+
+      <ul class="nav nav-tabs">
+        <li>
+        <a href="/new_main">For Customers</a>
+        </li>
+        <li class="disabled">
+        <a href="/forsalons">For Salons</a>
+        </li>
+        <li  class="active">
+        <a href="/new_about">About Us</a>
+        </li>
+        <li class="disabled">
+        <a href="/profile">My Profile</a>
+        </li>
+      </ul>
+
+
+      <p class="lead">Choose your favourite Cambridge haircutterie and get notified by email when they're not busy</p>
+
+      <div class="row-fluid">
+        <p>Founded by these three finely groomed gentlemen</p>
+      </div>
+      <div class="row-fluid">
+        <div class="span4" style="text-align:center">
+          <a href="https://twitter.com/FraserAtkins">
+            <img src="../static/img/Fraser.jpg" alt="Fraser" width="110" height="90" class="img-polaroid" />
+          </a></br>
+          <strong>Fraser Atkins</strong>
+          <p>Scottish</p>
+        </div>
+        <div class="span4" style="text-align:center">
+          <a href="https://twitter.com">
+            <img src="../static/img/M.jpg" alt="M" class="img-polaroid" width="110" height="90" />
+          </a></br>
+          <strong>M Ahmed</strong>
+          <p>He claims it's designer stuble</p>
+        </div>
+        <div class="span4" style="text-align:center">
+          <a href="https://twitter.com/jordnb">
+            <img src="../static/img/Jordan.jpg" alt="Jordan" width="110" height="90" class="img-polaroid" />
+          </a></br>
+          <strong>Jordan Burgess</strong>
+          <p>Cracking sideburns</p>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+      <blockquote class="pull-left">
+        <p>"Would you like a free banana?"</p>
+        <small> Fraser Atkins, cofounder of <cite title="This webservice you're using here">handsome.ly</cite> and guerilla marketing genius</small>
+      </blockquote>
+
+      <blockquote class="pull-right">
+        <p>"I really liked this service, no queues for me ever again! I feel slightly less British"</p>
+        <small> Jordan Burgess, cofounder of <cite title="This webservice you're using here">handsome.ly</cite></small>
+      </blockquote>
+     </div>
+
+      <small><strong>&copy; 2012 handsome.ly</strong></small>
+    </div>
+
+
+
+
+
+    <script src="{% static 'js/vendor/jquery-1.8.2.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
+  </body>
+</html>
