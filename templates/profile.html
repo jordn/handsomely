@@ -25,8 +25,8 @@
 		<h3>Requests</h3>
 		{% if reqs %}
 			<table border="1">
-			<tr><th>Salon ID</th><th>Date requested</th><th>Status</th></tr>
-			{% for req in reqs %}
+			<tr><th>Salon</th><th>Date requested</th><th>Status</th></tr>
+			{% for req in reqs reversed %}
 				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_status_display }}</td></tr>
 			{% endfor %}
 			</table>
@@ -35,8 +35,9 @@
 		{% endif %}
 		</div>
 	</div>
+	<br/>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-	<div style="display:block;">
+	<div style="display:block; width: 800px;">
 		<h2><a href="/notify/">Salon Page - Click here to notify customers</a></h2>
 	</div>
 {% endif %}
