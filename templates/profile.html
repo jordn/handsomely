@@ -7,7 +7,7 @@
 	<h2>My Account: {{ user.email }}</h2>
 	<br/>
 	<div>
-		<div style="float:left; width:500px;">
+		<div style="float:left; width:50%;">
 		<h3>Your details:</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
@@ -21,12 +21,13 @@
 			</p><input type="submit" value="Save" /> </p>
 		</form>
 		</div>
-		<div style="float:left; width:500px;">
+		<div style="float:left; width:50%;">
 		<h3>Requests</h3>
 		{% if reqs %}
+			<p>Your most recent requests</p>
 			<table border="1">
 			<tr><th>Salon</th><th>Date requested</th><th>Status</th></tr>
-			{% for req in reqs reversed %}
+			{% for req in reqs|slice:":10" reversed %}
 				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_status_display }}</td></tr>
 			{% endfor %}
 			</table>
@@ -35,9 +36,8 @@
 		{% endif %}
 		</div>
 	</div>
-	<br/>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-	<div style="display:block; width: 800px;">
+	<div>
 		<h2><a href="/notify/">Salon Page - Click here to notify customers</a></h2>
 	</div>
 {% endif %}
