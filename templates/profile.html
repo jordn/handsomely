@@ -16,7 +16,7 @@
 			<p>Mobile: &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" name="mobile" value="{{ cust.mobile }}"/></p>
 			<p>Default city:&nbsp; <input type="text" name="defaultCity" value="{{ cust.defaultCity }}" readonly="readonly"/></p>
 			<p>Notifications: <input type="text" name="notification_preferences"
-				value="{{ cust.notification_preferences }}" readonly="readonly"/></p>
+				value="{{ cust.get_notification_preferences_display }}" readonly="readonly"/></p>
 			<input type="hidden" name="djangoUserID" value="{{ user.id }}"/>
 			</p><input type="submit" value="Save" /> </p>
 		</form>
