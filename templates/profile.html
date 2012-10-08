@@ -27,7 +27,7 @@
 			<p>Your most recent requests</p>
 			<table border="1">
 			<tr><th>Salon</th><th>Date requested</th><th>Status</th></tr>
-			{% for req in reqs|slice:":10" reversed %}
+			{% for req in reqs reversed|slice:":10" %}
 				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_status_display }}</td></tr>
 			{% endfor %}
 			</table>
