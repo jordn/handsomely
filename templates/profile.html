@@ -23,7 +23,7 @@
 	<h2>Requests</h2>
 	{% if reqs %}
 		{% for req in reqs %}
-			req.salonID  - req.startDate -  req.status
+			{{ req.salonID }}  - {{ req.startDate }} -  {{ req.status }}
 		{% endfor %}
 	{% else %}
 		<b>No requests</b>
