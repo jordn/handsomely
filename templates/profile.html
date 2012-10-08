@@ -22,9 +22,11 @@
 	<br/>
 	<h2>Requests</h2>
 	{% if reqs %}
+		<table>
 		{% for req in reqs %}
-			{{ req.salonID }}  - {{ req.startDate }} -  {{ req.status }}
+			<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td><td>{{ req.get_STATUS.display }}</td></tr>
 		{% endfor %}
+		</table>
 	{% else %}
 		<b>No requests</b>
 	{% endif %}
