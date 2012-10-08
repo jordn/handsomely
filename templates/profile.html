@@ -8,7 +8,7 @@
 	<br/>
 	<div>
 		<div style="float:left; width:40%; width:30%; border-right: solid black 1px;">
-		<h3>Your details:</h3> 
+		<h3 style="text-align:center">Your details</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
 			<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ cust.lastName }}"/></p>
@@ -22,7 +22,7 @@
 		</form>
 		</div>
 		<div style="float:left; width:30%; border-right: solid black 1px; padding-left: 9%">
-		<h3>Recent requests</h3>
+		<h3 style="text-align:center">Recent requests</h3>
 		{% if reqs %}
 			<table border="1" cellpadding="5">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
@@ -37,7 +37,7 @@
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
 	<div style="float:left; width:20%; padding-left: 9%">
-		<h2>Salon page</h2>
+		<h2 style="text-align:center">Salon page</h2>
 		<p style="font-size:130%"><b><a href="/notify/">Click here to notify customers!</a></b></p>
 		<br/>
 		<img src="../static/img/tumbleweed.jpg">
