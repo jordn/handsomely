@@ -22,12 +22,12 @@
 		</form>
 		</div>
 		<div style="float:left; width:30%; border-right: solid black 1px; padding-left: 9%">
-		<h3 style="text-align:center">Recent requests</h3>
+		<h3>Recent requests</h3>
 		{% if reqs %}
 			<table border="1" cellpadding="5">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
 			{% for req in reqs %}
-				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td>
+				<tr><td>{{ req.salon_set.all.salonName }}</td><td>{{ req.startDate }}</td>
 				<td>{{ req.get_status_display }}</td><td><a href="#">Cancel</a></td></tr>
 			{% endfor %}
 			</table>
