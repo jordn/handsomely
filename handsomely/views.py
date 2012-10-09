@@ -151,7 +151,8 @@ def ajax_user_login(request):
 
 def user_logout(request):
     logout(request)
-    return render_to_response('index.html', context_instance=RequestContext(request)) 
+    salons = Salon.objects.all()
+    return render_to_response('index.html', { 'salonList' : salons }, context_instance=RequestContext(request)) 
 	#template breaks when context_instance... isnt included?
 	#...every page imports navigation.html, which has a POST form for the login
 	#...any page with a POST form needs this context_instance... supplied
