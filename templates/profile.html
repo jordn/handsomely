@@ -16,14 +16,15 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-	
-	<br/>
+
 	<div id="tabs">
 	 <ul>
         <li><a href="#tabs-1">My details</a></li>
         <li><a href="#tabs-2">Recent requests</a></li>
+        {% if handUser.salonID != -1 or handUser.salonID != -1 %}
         <li><a href="#tabs-3">Manage salon</a></li>
-        	<h3 style="text-align: right;">My Account: {{ user.email }}</h3>
+        {% endif %}
+       	<h4 style="text-align: right;">My Account: {{ user.email }}</h4>
    	 </ul>
 		<div id="tabs-1">
 		<h3>My details</h3> 
