@@ -15,7 +15,8 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 def index(request):
-    return render_to_response('index.html', {}, context_instance=RequestContext(request))
+    salons = Salon.objects.all()
+    return render_to_response('index.html', { 'salonList' : salons }, context_instance=RequestContext(request))
 
 def about(request):
     return render_to_response('about.html', {})
