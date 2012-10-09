@@ -3,7 +3,7 @@
 {% block title %}My Account{% endblock %}
 
 {% block page_specific_headers %}
-   <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+   <link rel="stylesheet" href="../static/css/jquery-tabs.css" />
    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
    <script type="text/javascript">
     $(function() {
@@ -18,14 +18,14 @@
 
 	<div id="tabs">
 	 <ul>
-        <li><a href="#tabs-1">My details</a></li>
-        <li><a href="#tabs-2">Recent requests</a></li>
+        <li><a href="#tabs-1">Profile</a></li>
+        <li><a href="#tabs-2">Requests</a></li>
         {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-        <li><a href="#tabs-3">Manage salon</a></li>
+        <li><a href="#tabs-3">Salon</a></li>
         {% endif %}
    	 </ul>
 		<div id="tabs-1">
-		<h3>My details - {{ user.email }}</h3> 
+		<h3>My details</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
 			<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ cust.lastName }}"/></p>
