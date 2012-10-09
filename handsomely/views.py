@@ -65,7 +65,7 @@ def profile(request):
 	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
 	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
-	salonNames = ['dummy', 'salons']
+	salonNames = []
 	for req in reqs:
 		salon = Salon.objects.get(id=req.salonID)
 		salonNames.append(salon.salonName)
