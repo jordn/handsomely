@@ -68,9 +68,9 @@
 		{{ reqsWithSalonNames }}
 			<table border="1" cellpadding="5" class="table table-striped">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
-			{% for req in reqs %}
-				<tr><td>{{ req.salonID }} - </td><td>{{ req.startDate }}</td>
-				<td>{{ req.get_status_display }}</td><td id="reqtd{{ req.id }}"><a href="#" onclick="cancelRequestAjax({{ req.id }}, {{ user.id }});">Cancel</a></td></tr>
+			{% for req in reqsWithSalonNames %}
+				<tr><td>{{ req.0.salonID }} - {{ req.1 }}</td><td>{{ req.0.startDate }}</td>
+				<td>{{ req.0.get_status_display }}</td><td id="reqtd{{ req.0.id }}"><a href="#" onclick="cancelRequestAjax({{ req.0.id }}, {{ user.id }});">Cancel</a></td></tr>
 			{% endfor %}
 			</table>
 		{% else %}
