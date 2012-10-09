@@ -205,7 +205,7 @@ def big_red_button(request):
 	djangoUserID = request.user.id
 	djUser = request.user
 	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-	numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID)
+	numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
 	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests}, context_instance=RequestContext(request))
 
 def get_notified(request):
