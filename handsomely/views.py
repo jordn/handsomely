@@ -92,6 +92,7 @@ def update_profile(request):
 	cust.notification_preferences = notification_preferences
 	cust.save()
 	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
+	salonNames = []
 	for req in reqs:
 		salon = Salon.objects.get(id=req.salonID)
 		salonNames.append(salon.salonName)
