@@ -268,7 +268,7 @@ def response(request):
 	
 def cancel_request_ajax(request):
 	requestID = request.POST['reqID']
-	req = Notification.objects.get(id=requestID)
+	req = Request.objects.get(id=requestID)
 	req.delete()
 	result = req.id
 	response = HttpResponse(result)
