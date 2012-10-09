@@ -4,26 +4,34 @@
 
 {% block content %}
 	<h1>For Salons</h1>
-	<h2>Make every time your peak time with handsome.ly.</h2>
-	<br/>
-	<p>We can help you to balance levels of demand throughout the day by allowing you to send out
-	notifications to select customers in search of a haircut on that day.<br>
+	<p><a href="http://www.handsome.ly/notify">Click here</a> if you are a salon with an account and are looking to notify customers.
+	<br>
+	<br>	
+	<h3>Make every time your peak time with handsome.ly.</h3>
+	<p>We can help you to <b> balance levels of demand throughout the day </b> by allowing you to send out notifications to select customers in search of a haircut today.</p>
 
-	This can help to help you optimise stylist schedules and gather insightful data about client behaviours.<br>
+	<p>handsome.ly will help you to <b>optimise stylist schedules</b> ; as well as maximising and levelising the number of clients you serve on a daily basis.</p>
 
-	As well as balancing the rate of clients, handsome.ly provides an enhanced service to customers, which reduces frustration levels.<br>
+	<p>When you are not busy, you come to handsome.ly and click what we like to call "The Button".</p>
 
-	Furthermore, we are confident that you will note a marked difference in the number of lost clients due your salon being either too busy	or too empty.<br>
+	<p>It's as simple as that! In the click of a button, you can <b>instantly communicate</b> with your queue-hating clients. Less frustration for them; less waste for you. Everyone is happy :) </p>
 
-	Finally, handsome.ly will help to boost your online presence and expose you to new customers in your area.<br>
+	<p>It is sadly true that a salon with a long queue is not an appealing sight. I mean, who likes queueing? We can help to eliminate this problem.</p>
 
-	If you would like to sign up to handsome.ly, then please enter your email address below.<br>
+	<p>Finally, handsome.ly will help to boost your online presence and expose you to new customers in your area.</p>
 
-	We would be delighted to have you on board!</p> 
+	<p>If you would like to sign up to handsome.ly, then please enter your email address below. (We hate spam too, don't worry)</p>
+
 	<br/>
 	<form action="salon_signup" method="post"> {% csrf_token %}
 		<p> 
 			E-mail: <input type="text" name="email"/>
 			<input type="submit" value="Go!" /> 
 		</p>
+
+	<p>We would be delighted to have you on board!</p> 
+
+	<p>If you have any questions about the service, we would be more than happy to help: you can hit us up at <a href="mailto:team@handsome.ly">team@handsome.ly</a>.</p>
+
+
 {% endblock %}
