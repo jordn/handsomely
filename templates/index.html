@@ -42,7 +42,7 @@
               <input type="text" class="prependedInput focusedInput" placeholder="Search not working.">
             </div>
           </form>
-          <table class="tabl table-striped">
+          <table class="table table-striped">
           {% for salon in salonList %}
           	<tr><td>{{ salon.salonName }}</td></tr>
           {% endfor %}
@@ -97,7 +97,7 @@
                 <input type="hidden" name="djangoUserID_ajaxLogin" id="djangoUserID_ajaxLogin" value="">
 
                 <div class="form-actions">
-                  <button type="button" class="btn btn-primary pull-right" name="login" value="login" onclick="doAjaxLogin();"/>Log in</button>
+                  <button type="button" class="btn btn-primary pull-right" name="login" value="login" onclick="doAjaxLogin();">Log in</button>
                   <a href="javascript:ajax_login('hide');"><button type="button" class="btn pull-right">Cancel</button></a>
                   <a href="javascript:ajax_login('hide'); javascript:register_popup('show');" class="btn btn-link pull-right">Register for an account</a>
                 </div>
