@@ -25,7 +25,7 @@
         <li><a href="#tabs-2">Recent requests</a></li>
         <li><a href="#tabs-3">Manage salon</a></li>
    	 </ul>
-		<div id="tabs-1" style="float:left; width:40%; width:30%;">
+		<div id="tabs-1" style="float:left; width:40%;">
 		<h3 style="text-align:center">My details</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
@@ -39,7 +39,7 @@
 			</p><input type="submit" value="Save" /> </p>
 		</form>
 		</div>
-		<div id="tabs-2" style="float:left; width:30%; padding-left: 9%">
+		<div id="tabs-2" style="float:left; width:30%;">
 		<h3>Recent requests</h3>
 		{% if reqs %}
 			<table border="1" cellpadding="5">
@@ -54,7 +54,7 @@
 		{% endif %}
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-	<div id="tabs-3" style="float:left; width:20%; padding-left: 10%;">
+	<div id="tabs-3" style="float:left; width:20%; ">
 		<h2 style="text-align:center">Manage salon</h2>
 		<p style="font-size:130%"><b><a href="/notify/">Click here to notify customers!</a></b></p>
 		<br/>
