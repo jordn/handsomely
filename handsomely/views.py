@@ -65,7 +65,11 @@ def profile(request):
 	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
 	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
-	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs}, context_instance=RequestContext(request))
+	salonNames = {}
+	for req in reqs:
+		salon = Salon.objects.filter(id=req.salonID)dj
+		salonNames.add(salon.salonName)
+	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs, 'salonNames' : salonNames}, context_instance=RequestContext(request))
 	
 def update_profile(request):
 	user = request.user
