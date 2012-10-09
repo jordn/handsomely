@@ -265,6 +265,14 @@ def response(request):
 		notif.status = 'CAN'
 	notif.save()
 	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
+	
+def cancel_request_ajax(request):
+	requestID = request.POST['reqID']
+	req = Notification.objects.get(id=requestID)
+	req.delete()
+	result = req.id
+	response = HttpResponse(result)
+	return response
 
 def salons(request):
 	return render_to_response('salons.html', {}, context_instance=RequestContext(request))
