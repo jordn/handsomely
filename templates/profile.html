@@ -5,7 +5,6 @@
 {% block page_specific_headers %}
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
    <link rel="stylesheet" href="http://jqueryui.com/web-base-template/themes/jqueryui.com/style.css">
-   <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
    <script type="text/javascript">
     $(function() {
@@ -17,14 +16,14 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-	<h2>My Account: {{ user.email }}</h2>
+	
 	<br/>
 	<div id="tabs">
 	 <ul>
         <li><a href="#tabs-1">My details</a></li>
         <li><a href="#tabs-2">Recent requests</a></li>
         <li><a href="#tabs-3">Manage salon</a></li>
-        testing
+        	<h3>My Account: {{ user.email }}</h3>
    	 </ul>
 		<div id="tabs-1" style="float:left; width:40%;">
 		<h3>My details</h3> 
