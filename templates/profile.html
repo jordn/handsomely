@@ -4,6 +4,10 @@
 
 {% block page_specific_headers %}
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+   <link rel="stylesheet" href="http://jqueryui.com/web-base-template/themes/jquery/css/base.css?v=1">
+   <link rel="stylesheet" href="http://jqueryui.com/web-base-template/themes/jqueryui.com/style.css">
+   <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+   <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
    <script type="text/javascript">
     $(function() {
         $( "#tabs" ).tabs();
@@ -22,7 +26,7 @@
         <li><a href="#tabs-2">Recent requests</a></li>
         <li><a href="#tabs-3">Manage salon</a></li>
    	 </ul>
-		<div id="tabs-1" style="float:left; width:40%; width:30%; border-right: solid black 1px;">
+		<div id="tabs-1" style="float:left; width:40%; width:30%;">
 		<h3 style="text-align:center">My details</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
@@ -51,7 +55,7 @@
 		{% endif %}
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-	<div id="tabs-3" style="float:left; width:20%; padding-left: 9% border-left: solid black 1px">
+	<div id="tabs-3" style="float:left; width:20%; padding-left: 10%;">
 		<h2 style="text-align:center">Manage salon</h2>
 		<p style="font-size:130%"><b><a href="/notify/">Click here to notify customers!</a></b></p>
 		<br/>
