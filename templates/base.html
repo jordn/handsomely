@@ -61,7 +61,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <form name="nav-bar-login" action="/user_login/" method="post" accept-charset="UTF-8">
-                    {% csrf_token %} <!-- what does the csrf token do? Jordan 2012 10 08) -->
+                    {% csrf_token %} <!-- what does the csrf token do? Jordan 2012 10 08) -required by every POST form, mansour 2012 10 09-->
                     <input id="user_username" style="margin-bottom: 15px;" type="text" name="email" size="30" />
                     <input id="user_password" style="margin-bottom: 15px;" type="password" name="password" size="30" />
                     <input type="hidden" name="djangoUserID" value=""> <!--how is this working, it's empty?? -->

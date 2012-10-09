@@ -4,7 +4,6 @@
 
 {% block page_specific_headers %}
    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
-   <link rel="stylesheet" href="http://jqueryui.com/web-base-template/themes/jqueryui.com/style.css">
    <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
    <script type="text/javascript">
     $(function() {
@@ -24,10 +23,9 @@
         {% if handUser.salonID != -1 or handUser.salonID != -1 %}
         <li><a href="#tabs-3">Manage salon</a></li>
         {% endif %}
-       	<h4 style="text-align: right;">My Account: {{ user.email }}</h4>
    	 </ul>
 		<div id="tabs-1">
-		<h3>My details</h3> 
+		<h3>My details - {{ user.email }}</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
 			<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ cust.lastName }}"/></p>
@@ -59,7 +57,7 @@
 		<h3>Manage salon</h3>
 		<p style="font-size:130%"><b><a href="/notify/">Click here to notify customers!</a></b></p>
 		<br/>
-		<img src="../static/img/tumbleweed.jpg">
+		<a href="/notify/"><img src="../static/img/tumbleweed.jpg"></a>
 	</div>
 {% endif %}
 	</div>
