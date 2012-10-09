@@ -16,6 +16,7 @@
 </script>
 	<center>
 		<h1>Let customers know you are free</h1>
+		<h2>Customers waiting: {{ numOfRequests|length }} </h2>
 		<form action="../notify_customers/" method="post">
 			{% csrf_token %}
 			<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">

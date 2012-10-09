@@ -201,7 +201,10 @@ def create_user(request):
 
 def big_red_button(request):
 	djangoUserID = request.user.id
-	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+	djUser = request.user
+	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
+	numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID)
+	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests}, context_instance=RequestContext(request))
 
 def get_notified(request):
 	djangoUserID = request.user.id
@@ -262,7 +265,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	return render_to_response("thank_you.html", {'name' : djangoUser.email}, context_instance=RequestContext(request))
+	return render_to_response("thank_you_notified.html", {'email' : djangoUser.email}, context_instance=RequestContext(request))
 
 def response(request):
 	answer = request.GET['ans']
@@ -294,7 +297,7 @@ def salon_signup(request):
 	admin_mail = 'team@handsome.ly'
 	#email us
 	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
-	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
+	return render_to_response('thank_you_salons.html', {email : email}, context_instance=RequestContext(request))
 
 def privacy_policy(request):
     return render_to_response('privacy_policy.html', {}, context_instance=RequestContext(request))
