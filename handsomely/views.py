@@ -19,7 +19,7 @@ def index(request):
     return render_to_response('index.html', { 'salonList' : salons }, context_instance=RequestContext(request))
 
 def about(request):
-    return render_to_response('about.html', {})
+    return render_to_response('about.html', {}, context_instance=RequestContext(request))
 
 def get_salons(request):
 	queryCity = request.GET.get('city', '')
@@ -90,7 +90,7 @@ def update_profile(request):
 	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs}, context_instance=RequestContext(request))
 
 def login_page(request):
-	return render_to_response('login.html', {})
+	return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 def user_login(request):
 	if request.method == 'POST':
@@ -207,7 +207,7 @@ def create_notification_request(request):
 	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for '+salon.salonName
 	#email user and us
 	send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
-	return render_to_response("thank_you.html", {"name" : djangoUser.email})
+	return render_to_response("thank_you.html", {"name" : djangoUser.email}, context_instance=RequestContext(request))
 
 def notify_customers(request):
 	userIDFromForm = request.POST['djangoUserID']
@@ -247,7 +247,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	return render_to_response("thank_you.html", {'name' : djangoUser.email})
+	return render_to_response("thank_you.html", {'name' : djangoUser.email}, context_instance=RequestContext(request))
 
 def response(request):
 	answer = request.GET['ans']
@@ -271,10 +271,10 @@ def salon_signup(request):
 	admin_mail = 'team@handsome.ly'
 	#email us
 	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
-	return render_to_response('thank_you.html', {})
+	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
 
 def privacy_policy(request):
-    return render_to_response('privacy_policy.html', {})
+    return render_to_response('privacy_policy.html', {}, context_instance=RequestContext(request))
 
 
 def new_main(request):
