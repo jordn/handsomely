@@ -70,7 +70,7 @@ def profile(request):
 		salon = Salon.objects.get(id=req.salonID)
 		salonNames.append(salon.salonName)
 	reqsWithSalonNames = zip(reqs, salonNames)
-	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs, 'salonNames' : salonNames}, context_instance=RequestContext(request))
+	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs, 'salonNames' : salonNames, 'reqsWithSalonNames' : reqsWithSalonNames}, context_instance=RequestContext(request))
 	
 def update_profile(request):
 	user = request.user
@@ -96,7 +96,7 @@ def update_profile(request):
 		salon = Salon.objects.get(id=req.salonID)
 		salonNames.append(salon.salonName)
 	reqsWithSalonNames = zip(reqs, salonNames)
-	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs}, context_instance=RequestContext(request))
+	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs, 'reqsWithSalonNames' : reqsWithSalonNames}, context_instance=RequestContext(request))
 
 def login_page(request):
 	return render_to_response('login.html', {}, context_instance=RequestContext(request))
@@ -118,7 +118,7 @@ def user_login(request):
 			salon = Salon.objects.get(id=req.salonID)
 			salonNames.append(salon.salonName)
 		    reqsWithSalonNames = zip(reqs, salonNames)
-		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs}, context_instance=RequestContext(request))
+		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs, 'reqsWithSalonNames' : reqsWithSalonNames}, context_instance=RequestContext(request))
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
