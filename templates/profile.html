@@ -24,9 +24,10 @@
         <li><a href="#tabs-1">My details</a></li>
         <li><a href="#tabs-2">Recent requests</a></li>
         <li><a href="#tabs-3">Manage salon</a></li>
+        testing
    	 </ul>
 		<div id="tabs-1" style="float:left; width:40%;">
-		<h3 style="text-align:center">My details</h3> 
+		<h3>My details</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
 			<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ cust.lastName }}"/></p>
@@ -55,7 +56,7 @@
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
 	<div id="tabs-3" style="float:left; width:20%; ">
-		<h2 style="text-align:center">Manage salon</h2>
+		<h3>Manage salon</h3>
 		<p style="font-size:130%"><b><a href="/notify/">Click here to notify customers!</a></b></p>
 		<br/>
 		<img src="../static/img/tumbleweed.jpg">
