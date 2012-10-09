@@ -34,6 +34,7 @@
 
 
       <div class="row-fluid" style="height:same-as-width;">
+
         <div class="span3" style="background-color: #a5bfdd;">
           <form class="form">
             <div class="input-prepend">
@@ -47,60 +48,71 @@
           	<li>{{ salon.salonName }}</li>
           {% endfor %}
           </ul>
-
-          <!-- uggo popups. COMMENT AND IMPROVE ME! -->
-          <div id="popupbox"> 
-            <form name="login" action="/user_login/" method="POST"> 
-              {% csrf_token %}
-              <center>Email:</center>
-              <center><input type="input" name="email" size="14" /></center>
-              <center>Password:</center>
-              <center><input type="password" name="password" size="14" />
-              <input type="hidden" name="djangoUserID" value="">
-              </center>
-              <center><input type="submit" name="submit" value="login" /></center>
-            </form>
-            <center><a href="javascript:login('hide'); javascript:login2('show');">Don't have an account? Sign up here!</a></center> 
-            <center><a href="javascript:login('hide');">close</a></center> 
-          </div> 
-
-
-          <div id="popupbox2"> 
-            <form name="register" action="/register/" method="post"> {% csrf_token %}
-              <center>Email:</center>
-              <center><input type="text" name="email" size="14" /></center>
-              <center><input type="submit" name="submit" value="Go!" /></center>
-              <center><p>We will send you a confirmation email. No spam we promise!</p></center>
-            </form>
-            <center><a href="javascript:login2('hide');">close</a></center> 
-          </div> 
-
-          <div id="popupbox3"> 
-            <form name="ajaxLogin" action="" method="POST"> 
-              {% csrf_token %}
-              <center>Email:</center>
-              <center><input type="input" name="email" id="email_ajaxLogin" size="14" /></center>
-              <center>Password:</center>
-              <center><input type="password" name="password" id="password_ajaxLogin" size="14" />
-              <input type="hidden" name="djangoUserID_ajaxLogin" id="djangoUserID_ajaxLogin" value="">
-              </center>
-              <center><button type="button" name="submit" value="login" onclick="doAjaxLogin();" style="margin-bottom: 10px;"/>login</button></center>
-              <center><button type="button" name="ajax_tellUser" id="ajax_tellUser" value="" onclick="ajax_tellU(Ajax_salonID);" style="visibility: hidden;"/>Notify me when this salon is free!</button></center>
-            </form>
-            <center><a href="javascript:ajax_login('hide'); javascript:login2('show');">Don't have an account? Sign up here!</a></center> 
-            <center><a href="javascript:ajax_login('hide');">close</a></center> 
-          </div> 
-
         </div>
 
-        <div id="map_canvas" class="" style="background-color: #efefef; height:500px">
+        <div id="map_canvas" class="span9" style="background-color: #efefef; height:500px">
           <h1 style="text-align:center; color: #999; padding-top:100px;">LOADING MAP</h1>
           <p style="text-align:center; color: #999; padding-left:20%; padding-right:20%;">If you're still able to read this, I hate to break it to you, but the map probably isn't coming :(<br> Give us a slap at team@handomsome.ly and we can try to screw up less in future.</p>
         </div> 
       </div> <!--/maprow-->
 
+
+          <!-- uggo popups. COMMENT AND IMPROVE ME! -->
+          <div id="register-modal" class="modal">
+            <div class="modal-header">
+              <a href="javascript:register_popup('hide');"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+              <h3>Register</h3>
+            </div> 
+            <div class="modal-body">
+              <form name="register" action="/register/" method="post">
+               {% csrf_token %}
+                Email: <input type="text" name="email" />
+                <div class="form-actions">
+                  <button type="submit" name="submit" class="btn btn-primary pull-right">Register</button>
+                  <a href="javascript:register_popup('hide');"><button type="button" class="btn pull-right">Cancel</button></a>
+                </div>
+                <p>You'll receive a a confirmation email but no spam, never.</p>
+              </form>
+            </div>
+          </div> 
+
+          <!-- POPUPS -->
+          <!-- can we name the variables nicely, what is tell user? and is having 'ajax' in there relevant? -->
+          <div id="login-modal" class="modal"> 
+
+            <div class="modal-header">
+              <a href="javascript:ajax_login('hide');"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+              <h3>Login</h3>
+            </div>
+
+            <div class="modal-body">
+              <div class="row">
+                <form name="ajaxLogin" action="" method="POST">
+                  {% csrf_token %}
+                  <span class="pull-right">Email: <input type="text" name="email" id="email_ajaxLogin"/></span><br>
+              </div>
+
+              <div class="row">
+                <span class="pull-right">Password: <input type="password" name="password" id="password_ajaxLogin" /></span>
+              </div>
+                  <input type="hidden" name="djangoUserID_ajaxLogin" id="djangoUserID_ajaxLogin" value="">
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary pull-right" name="login" value="login" onclick="doAjaxLogin();"/>Log in</button>
+                    <a href="javascript:ajax_login('hide');"><button type="button" class="btn pull-right">Cancel</button></a>
+                    <a href="javascript:ajax_login('hide'); javascript:register_popup('show');" class="btn btn-link pull-right">Register for an account</a>
+                  </div>
+
+                  <button class="btn btn-primary btn-block" type="button" name="ajax_tellUser" id="ajax_tellUser" value="" onclick="ajax_tellU(Ajax_salonID);" style="visibility: hidden;"/>Email me when this salon is free</button>
+                </form>
+              </div>
+            </div>
+          </div> 
+
       <div class="row-fluid">
         <small class="muted">*Not all salons are currently active on our system.</small> <br>
       </div>
+
+
 
   {% endblock %}

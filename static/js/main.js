@@ -1,25 +1,27 @@
-  function login(showhide){
-    if(showhide == "show"){
-        document.getElementById('popupbox').style.visibility="visible";
-    }else if(showhide == "hide"){
-        document.getElementById('popupbox').style.visibility="hidden"; 
-    }
-  }
+  // function login(showhide){
+  //   if(showhide == "show"){
+  //       document.getElementById('popupbox').style.visibility="visible";
+  //   }else if(showhide == "hide"){
+  //       document.getElementById('popupbox').style.visibility="hidden"; 
+  //   }
+  // }
+
+  // THIS DOCUMENT NEEDS SOME SERIOUS VARIABLE RENAMING
   
   function ajax_login(showhide){
     if(showhide == "show"){
-        document.getElementById('popupbox3').style.visibility="visible";
+        document.getElementById('login-modal').style.visibility="visible";
     }else if(showhide == "hide"){
         document.getElementById('ajax_tellUser').style.visibility="hidden";
-        document.getElementById('popupbox3').style.visibility="hidden"; 
+        document.getElementById('login-modal').style.visibility="hidden"; 
     }
   }
 
-  function login2(showhide){
+  function register_popup(showhide){
     if(showhide == "show"){
-        document.getElementById('popupbox2').style.visibility="visible";
+        document.getElementById('register-modal').style.visibility="visible";
     }else if(showhide == "hide"){
-        document.getElementById('popupbox2').style.visibility="hidden"; 
+        document.getElementById('register-modal').style.visibility="hidden"; 
     }
   }
 
@@ -51,5 +53,5 @@
   function ajax_tellU(salID){
   	tellUsers(salID);
   	document.getElementById('ajax_tellUser').style.visibility="hidden";
-  	document.getElementById('popupbox3').style.visibility="hidden"; 
+  	document.getElementById('login-modal').style.visibility="hidden"; 
   }

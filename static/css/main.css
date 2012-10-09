@@ -1,48 +1,34 @@
-/*Initial log in box*/
-  #popupbox{
+/*Initial log in box
+#popupbox{
   margin: 0; 
   margin-left: 40%; 
   margin-right: 40%;
   margin-top: 50px; 
   padding-top: 10px; 
   width: 20%; 
-  height: 200px; 
-  position: absolute; 
-  background: #123; 
+  background: #876fff; 
   border: solid #000000 2px; 
-  z-index: 9; 
-  font-family: arial; 
   visibility: hidden; 
-  }
+  }*/
+
+
 /* COLOURED THEM TO SITINGUISH WHAT'S WHAT */
-   #popupbox2{
-  margin: 0; 
-  margin-left: 40%; 
+#register-modal{
+ /* margin-left: 40%; 
   margin-right: 40%;
   margin-top: 50px; 
-  padding-top: 10px; 
-  width: 20%; 
-  height: 180px; 
-  position: absolute; 
-  background: #456879; 
+  padding-top: 10px; */
+/*  width: 20%; */
   border: solid #000000 2px; 
-  z-index: 9; 
-  font-family: arial; 
   visibility: hidden; 
   }
 
-  #popupbox3{
-  margin: 0; 
-  margin-left: 40%; 
+#login-modal{
+/*  margin-left: 40%; 
   margin-right: 40%;
   margin-top: 50px; 
-  padding-top: 10px; 
-  width: 20%; 
-  height: 220px; 
-  position: absolute; 
-  background: #afafaf; 
+  padding-top: 10px; */
+/*  width: 20%; */
   border: solid #000000 2px; 
-  z-index: 9; 
-  font-family: arial; 
-  visibility: hidden; 
+   visibility: hidden; 
   }
