@@ -36,6 +36,7 @@ urlpatterns = patterns('',
     url(r'^notify_customers/$', notify_customers), # page that process the notification
     url(r'^test/$', test), #sandbox to try out tings 
     url(r'^cancel_request/$', cancel_request_ajax),
+    url(r'^salon_signup/$', salon_signup),
     )
 	
 

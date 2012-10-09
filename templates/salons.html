@@ -23,7 +23,7 @@
 	<p>If you would like to sign up to handsome.ly, then please enter your email address below. (We hate spam too, don't worry)</p>
 
 	<br/>
-	<form action="salon_signup" method="post"> {% csrf_token %}
+	<form action="/salon_signup/" method="post"> {% csrf_token %}
 		<p> 
 			E-mail: <input type="text" name="email"/>
 			<input type="submit" value="Go!" /> 
