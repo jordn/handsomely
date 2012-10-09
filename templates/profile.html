@@ -65,7 +65,7 @@
 		<div id="tabs-2">
 		<h3>Recent requests</h3>
 		{% if reqs %}
-		{{ salonNames }}
+		{{ reqsWithSalonNames }}
 			<table border="1" cellpadding="5" class="table table-striped">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
 			{% for req in reqs %}
