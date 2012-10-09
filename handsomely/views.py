@@ -67,7 +67,7 @@ def profile(request):
 	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
 	salonNames = {}
 	for req in reqs:
-		salon = Salon.objects.filter(id=req.salonID)dj
+		salon = Salon.objects.filter(id=req.salonID)
 		salonNames.add(salon.salonName)
 	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs, 'salonNames' : salonNames}, context_instance=RequestContext(request))
 	
