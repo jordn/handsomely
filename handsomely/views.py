@@ -296,8 +296,8 @@ def salon_signup(request):
 	message = "New salon. Their contact email: " + email
 	admin_mail = 'team@handsome.ly'
 	#email us
-	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
-	return render_to_response('thank_you_salons.html', {email : email}, context_instance=RequestContext(request))
+	send_mail('Handsomely - New Salon', message, admin_mail, [ email ], fail_silently=False)
+	return render_to_response('thank_you_salons.html', { 'email' : email }, context_instance=RequestContext(request))
 
 def privacy_policy(request):
     return render_to_response('privacy_policy.html', {}, context_instance=RequestContext(request))
