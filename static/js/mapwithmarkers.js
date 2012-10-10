@@ -356,7 +356,7 @@
 							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 						}
 
-						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" class=\"getNotifiedButton\" value = \"Email me when they are free!\" id=\"getNotifiedButton" + salonID + "\">"; 
+						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" class='getNotifiedButton btn-block btn-primary' value = \"Email me when they are free!\" id=\"getNotifiedButton" + salonID + "\">"; 
 						var myboxOptions = {
                  			content: marker_content 
 			                ,disableAutoPan: false
