@@ -4,8 +4,12 @@
 
 {% block content %}
 	<h1>For Salons</h1>
-	<p><a href="http://www.handsome.ly/notify">Click here</a> if you are a salon with an account and are looking to notify customers.
-	<br>
+	{% if user.is_authenticated %}
+		{% if handUser.salonID != -1 or handUser.salonID != -1 %}
+		<p><a href="http://www.handsome.ly/notify">Click here</a> if you are a salon with an account and are looking to notify customers.
+		<br>
+		{% endif %}
+	{% endif %}
 	<h3>Make every time your peak time with handsome.ly.</h3>
 	<p>We can help you to <b> balance levels of demand throughout the day </b> by allowing you to send out notifications to select customers in search of a haircut today.</p>
 
