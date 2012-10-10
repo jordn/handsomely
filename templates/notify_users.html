@@ -39,7 +39,7 @@
 	</script>
 		<center>
 			<h1>Let customers know you are free</h1>
-			<h2>People waiting for {{ salon.salonName }}: {{ numOfRequests|length }} </h2>
+			<h3>{{ numOfRequests|length }} people waiting for {{ salon.salonName }}</h3>
 			<form action="" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
