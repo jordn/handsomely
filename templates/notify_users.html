@@ -14,14 +14,36 @@
 		function customersAlerted(){
 			var addedHtml = document.getElementById('textAppearsHere').innerHTML = ("<b>" + "Customers have been notified!" + "</b>" + "<br/>" + "<br/>" + "<b>" + "What happens next?" + "</b>" + "<br/>" + "Well, we instantly send out emails to all those who have indicated they want a haircut at yours." + "<br/>" + "Now just wait for the customers to come!" + "<br/>" + "Have a great day.");
 		}
+		
+		  function getCookie(name) {
+		    var cookieValue = null;
+		    if (document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+			    var cookie = jQuery.trim(cookies[i]);
+			    // Does this cookie string begin with the name we want?
+			    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			    }
+			}
+		    }
+		    return cookieValue;
+		}
+		
+		function doAjaxNotify(){
+		    var djangoUserID = document.getElementById('password_ajaxLogin').value; 
+		    var csrftoken = getCookie('csrftoken'); 
+		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken}, function(data){ djangoUserID = data; }); 
+		  }
 	</script>
 		<center>
 			<h1>Let customers know you are free</h1>
 			<h2>People waiting: {{ numOfRequests|length }} </h2>
-			<form action="../notify_customers/" method="post">
+			<form action="" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
-				<input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="customersAlerted()">
+				<input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify; customersAlerted();">
 			</form>
 			<!--Allows text to come up on screen when click button-->
 	  		<div id="textAppearsHere"></div>
