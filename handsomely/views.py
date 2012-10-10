@@ -64,7 +64,7 @@ def profile(request):
 	handUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
-	reqs = Request.objects.filter(customerID = handUser.customerID)
+	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
 	salonNames = []
 	for req in reqs:
 		salon = Salon.objects.get(id=req.salonID)
@@ -91,7 +91,7 @@ def update_profile(request):
 	notification_preferences = request.POST['notification_preferences']
 	cust.notification_preferences = notification_preferences
 	cust.save()
-	reqs = Request.objects.filter(customerID = handUser.customerID)
+	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
 	salonNames = []
 	for req in reqs:
 		salon = Salon.objects.get(id=req.salonID)
@@ -113,7 +113,7 @@ def user_login(request):
 		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
 		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
-		    reqs = Request.objects.filter(customerID = handUser.customerID)
+		    reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
 		    salonNames = []
 		    for req in reqs:
 			salon = Salon.objects.get(id=req.salonID)
@@ -203,13 +203,10 @@ def create_user(request):
 
 def big_red_button(request):
 	djangoUserID = request.user.id
-	if not request.user.is_anonymous():
-		djUser = request.user
-		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
-		return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser}, context_instance=RequestContext(request))
-	else:
-		return render_to_response('notify_users.html', {}, context_instance=RequestContext(request))
+	djUser = request.user
+	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
+	numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ').filter(startDate__gte=datetime.date.today(),startDate__lte=datetime.date.today + timedelta(days=1) )
+	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser}, context_instance=RequestContext(request))
 
 def get_notified(request):
 	djangoUserID = request.user.id
@@ -295,12 +292,9 @@ def cancel_request_ajax(request):
 
 def salons(request):
 	djangoUserID = request.user.id
-	if not request.user.is_anonymous():
-		djUser = request.user
-		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-		return render_to_response('salons.html', { 'handUser' : handsomelyUser }, context_instance=RequestContext(request))
-	else:
-		return render_to_response('salons.html', {}, context_instance=RequestContext(request))
+	djUser = request.user
+	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
+	return render_to_response('salons.html', { 'handUser' : handsomelyUser }, context_instance=RequestContext(request))
 
 def salon_signup(request):
    	email = request.POST['email']
