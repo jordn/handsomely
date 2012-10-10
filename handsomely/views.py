@@ -282,7 +282,7 @@ def response(request):
 	if answer == "CANCEL":
 		notif.status = 'CAN'
 	notif.save()
-	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
+	return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
 	
 def cancel_request_ajax(request):
 	requestID = request.POST['reqID']
