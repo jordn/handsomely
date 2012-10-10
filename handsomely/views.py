@@ -204,9 +204,12 @@ def create_user(request):
 def big_red_button(request):
 	djangoUserID = request.user.id
 	djUser = request.user
-	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-	numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
-	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser}, context_instance=RequestContext(request))
+	if djUser.is_anonymous():
+		return render_to_response('notify_users.html', {}, context_instance=RequestContext(request))
+	else:
+		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
+		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
+		return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser}, context_instance=RequestContext(request))
 
 def get_notified(request):
 	djangoUserID = request.user.id
