@@ -7,14 +7,13 @@
     <div class="row-fluid">
     	<p class="lead">Bring customers to you, at times you can manage</p>
     </div>
-
-	<div=class"row">
-	  <div=class"span12">
-	  		{% if user.is_authenticated %}
+	  {% if user.is_authenticated %}
 		{% if handUser.salonID != -1 or handUser.salonID != -1 %}
 		<p><a href="/notify">Click here</a> if you are a salon with an account and are looking to notify customers.
 		{% endif %}
 	{% endif %}
+	<div=class"row">
+	  <div=class"span12">
 		<br>
 		<h3>Make every time your peak time with handsome.ly.</h3>
 		<p>We can help you to <b> balance levels of demand throughout the day </b> by allowing you to send out notifications to select customers in search of a haircut today.</p>
