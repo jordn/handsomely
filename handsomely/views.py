@@ -295,8 +295,11 @@ def cancel_request_ajax(request):
 def salons(request):
 	djangoUserID = request.user.id
 	djUser = request.user
-	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-	return render_to_response('salons.html', { 'handUser' : handsomelyUser }, context_instance=RequestContext(request))
+	if djUser.is_anonymous():
+		return render_to_response('salons.html', {}, context_instance=RequestContext(request))
+	else: 
+		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
+		return render_to_response('salons.html', { 'handUser' : handsomelyUser }, context_instance=RequestContext(request))
 
 def salon_signup(request):
    	email = request.POST['email']
