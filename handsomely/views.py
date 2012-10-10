@@ -1,6 +1,6 @@
 
 from django.shortcuts import render_to_response
-from datetime import datetime
+import datetime
 from models import *
 from django.db.models import Q
 from django.core import serializers
@@ -64,7 +64,7 @@ def profile(request):
 	handUser = HandsomelyUser.objects.get(djangoUserID = user)
 	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
-	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
+	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')
 	salonNames = []
 	for req in reqs:
 		salon = Salon.objects.get(id=req.salonID)
@@ -91,7 +91,7 @@ def update_profile(request):
 	notification_preferences = request.POST['notification_preferences']
 	cust.notification_preferences = notification_preferences
 	cust.save()
-	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
+	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')
 	salonNames = []
 	for req in reqs:
 		salon = Salon.objects.get(id=req.salonID)
@@ -113,7 +113,7 @@ def user_login(request):
 		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
 		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
-		    reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
+		    reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')
 		    salonNames = []
 		    for req in reqs:
 			salon = Salon.objects.get(id=req.salonID)
