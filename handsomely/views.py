@@ -206,7 +206,7 @@ def big_red_button(request):
 	if not request.user.is_anonymous():
 		djUser = request.user
 		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ').filter(startDate__gte=datetime.date.today(),startDate__lte=datetime.date.today + timedelta(days=1) )
+		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ').filter(startDate__gte=datetime.date.today(),startDate__lte=datetime.date.today() + timedelta(days=1) )
 		return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('notify_users.html', {}, context_instance=RequestContext(request))
