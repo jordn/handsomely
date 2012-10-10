@@ -44,7 +44,7 @@
 			<form action="" method="post">
 				{% csrf_token %}
 				<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
-				<input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify; customersAlerted();">
+				<input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify(); customersAlerted();">
 			</form>
 			<!--Allows text to come up on screen when click button-->
 	  		<div id="textAppearsHere"></div>
