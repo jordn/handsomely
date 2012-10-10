@@ -1,7 +1,6 @@
 
 from django.shortcuts import render_to_response
 from datetime import datetime
-import datetime
 from models import *
 from django.db.models import Q
 from django.core import serializers
@@ -207,7 +206,7 @@ def big_red_button(request):
 	if not request.user.is_anonymous():
 		djUser = request.user
 		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ').filter(startDate__gte=datetime.date.today(),startDate__lte=datetime.date.today() + datetime.timedelta(days=1) )
+		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
 		return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('notify_users.html', {}, context_instance=RequestContext(request))
