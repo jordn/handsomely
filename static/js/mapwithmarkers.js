@@ -161,7 +161,7 @@
 			function tellUsers(salonID){
 				if (LoggedInStatus == true){
 					if (djangoUserID != -1) {
-                        document.getElementById('getNotifiedButton').innerHTML = "Loading..."; 
+                        document.getElementById('getNotifiedButton' + salonID).innerHTML = "Loading..."; 
 						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 						});
                         document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
@@ -254,7 +254,7 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\">"; 
+								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton\"" + salonID + ">"; 
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
