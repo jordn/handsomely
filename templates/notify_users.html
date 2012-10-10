@@ -1,13 +1,33 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 {% block title %}Notify Users{% endblock %}
 
+  {% block page_specific_headers %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+  {% endblock %}
+
+
 {% block content %}
-	<h1>Break glass for users</h1>
-	<p>Push the big red button below to notify users</p>
-	<form action="../notify_customers/" method="post">
-		{% csrf_token %}
-		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
-		<input type="image" src="../static/img/bigred.jpg" name="notify">
-	</form>
+
+<script type="text/javascript">
+	function customersAlerted(){
+		var addedHtml = document.getElementById('textAppearsHere').innerHTML = ("<b>" + "Customers have been notified!" + "</b>" + "<br/>" + "<br/>" + "<b>" + "What happens next?" + "</b>" + "<br/>" + "Well, we instantly send out emails to all those who have indicated they want a haircut at yours." + "<br/>" + "Now just wait for the customers to come!" + "<br/>" + "Have a great day.");
+	}
+</script>
+	<center>
+		<h1>Let customers know you are free</h1>
+		<h2>Customers waiting: {{ numOfRequests|length }} </h2>
+		<form action="../notify_customers/" method="post">
+			{% csrf_token %}
+			<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
+			<input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary" onclick="customersAlerted()">
+		</form>
+		<!--Allows text to come up on screen when click button-->
+  		<div id="textAppearsHere"></div>
+  		</br>
+		</div>
+	</center>
+
 {% endblock %}
+
+

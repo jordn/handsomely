@@ -2,13 +2,54 @@
 
 {% block title %}My Account{% endblock %}
 
+{% block page_specific_headers %}
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+   <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+   <script type="text/javascript">
+    $(function() {
+        $( "#tabs" ).tabs();
+    });
+    </script>
+  <script language="JavaScript" type="text/javascript">
+  
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+
+  function cancelRequestAjax(reqID, userID){
+    var csrftoken = getCookie('csrftoken'); 
+    jQuery.post('/cancel_request/', {reqID : reqID, userID : userID, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('reqtd'+reqID).innerHTML="Cancelled &#10004;"; }); 
+  }
+
+  </script>
+{% endblock %}
+
 {% block content %}
+
 {% if user.is_authenticated %}
-	<h2>My Account: {{ user.email }}</h2>
-	<br/>
-	<div>
-		<div style="float:left; width:40%; width:30%; border-right: solid black 1px;">
-		<h3 style="text-align:center">Your details</h3> 
+
+	<div id="tabs">
+	 <ul>
+        <li><a href="#tabs-1">Profile</a></li>
+        <li><a href="#tabs-2">Requests</a></li>
+        {% if handUser.salonID != -1 or handUser.salonID != -1 %}
+        <li><a href="#tabs-3">Salon</a></li>
+        {% endif %}
+   	 </ul>
+		<div id="tabs-1">
+		<h3>My details</h3> 
 		<form action="../update_profile/" method="post"> {% csrf_token %}
 			<p>First name: &nbsp; <input type="text" name="firstName" value="{{ cust.firstName }}"/></p>
 			<p>Last name: &nbsp; <input type="text" name="lastName" value="{{ cust.lastName }}"/></p>
@@ -16,19 +57,19 @@
 			<p>Mobile: &nbsp; &nbsp; &nbsp; &nbsp; <input type="text" name="mobile" value="{{ cust.mobile }}"/></p>
 			<p>Default city:&nbsp; <input type="text" name="defaultCity" value="{{ cust.defaultCity }}" readonly="readonly"/></p>
 			<p>Notifications: <input type="text" name="notification_preferences"
-				value="{{ cust.get_notification_preferences_display }}" readonly="readonly"/></p>
+				value="{{ cust.notification_preferences }}" readonly="readonly"/> (currently {{ cust.get_notification_preferences_display }} only)</p> 
 			<input type="hidden" name="djangoUserID" value="{{ user.id }}"/>
 			</p><input type="submit" value="Save" /> </p>
 		</form>
 		</div>
-		<div style="float:left; width:30%; border-right: solid black 1px; padding-left: 9%">
+		<div id="tabs-2">
 		<h3>Recent requests</h3>
 		{% if reqs %}
-			<table border="1" cellpadding="5">
+			<table border="1" cellpadding="5" class="table table-striped">
 			<tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
-			{% for req in reqs %}
-				<tr><td>{{ req.salonID }}</td><td>{{ req.startDate }}</td>
-				<td>{{ req.get_status_display }}</td><td><a href="#">Cancel</a></td></tr>
+			{% for req in reqsWithSalonNames %}
+				<tr><td>{{ req.1 }}</td><td>{{ req.0.startDate }}</td>
+				<td>{{ req.0.get_status_display }}</td><td id="reqtd{{ req.0.id }}"><a href="#" onclick="cancelRequestAjax({{ req.0.id }}, {{ user.id }});">Cancel</a></td></tr>
 			{% endfor %}
 			</table>
 		{% else %}
@@ -36,11 +77,11 @@
 		{% endif %}
 		</div>
 {% if handUser.salonID != -1 or handUser.salonID != -1 %}
-	<div style="float:left; width:20%; padding-left: 9%">
-		<h2 style="text-align:center">Salon page</h2>
+	<div id="tabs-3">
+		<h3>Manage salon</h3>
 		<p style="font-size:130%"><b><a href="/notify/">Click here to notify customers!</a></b></p>
 		<br/>
-		<img src="../static/img/tumbleweed.jpg">
+		<a href="/notify/"><img src="../static/img/tumbleweed.jpg"></a>
 	</div>
 {% endif %}
 	</div>

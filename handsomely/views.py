@@ -65,7 +65,12 @@ def profile(request):
 	salonID = handUser.salonID
 	cust = Customer.objects.get(id=handUser.customerID)
 	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
-	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs}, context_instance=RequestContext(request))
+	salonNames = []
+	for req in reqs:
+		salon = Salon.objects.get(id=req.salonID)
+		salonNames.append(salon.salonName)
+	reqsWithSalonNames = zip(reqs, salonNames)
+	return render_to_response('profile.html', {'djangoUserID' : djangoUserID, 'salonID' : salonID, 'cust' : cust, 'handUser' : handUser, 'reqs' : reqs, 'salonNames' : salonNames, 'reqsWithSalonNames' : reqsWithSalonNames}, context_instance=RequestContext(request))
 	
 def update_profile(request):
 	user = request.user
@@ -87,7 +92,12 @@ def update_profile(request):
 	cust.notification_preferences = notification_preferences
 	cust.save()
 	reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
-	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs}, context_instance=RequestContext(request))
+	salonNames = []
+	for req in reqs:
+		salon = Salon.objects.get(id=req.salonID)
+		salonNames.append(salon.salonName)
+	reqsWithSalonNames = zip(reqs, salonNames)
+	return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs, 'reqsWithSalonNames' : reqsWithSalonNames}, context_instance=RequestContext(request))
 
 def login_page(request):
 	return render_to_response('login.html', {}, context_instance=RequestContext(request))
@@ -103,7 +113,13 @@ def user_login(request):
 		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
 		    salonID = handUser.salonID
 		    cust = Customer.objects.get(id=handUser.customerID)
-		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID}, context_instance=RequestContext(request))
+		    reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
+		    salonNames = []
+		    for req in reqs:
+			salon = Salon.objects.get(id=req.salonID)
+			salonNames.append(salon.salonName)
+		    reqsWithSalonNames = zip(reqs, salonNames)
+		    return render_to_response('profile.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs, 'reqsWithSalonNames' : reqsWithSalonNames}, context_instance=RequestContext(request))
 		else:
 		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
 	    else:
@@ -136,7 +152,8 @@ def ajax_user_login(request):
 
 def user_logout(request):
     logout(request)
-    return render_to_response('index.html', context_instance=RequestContext(request)) 
+    salons = Salon.objects.all()
+    return render_to_response('index.html', { 'salonList' : salons }, context_instance=RequestContext(request)) 
 	#template breaks when context_instance... isnt included?
 	#...every page imports navigation.html, which has a POST form for the login
 	#...any page with a POST form needs this context_instance... supplied
@@ -186,7 +203,10 @@ def create_user(request):
 
 def big_red_button(request):
 	djangoUserID = request.user.id
-	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID}, context_instance=RequestContext(request))
+	djUser = request.user
+	handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
+	numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
+	return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests}, context_instance=RequestContext(request))
 
 def get_notified(request):
 	djangoUserID = request.user.id
@@ -247,7 +267,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	return render_to_response("thank_you.html", {'name' : djangoUser.email}, context_instance=RequestContext(request))
+	return render_to_response("thank_you_notified.html", {'email' : djangoUser.email}, context_instance=RequestContext(request))
 
 def response(request):
 	answer = request.GET['ans']
@@ -261,6 +281,14 @@ def response(request):
 		notif.status = 'CAN'
 	notif.save()
 	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
+	
+def cancel_request_ajax(request):
+	requestID = request.POST['reqID']
+	req = Request.objects.get(id=requestID)
+	req.delete()
+	result = req.id
+	response = HttpResponse(result)
+	return response
 
 def salons(request):
 	return render_to_response('salons.html', {}, context_instance=RequestContext(request))
@@ -270,8 +298,8 @@ def salon_signup(request):
 	message = "New salon. Their contact email: " + email
 	admin_mail = 'team@handsome.ly'
 	#email us
-	send_mail('Handsomely - New Salon', message, admin_mail, [ admin_mail], fail_silently=False)
-	return render_to_response('thank_you.html', {}, context_instance=RequestContext(request))
+	send_mail('Handsomely - New Salon', message, admin_mail, [ email ], fail_silently=False)
+	return render_to_response('thank_you_salons.html', { 'email' : email }, context_instance=RequestContext(request))
 
 def privacy_policy(request):
     return render_to_response('privacy_policy.html', {}, context_instance=RequestContext(request))
