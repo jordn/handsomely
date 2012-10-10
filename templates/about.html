@@ -4,25 +4,14 @@
 {% block title %}Hairwhat? - Handsome.ly{% endblock %}
 
   {% block page_specific_headers %}
-    <!-- Google Maps API -->
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBu3mqa90Iwx2hx4EKpzfUj2kp6y6TC_4Y&amp;sensor=false">
-    </script>
-
-    <!--- Creating, loading and customising the map with markers-->
-    <script type="text/javascript" src="{% static "js/mapwithmarkers.js"%}"></script>
-    <script type="text/javascript" src="{% static "js/infobox.js"%}"></script>
-    <link href="{% static 'css/map.css' %}" rel="stylesheet">
-
-    <!--- Popup styling etc -->
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <script type="text/javascript" src="{% static "js/main.js"%}"></script>
   {% endblock %}
 
   {% block content %}
 
-  <body>
-    <div class="container">
+      <div class="row-fluid">
+        <p class="lead">What is this?</p>
+      </div>
+
       <center>
       <b>
         What do we do?
