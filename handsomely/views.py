@@ -267,7 +267,9 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	return render_to_response("thank_you_notified.html", {'email' : djangoUser.email}, context_instance=RequestContext(request))
+	result = 'done'
+	response = HttpResponse(result)
+	return response
 
 def response(request):
 	answer = request.GET['ans']

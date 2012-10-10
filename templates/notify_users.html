@@ -33,9 +33,9 @@
 		}
 		
 		function doAjaxNotify(){
-		    var djangoUserID = document.getElementById('password_ajaxLogin').value; 
+		    var djangoUserID = document.getElementById('djangoUserID').value; 
 		    var csrftoken = getCookie('csrftoken'); 
-		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken}, function(data){ djangoUserID = data; }); 
+		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken}, function(data){ var dat = data; }); 
 		  }
 	</script>
 		<center>
