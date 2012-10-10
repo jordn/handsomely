@@ -295,7 +295,9 @@ def salons(request):
 	if not request.user.is_anonymous():
 		djUser = request.user
 		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
-	return render_to_response('salons.html', { 'handUser' : handsomelyUser }, context_instance=RequestContext(request))
+		return render_to_response('salons.html', { 'handUser' : handsomelyUser }, context_instance=RequestContext(request))
+	else:
+		return render_to_response('salons.html', {}, context_instance=RequestContext(request))
 
 def salon_signup(request):
    	email = request.POST['email']
