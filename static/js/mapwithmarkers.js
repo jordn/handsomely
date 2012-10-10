@@ -164,7 +164,7 @@
                         document.getElementById('getNotifiedButton' + salonID).value = "Loading..."; 
 						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 						});
-                        document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
+                        document.getElementById('getNotifiedButton' + salonID).value = "Done!"; 
 					}		
   				}
   				else{
@@ -174,7 +174,7 @@
 						document.getElementById('getNotifiedButton' + salonID).value = "Loading..."; 
 									jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 									});
-						document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
+						document.getElementById('getNotifiedButton' + salonID).value = "Done!"; 
 					}
   				}
 			}
