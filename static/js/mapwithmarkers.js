@@ -161,7 +161,7 @@
 			function tellUsers(salonID){
 				if (LoggedInStatus == true){
 					if (djangoUserID != -1) {
-                        document.getElementById('getNotifiedButton' + salonID).innerHTML = "Loading..."; 
+                        document.getElementById('getNotifiedButton' + salonID).value = "Loading..."; 
 						jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 						});
                         document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
@@ -171,7 +171,7 @@
   					ajax_login("show");
   					window.Ajax_salonID = salonID;
   					if (djangoUserID != -1) {
-						document.getElementById('getNotifiedButton').innerHTML = "Loading..."; 
+						document.getElementById('getNotifiedButton' + salonID).value = "Loading..."; 
 									jQuery.get("/create_notification_request/?salonID=" + salonID + "&djangoUserID=" + djangoUserID, function(data){ alert("We will let you know if times are free!");
 									});
 						document.getElementById('getNotifiedButton').innerHTML = "Done!"; 
@@ -356,7 +356,7 @@
 							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 						}
 
-						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" class=\"getNotifiedButton\" value = \"Email me when they are free!\">"; 
+						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" class=\"getNotifiedButton\" value = \"Email me when they are free!\" id=\"getNotifiedButton\" " + salonID + ">"; 
 						var myboxOptions = {
                  			content: marker_content 
 			                ,disableAutoPan: false
