@@ -254,7 +254,7 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton\"" + salonID + ">"; 
+								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -356,7 +356,7 @@
 							marker_content += "<br>" + "Sunday: " + sund[index][0] + "-" + sund[index][1];
 						}
 
-						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" class=\"getNotifiedButton\" value = \"Email me when they are free!\" id=\"getNotifiedButton\" " + salonID + ">"; 
+						marker_content += "<br><input type = \"button\" onClick=\"tellUsers(" + salonID + ")\" class=\"getNotifiedButton\" value = \"Email me when they are free!\" id=\"getNotifiedButton" + salonID + "\">"; 
 						var myboxOptions = {
                  			content: marker_content 
 			                ,disableAutoPan: false
