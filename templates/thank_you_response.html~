@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Thank You{% endblock %}
+
+{% block content %}
+<h2>Submitted</h2>
+<p>Thanks <b>{{ email }}</b>. We've notified all waiting customers.</p>
+{% endblock %}

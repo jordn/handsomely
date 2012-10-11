@@ -42,7 +42,7 @@
               <input type="text" class="prependedInput focusedInput" placeholder="Search not working.">
             </div>
           </form>
-          <table class="table table-striped" id="salon_list">
+          <table class="table table-striped">
           {% for salon in salonList %}
           	<tr><td>{{ salon.salonName }}</td></tr>
           {% endfor %}

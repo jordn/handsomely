@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+	<h1>Registration</h1>
+	<br/>
+	<p>Please enter your e-mail address below to register</p> 
+	<br/>
+	<form action="../register/" method="post"> {% csrf_token %}
+		<p> 
+			e-mail: <input type="text" name="email"/>
+			<input type="submit" value="Go!" /> 
+		</p>
+{% endblock %}

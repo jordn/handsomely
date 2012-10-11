@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Get notified{% endblock %}
+
+{% block content %}
+	<h1>Get notified</h1>
+	<p>Get notified by this salon</p>
+	<form action="/create_notification_request/" method="post">
+		{% csrf_token %}
+		<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
+		<input type="hidden" name="salonID" value="{{ salonID }}">
+		<input type="submit" value="Go">
+	</form>
+{% endblock %}
