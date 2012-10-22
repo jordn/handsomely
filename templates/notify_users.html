@@ -34,7 +34,7 @@
 		
 		function doAjaxNotify(djangoUserID){
 		    var csrftoken = getCookie('csrftoken'); 
-		    var additionalInfoFromSalon = document.getElementById("additionalInfoFromSalon").innerHTML;
+		    var additionalInfoFromSalon = document.getElementById("additionalInfoFromSalon").value;
 		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken, additionalInfoFromSalon : additionalInfoFromSalon}, function(data){ var dat = data; }); 
 		  }
 	</script>
