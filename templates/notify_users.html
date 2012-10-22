@@ -45,7 +45,7 @@
 				{% csrf_token %}
 				<p><input type="textarea" id=name="additionalInfoFromSalon" name="additionalInfoFromSalon" value="Any additional information..."></p>
 				<p><input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"></p>
-				<p><input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify({{ djangoUserID }}),; customersAlerted();"></p>
+				<p><input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify({{ djangoUserID }}); customersAlerted();"></p>
 			</form>
 			<!--Allows text to come up on screen when click button-->
 	  		<div id="textAppearsHere"></div>
