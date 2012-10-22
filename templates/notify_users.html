@@ -34,7 +34,7 @@
 		
 		function doAjaxNotify(djangoUserID){
 		    var csrftoken = getCookie('csrftoken'); 
-		    var additionalInfoFromSalon = document.getElementById("additionalInfoFromSalon").value;
+		    var additionalInfoFromSalon = document.getElementById("additionalInfoFromSalon").innerHTML;
 		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken, additionalInfoFromSalon : additionalInfoFromSalon}, function(data){ var dat = data; }); 
 		  }
 	</script>
@@ -43,7 +43,7 @@
 			<h3>{{ numOfRequests|length }} people waiting for {{ salon.salonName }}</h3>
 			<form action="" method="post">
 				{% csrf_token %}
-				<p><input type="textarea" id="additionalInfoFromSalon" name="additionalInfoFromSalon" value="Any additional information..."></p>
+				<p><textarea id="additionalInfoFromSalon" name="additionalInfoFromSalon" rows="5" cols="50">Any additional information for customers</textarea></p>
 				<p><input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"></p>
 				<p><input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify({{ djangoUserID }}); customersAlerted();"></p>
 			</form>
