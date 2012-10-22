@@ -236,6 +236,7 @@ def create_notification_request(request):
 
 def notify_customers(request):
 	userIDFromForm = request.POST['djangoUserID']
+	additionalInfoFromForm = request.POST['additionalInfoFromSalon']
 	djangoUser = User.objects.get(id=userIDFromForm)
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser)
 	salonID = handsomelyUser.salonID
@@ -255,6 +256,7 @@ def notify_customers(request):
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
 		text_content += 'The salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
+		text_content += 'Additional info from salon:' + additionalInfoFromForm + '\n'
 		text_content += ' Your response: Yes: http://www.handsome.ly/response?ans=YES&notifID=' + str(notif.id) 
 		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&notifID=' + str(notif.id) 
 		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID=' + str(notif.id)
@@ -263,6 +265,7 @@ def notify_customers(request):
 		html_content += '!<br/>'
 		html_content += 'The salon <b>' + salon.salonName 
 		html_content += '</b> is now free, why not head down now to avoid a queue?<br/>'
+		text_content += 'Additional info from salon:' + additionalInfoFromForm + '\n'
 		html_content += ' Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
 		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 

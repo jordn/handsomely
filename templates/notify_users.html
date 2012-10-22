@@ -34,7 +34,8 @@
 		
 		function doAjaxNotify(djangoUserID){
 		    var csrftoken = getCookie('csrftoken'); 
-		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken}, function(data){ var dat = data; }); 
+		    var additionalInfoFromSalon = document.getElementById("additionalInfoFromSalon").value;
+		    jQuery.post('../notify_customers/', {djangoUserID : djangoUserID, csrfmiddlewaretoken : csrftoken, additionalInfoFromSalon : additionalInfoFromSalon}, function(data){ var dat = data; }); 
 		  }
 	</script>
 		<center>
@@ -42,8 +43,9 @@
 			<h3>{{ numOfRequests|length }} people waiting for {{ salon.salonName }}</h3>
 			<form action="" method="post">
 				{% csrf_token %}
-				<input type="hidden" name="djangoUserID" value="{{ djangoUserID }}">
-				<input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify({{ djangoUserID }}); customersAlerted();">
+				<p><input type="textarea" id=name="additionalInfoFromSalon" name="additionalInfoFromSalon" value="Any additional information..."></p>
+				<p><input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"></p>
+				<p><input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="doAjaxNotify({{ djangoUserID }}),; customersAlerted();"></p>
 			</form>
 			<!--Allows text to come up on screen when click button-->
 	  		<div id="textAppearsHere"></div>
