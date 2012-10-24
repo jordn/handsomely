@@ -268,7 +268,7 @@ def notify_customers(request):
 		html_content += '</b> is now free, why not head down now to avoid a queue?<br/>'
 		html_content += 'Additional info from salon:' 
 		html_content += additionalInfoFromForm
-		html_content += '\nYour response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
+		html_content += '<br/>Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
 		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
 		html_content += '\">CANCEL</a> <br/>'
