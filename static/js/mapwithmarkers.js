@@ -192,7 +192,10 @@
 			          		map: map,
 			          		position: results[0].geometry.location
 			      		});
-
+			      		//CODE ADDED TO MAKE DIRECTORS GREEN
+			      		if (names[index] == "Directors"){
+			      			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+			      		}
 						//This code does the infoboxes. Infobox allows for greater flexibility that infowindow
 						var infowindow = new InfoBox();
 						//listener is the click.
