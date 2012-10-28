@@ -260,19 +260,20 @@ def notify_customers(request):
 		text_content += '\nYour response: Yes: http://www.handsome.ly/response?ans=YES&notifID=' + str(notif.id) 
 		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&notifID=' + str(notif.id) 
 		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID=' + str(notif.id)
+		text_content += '\nthanks\n\nthe Handsome.ly Team '
 		# html email
 		html_content = 'Hi ' + recipientDjangoUser.first_name
 		html_content += '!<br/>'
 		html_content += 'The salon <b>' 
 		html_content += salon.salonName 
-		html_content += '</b> is now free, why not head down now to avoid a queue?<br/>'
-		html_content += 'Additional info from salon:' 
+		html_content += '</b> is now free, why not head down now to avoid a queue?<br/><br/>'
+		html_content += 'Additional info from salon:<br/><br/>' 
 		html_content += additionalInfoFromForm
 		html_content += '<br/>Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
 		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
 		html_content += '\">CANCEL</a> <br/>'
-		html_content += '<br/>Thanks, <br/>the Handsomely team.'
+		html_content += '<br/>thanks, <br/>the Handsome.ly team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
@@ -287,8 +288,9 @@ def response(request):
 	notif = Notification.objects.get(id=notifID)
 	salonID = notif.salonID
 	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
-	customerEmail = Customer.objects.get(id=notif.customerID).firstName
-	message = "Hi! A customer has responded to your notification"
+	customerName = Customer.objects.get(id=notif.customerID).firstName
+	message = "Hi! A customer (" 
+	message += customerName + ") has responded to your notification"
 	message += "\n\nthanks,\nthe Handsome.ly team"
 	send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 	if answer == "YES":
