@@ -298,7 +298,7 @@ def response(request):
 		notif.save()
 		return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
 	if answer == "YES":
-		if notify.status == "POS":
+		if notif.status == "POS":
 			return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
 		else: 
 			notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
