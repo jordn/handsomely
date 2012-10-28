@@ -304,7 +304,7 @@ def response(request):
 			notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
 			for notification in notificationsList:
 				notification.status = "POS"
-				notifcation.save()
+				notification.save()
 			message = "Hi! \n\n A customer (" 
 			message += customerName + ") has responded to your notification and accepted the appointment"
 			message += "\n\nthanks,\nthe Handsome.ly team"
