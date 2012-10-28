@@ -210,7 +210,7 @@ def big_red_button(request):
 		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
 		salonID = handsomelyUser.salonID
 		salon = Salon.objects.get(id=salonID)
-		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
+		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(Q(status = 'REQ') | Q(status = 'HOL'))
 		return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser, 'salon' : salon}, context_instance=RequestContext(request))
 
 def get_notified(request):
@@ -241,11 +241,11 @@ def notify_customers(request):
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser)
 	salonID = handsomelyUser.salonID
 	salon = Salon.objects.get(id=salonID)
-	requestsList = Request.objects.filter(salonID=salonID).filter(status="REQ")
+	requestsList = Request.objects.filter(salonID=salonID).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	for req in requestsList:
-		req.status = "FUL"
+		req.status = "HOL"
 		req.save()
 		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID.id)
@@ -255,24 +255,25 @@ def notify_customers(request):
 		#email user
 		to_email = recipientDjangoUser.email
 		text_content = 'Hi! ' + recipientDjangoUser.first_name
-		text_content += 'The salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
-		text_content += 'Additional info from salon:' + additionalInfoFromForm
-		text_content += '\nYour response: Yes: http://www.handsome.ly/response?ans=YES&notifID=' + str(notif.id) 
+		text_content += '\nThe salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
+		text_content += 'Additional info from salon:"' + additionalInfoFromForm
+		text_content += '"\n\nYour response: Yes: http://www.handsome.ly/response?ans=YES&notifID=' + str(notif.id) 
 		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&notifID=' + str(notif.id) 
 		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID=' + str(notif.id)
+		text_content += '\nthanks\n\nthe Handsome.ly Team '
 		# html email
 		html_content = 'Hi ' + recipientDjangoUser.first_name
 		html_content += '!<br/>'
 		html_content += 'The salon <b>' 
 		html_content += salon.salonName 
-		html_content += '</b> is now free, why not head down now to avoid a queue?<br/>'
-		html_content += 'Additional info from salon:' 
+		html_content += '</b> is now free, why not head down now to avoid a queue?<br/><br/>'
+		html_content += 'Additional info from salon:<br/>"' 
 		html_content += additionalInfoFromForm
-		html_content += '<br/>Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
+		html_content += '"<br/><br/>Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
 		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
 		html_content += '\">CANCEL</a> <br/>'
-		html_content += '<br/>Thanks, <br/>the Handsomely team.'
+		html_content += '<br/>thanks, <br/>the Handsome.ly team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
@@ -285,14 +286,36 @@ def response(request):
 	answer = request.GET['ans']
 	notifID = request.GET['notifID']
 	notif = Notification.objects.get(id=notifID)
-	if answer == "YES":
-		notif.status = 'ACC'
+	salonID = notif.salonID
+	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
+	customerName = Customer.objects.get(id=notif.customerID).firstName
 	if answer == "NO":
 		notif.status = 'POS' 
+		notif.save()
+		return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
 	if answer == "CANCEL":
 		notif.status = 'CAN'
-	notif.save()
-	return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
+		notif.save()
+		return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
+	if answer == "YES":
+		if notif.status == "POS":
+			return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
+		else: 
+			notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
+			for notification in notificationsList:
+				notification.status = "POS"
+				notification.save()
+			message = "Hi! \n\n A customer (" 
+			message += customerName + ") has responded to your notification and accepted the appointment"
+			message += "\n\nthanks,\nthe Handsome.ly team"
+			send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
+			notif.status = 'ACC'
+			notif.save()
+			requests = Request.objects.filter(customerID = notif.customerID)
+			for req in requests:
+				req.status = 'FUL'
+				req.save()
+			return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
 	
 def cancel_request_ajax(request):
 	requestID = request.POST['reqID']
