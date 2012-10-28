@@ -312,8 +312,9 @@ def response(request):
 			notif.status = 'ACC'
 			notif.save()
 			request = Request.objects.filter(customerID = notif.customerID)
-			request.status = 'FUL'
-			request.save()
+			for req in request:
+				req.status = 'FUL'
+				req.save()
 			return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
 	
 def cancel_request_ajax(request):
