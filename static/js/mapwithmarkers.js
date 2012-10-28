@@ -260,7 +260,9 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								if (names[index] == "Directors"){
+									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								}
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -368,7 +370,9 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								if (names[index] == "Directors"){
+									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								}
 								//defined all the infobox parameters.
 						var myboxOptions = {
                  			content: marker_content 
