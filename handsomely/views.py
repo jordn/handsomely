@@ -311,7 +311,7 @@ def response(request):
 			send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 			notif.status = 'ACC'
 			notif.save()
-			request = Request.objects.filter(customerid = notif.customerID)
+			request = Request.objects.filter(customerID = notif.customerID)
 			request.status = 'FUL'
 			request.save()
 			return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
