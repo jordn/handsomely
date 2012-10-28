@@ -287,8 +287,9 @@ def response(request):
 	notif = Notification.objects.get(id=notifID)
 	salonID = notif.salonID
 	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
+	customerEmail = Customer.objects.get(id=notif.customerID).firstName
 	message = "Hi! A customer has responded to your notification"
-	message = "\nthanks,\nthe Handsome.ly team"
+	message += "\n\nthanks,\nthe Handsome.ly team"
 	send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 	if answer == "YES":
 		notif.status = 'ACC'
