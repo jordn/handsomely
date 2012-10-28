@@ -210,7 +210,7 @@ def big_red_button(request):
 		handsomelyUser = HandsomelyUser.objects.get(email=djUser.email)
 		salonID = handsomelyUser.salonID
 		salon = Salon.objects.get(id=salonID)
-		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ')
+		numOfRequests = Request.objects.filter(salonID = handsomelyUser.salonID).filter(status = 'REQ' | status = 'HOL')
 		return render_to_response('notify_users.html', {'djangoUserID' : djangoUserID, 'numOfRequests' : numOfRequests, 'handUser' : handsomelyUser, 'salon' : salon}, context_instance=RequestContext(request))
 
 def get_notified(request):
@@ -241,11 +241,11 @@ def notify_customers(request):
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser)
 	salonID = handsomelyUser.salonID
 	salon = Salon.objects.get(id=salonID)
-	requestsList = Request.objects.filter(salonID=salonID).filter(status="REQ")
+	requestsList = Request.objects.filter(salonID=salonID).filter(status="REQ" | status="HOL")
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	for req in requestsList:
-		req.status = "FUL"
+		req.status = "HOL"
 		req.save()
 		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID.id)
@@ -311,6 +311,9 @@ def response(request):
 			send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 			notif.status = 'ACC'
 			notif.save()
+			request = Request.objects.filter(customerid = notif.customerID)
+			request.status = 'FUL'
+			request.save()
 			return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
 	
 def cancel_request_ajax(request):
