@@ -196,6 +196,9 @@
 			      		if (names[index] == "Directors"){
 			      			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
 			      		}
+			      		if (names[index] == "Hairy Canary"){
+			      			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+			      		}
 						//This code does the infoboxes. Infobox allows for greater flexibility that infowindow
 						var infowindow = new InfoBox();
 						//listener is the click.
@@ -206,6 +209,9 @@
 								marker_content += "<br><span class='haircut'>" + cut[index] + ":</span><span class='price'>&pound" + prices[index] + "<i class='icon-tag'></i></span>"; 
 								if (names[index] == "Directors"){
 									marker_content += "<br><i>Typical handsome.ly price: £29</i>"
+								}
+								if (names[index] == "Hairy Canary"){
+									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
 								}
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
 								marker_content += "<span class='timetable'>"
@@ -263,6 +269,9 @@
 								if (names[index] == "Directors"){
 									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
+								if (names[index] == "Hairy Canary"){
+									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								}
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
@@ -317,6 +326,9 @@
 								if (names[index] == "Directors"){
 									marker_content += "<br><i>Typical handsome.ly price: £29</i>"
 								}
+								if (names[index] == "Hairy Canary"){
+									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
+								}								
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
 								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
@@ -371,6 +383,9 @@
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
 								if (names[index] == "Directors"){
+									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								}
+								if (names[index] == "Hairy Canary"){
 									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
 								//defined all the infobox parameters.
