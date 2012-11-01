@@ -315,6 +315,9 @@
 		          		map: map,
 		          		position: location
 		      		});
+		      	if (names[index] == "Hairy Canary"){
+			      	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+			    }
 
 				//This code does the infoboxes
 				var infowindow = new InfoBox();
