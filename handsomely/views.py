@@ -305,7 +305,7 @@ def response(request):
 		else: 
 			if len(customerPhone) == 0:
 				detailsNeeded = True
-			if "@" in customerName = 
+			if "@" in customerName:
 				detailsNeeded = True
 			if detailsNeeded:
 				return render_to_response('details_needed.html', { 'number' : customerPhone, 'name' : customerName, 'answer' : answer, 'notifID' : notifID }, context_instance=RequestContext(request))
