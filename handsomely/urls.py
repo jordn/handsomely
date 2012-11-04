@@ -37,6 +37,7 @@ urlpatterns = patterns('',
     url(r'^test/$', test), #sandbox to try out tings 
     url(r'^cancel_request/$', cancel_request_ajax),
     url(r'^salon_signup/$', salon_signup),
+    url(r'^response_yes_after_providing_details/$', response_yes_after_providing_details),
     )
 	
 
