@@ -317,7 +317,8 @@ def response(request):
 					notification.status = "POS"
 					notification.save()
 				message = "Hi! \n\n A customer (" 
-				message += customerName + ") has responded to your notification and accepted the appointment"
+				message += customerName + " - " 
+				message += customerPhone + ") has responded to your notification and accepted the appointment"
 				message += "\n\nthanks,\nthe Handsome.ly team"
 				send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 				notif.status = 'ACC'
