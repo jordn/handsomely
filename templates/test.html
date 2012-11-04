@@ -25,6 +25,18 @@
   </div>
 
   <div class="row">
+
+    FORM
+<form action="" method="post">
+        {% csrf_token %}
+        <p><textarea id="additionalInfoFromSalon" name="additionalInfoFromSalon" rows="5" cols="50">Any additional information for customers</textarea></p>
+        <p><input type="hidden" name="djangoUserID" value="{{ djangoUserID }}"></p>
+        <p><div id="buttonContainer"><input type="button" name="notify" value= "Let Them Know!" class="btn btn-primary btn-large" style="padding:40px; padding-left:100px; padding-right:100px; font-size:25px;" onclick="customersAlerted();"></div></p>
+      </form>
+      <!--Allows text to come up on screen when click button-->
+        <div id="textAppearsHere">safs</div>
+
+
   <a href="#javascript:$(#myModal').modal('toggle');" role="button" class="btn" data-toggle="modal" data-target="#myModal"> JAVASCRIPT modal</a>
   </div>
 
@@ -42,5 +54,11 @@
   }
   </script>
 
+  <script type="text/javascript">
+    function customersAlerted(){
+      var addedHtml = document.getElementById('textAppearsHere').innerHTML = ("<b>" + "Customers have been notified!" + "</b>" + "<br/>" + "<br/>" + "<b>" + "What happens next?" + "</b>" + "<br/>" + "Well, we instantly send out emails to all those who have indicated they want a haircut at yours." + "<br/>" + "Now just wait for the customers to come!" + "<br/>" + "Have a great day.");
+      var buttonVisibility = document.getElementById('buttonContainer').style.visibility = "hidden";
+    }
+  </script>
 
 {% endblock %}

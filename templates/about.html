@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% block nav-about-active %}active{% endblock %}
 {% load staticfiles %}
 
-{% block title %}Hairwhat? - Handsome.ly{% endblock %}
+{% block title %}About | Handsome.ly{% endblock %}
 
   {% block page_specific_headers %}
   {% endblock %}
@@ -9,68 +9,110 @@
   {% block content %}
 
       <div class="row-fluid">
-        <p class="lead">What is this?</p>
+        <p class="lead">About handsome.ly</p>
       </div>
 
-      <center>
-      <b>
-        What do we do?
-      </b> 
-      </br>
-      <p>We instantly let you know when your favourite salon is not busy; or has an empty appointment for today. 
-      <br/>  
-      No queues. No appointments booked weeks in advance. handsome.ly is for those who value their time.</p>
-      <p><b>How to get involved:</b>
-      </br>
-      <b>1.</b> Indicate your salons of preference on our <a href="http://www.handsome.ly/">homepage.</a>
-      </br> 
-      <b>2.</b> That is it. We let you know when they are free by email for the next 24 hours. 
-      <br/>For each email we send you, you choose to Accept, Decline, or Cancel Notifications for the day.</p>
-      Find out more in the video below!  
-      <br/>
-        <iframe width="640" height="360" src="http://www.youtube.com/embed/mR-0jgf2YNs?hd=1&rel=0&autohide=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-      </center>
-    </br>
+    <div class="row-fluid" style="">
+
+        <div class="row-fluid">
+          <div class="span5">
+            <h3>What is this service?</h3>
+
+            <h5>We're here to make the experience of getting your haircut the best it can be.</h5>
+            <p>We know that your time is valuable and we’re trying to get salons and barbers to better appreciate that.</p>
+
+            <p>We're just getting started on our mission. We're focused on Cambridge at the moment while we grow - cus that's where we live and we know how busy people can be here.</p>
+          </div>
+
+          <div class="span7">
+            <div class="well well-large">
+              <h4>A better haircut booking experience</h4>
+              <dl>
+                <dt>Discounts</dt>
+                <dd>If you can squeeze in at short notice, or fill a cancelled appointment you are doing the salon a favour. They may encourage this behaviour by offering a discount.</dd>
+                <dt>No queues</dt>
+                 <dd>Your barber can tell you when they’re free, so you know there won’t be a long queue when you get there.</dd>
+                <dt>Customer choice</dt>
+                <dd>We’re going to show opening times, prices and reviews of all the places you can get your hair cut. You can make an informed choice of what’s best for you.</dd>
+                <dt>And <em>completely free</em></dt>
+                 <dd>The service has a lovely price of £0.00</dd>
+              </dl>   
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid" style="">
+        <div class="row-fluid">
+          <div class="span5">
+            <h3>How to use</h3>
+            <ol>
+              <li><strong>Select salons</strong> on the <a href="/">map</a> that you'd like to get a haircut with</li>
+              <li>We'll then <strong>email</strong> you anytime they're free and any discount they're offering</li>
+              <li>You can then:
+                <ul>
+                  <li><strong>Accept</strong> = You pop over and get a great haircut</li>
+                  <li><strong>Decline</strong> = You can't make this one but you still want to get notified about future opportunities</li>
+                  <li><strong>Cancel</strong> notifications</li>
+                </ul>
+            </ol>
+          </div>
+
+          <div class="span7">
+            <p>Here's an example use of handsome.ly in video form:</p>
+              <iframe width="640" height="360" src="http://www.youtube.com/embed/mR-0jgf2YNs?hd=1&rel=0&autohide=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
       <div class="row-fluid">
-      </br>
-        <center>
-        <p>Founded by these three finely groomed gentlemen:</p>
-        </center>
+        <h3>Team handsome</h3>
+        <p>Handsome.ly was founded in the summer of 2012 by these three well-groomed Cambridge gentlemen:</p>
       </div>
       <div class="row-fluid">
         <div class="span4" style="text-align:center">
           <a href="https://twitter.com/FraserAtkins">
-            <img src="../static/img/Fraser.jpg" alt="Fraser" width="110" height="90" class="img-polaroid" />
+            <img src="{% static 'img/Fraser.jpg' %}"  alt="Fraser" width="110" height="90" class="img-polaroid" />
           </a></br>
           <strong>Fraser Atkins</strong>
-          <p>Scottish</p>
+          <p><a href="http://twitter.com/FraserAtkins">@FraserAtkins</a><br>
+          Scottish</p>
         </div>
         <div class="span4" style="text-align:center">
-          <a href="https://twitter.com">
-            <img src="../static/img/M.jpg" alt="M" class="img-polaroid" width="110" height="90" />
-          </a></br>
+          <img src="{% static 'img/M.jpg' %}"  alt="M" class="img-polaroid" width="110" height="90" />
+          </br>
           <strong>M Ahmed</strong>
           <p>He claims it's designer stubble</p>
         </div>
         <div class="span4" style="text-align:center">
           <a href="https://twitter.com/jordnb">
-            <img src="../static/img/Jordan.jpg" alt="Jordan" width="110" height="90" class="img-polaroid" />
+            <img src="{% static 'img/Jordan.jpg' %}" alt="Jordan" width="110" height="90" class="img-polaroid" />
           </a></br>
           <strong>Jordan Burgess</strong>
-          <p>Cracking sideburns</p>
+          <p><a href="http://twitter.com/jordnb">@jordnb</a><br>
+          Cracking sideburns</p>
         </div>
       </div>
 
       <div class="row-fluid">
-      <blockquote class="pull-left">
-        <p>"Would you like a free banana?"</p>
-        <small> Fraser Atkins, cofounder of <cite title="This webservice you're using here">handsome.ly</cite> and guerilla marketing genius</small>
-      </blockquote>
+        <p>If you have any questions or suggestions we’d love to hear from you. Feel free to reach out to one of us individually on twitter, or to the whole <a href="mailto:team@handsome.ly">team@handsome.ly</a></p>
+      </div>
 
-      <blockquote class="pull-right">
-        <p>"I really liked this service, no queues for me ever again! I feel slightly less British"</p>
-        <small> Jordan Burgess, cofounder of <cite title="This webservice you're using here">handsome.ly</cite></small>
-      </blockquote>
+      <div class="row-fluid">
+        <h3>Testimonials</h3>
+        <blockquote class="pull-left">
+          <p>"Would you like a free banana?"</p>
+          <small> Fraser Atkins, cofounder of <cite title="This webservice you're using here">handsome.ly</cite> and guerilla marketing genius</small>
+        </blockquote>
+
+        <blockquote class="pull-right">
+          <p>"I really like this service, no queues for me ever again! I feel slightly less British"</p>
+          <small> Jordan Burgess, cofounder of <cite title="This webservice you're using here">handsome.ly</cite></small>
+        </blockquote>
      </div>
 
       <small><strong>&copy; 2012 handsome.ly</strong></small>
