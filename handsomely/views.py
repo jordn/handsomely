@@ -289,6 +289,8 @@ def response(request):
 	salonID = notif.salonID
 	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
 	customerName = Customer.objects.get(id=notif.customerID).firstName
+	customerPhone = Customer.objects.get(id=notif.customerID).mobile
+	detailsNeeded = False
 	if answer == "NO":
 		notif.status = 'POS' 
 		notif.save()
@@ -301,21 +303,58 @@ def response(request):
 		if notif.status == "POS":
 			return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
 		else: 
-			notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
-			for notification in notificationsList:
-				notification.status = "POS"
-				notification.save()
-			message = "Hi! \n\n A customer (" 
-			message += customerName + ") has responded to your notification and accepted the appointment"
-			message += "\n\nthanks,\nthe Handsome.ly team"
-			send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
-			notif.status = 'ACC'
-			notif.save()
-			requests = Request.objects.filter(customerID = notif.customerID)
-			for req in requests:
-				req.status = 'FUL'
-				req.save()
-			return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
+			if len(customerPhone) == 0:
+				detailsNeeded = True
+			if "@" in customerName = 
+				detailsNeeded = True
+			if detailsNeeded:
+				return render_to_response('details_needed.html', { 'number' : customerPhone, 'name' : customerName, 'answer' : answer, 'notifID' : notifID }, context_instance=RequestContext(request))
+			else:
+				notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
+				for notification in notificationsList:
+					notification.status = "POS"
+					notification.save()
+				message = "Hi! \n\n A customer (" 
+				message += customerName + ") has responded to your notification and accepted the appointment"
+				message += "\n\nthanks,\nthe Handsome.ly team"
+				send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
+				notif.status = 'ACC'
+				notif.save()
+				requests = Request.objects.filter(customerID = notif.customerID)
+				for req in requests:
+					req.status = 'FUL'
+					req.save()
+				return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
+				
+				
+def response_yes_after_providing_details(request):
+	answer = request.POST['answer']
+	notifID = request.POST['notifID']
+	name = request.POST['name']
+	number = request.POST['number']
+	notif = Notification.objects.get(id=notifID)
+	salonID = notif.salonID
+	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
+	customer = Customer.objects.get(id=notif.customerID)
+	customer.firstName = name
+	customer.mobile = number
+	customer.save()
+	notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
+	for notification in notificationsList:
+		notification.status = "POS"
+		notification.save()
+	message = "Hi! \n\n A customer (" 
+	message += customer.firstName + " - " 
+	message += customer.mobile +  ") has responded to your notification and accepted the appointment"
+	message += "\n\nthanks,\nthe Handsome.ly team"
+	send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
+	notif.status = 'ACC'
+	notif.save()
+	requests = Request.objects.filter(customerID = notif.customerID)
+	for req in requests:
+		req.status = 'FUL'
+		req.save()
+	return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customer.firstName }, context_instance=RequestContext(request))
 	
 def cancel_request_ajax(request):
 	requestID = request.POST['reqID']

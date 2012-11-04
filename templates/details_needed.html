@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Required Details{% endblock %}
+
+{% block content %}
+<h2>Details required</h2>
+<p>The salon you have requested requires your name and phone number to complete the booking. Please enter them below</p>
+	<form action="/response_yes_after_providing_details/" method="post"> {% csrf_token %}
+		<p> First name: <input type="input" name="number" value="{{ name }}"/> </p>
+		<p> Number: <input type="input" name="name" value="{{ number }}"/> </p>
+		<input type="hidden" name="answer" value="{{ answer }}"/>
+		<input type="hidden" name="notifID" value="{{ notifID }}"/>
+		</p> <input type="submit" value="Go!" /> </p>
+	</form>
+{% endblock %}
