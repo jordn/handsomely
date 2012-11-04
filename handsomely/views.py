@@ -305,7 +305,7 @@ def response(request):
 		else: 
 			if len(customerPhone) == 0:
 				detailsNeeded = True
-			if len(customerName):
+			if len(customerName) == 0:
 				detailsNeeded = True
 			if "@" in customerName:
 				detailsNeeded = True
