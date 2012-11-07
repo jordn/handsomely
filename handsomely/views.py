@@ -323,7 +323,7 @@ def response(request):
 	notifID = request.GET['notifID']
 	message = request.GET['message']
 	if djangoUser.is_anonymous():
-		return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
+		return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID, 'message' : message}, context_instance=RequestContext(request))
 	else: 
 		notif = Notification.objects.get(id=notifID)
 		handsomelyUserFromNotification = HandsomelyUser.objects.get(customerID=notif.customerID)
