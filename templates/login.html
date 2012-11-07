@@ -9,9 +9,7 @@
 	<p><b>{{ message }}</b></p>
 	<br/>
 	<form action="/user_login/" method="post"> {% csrf_token %}
-		<p> 
-			E-mail: <input type="input" name="email" value="{{ emailAdd }}"/>
-			Password: <input type="password" name="newPassword"/>
-			<input type="submit" value="Go!" /> 
-		</p>
+		<p> E-mail: <input type="input" name="email" value="{{ emailAdd }}"/> </p>
+		<p> Password: <input type="password" name="newPassword"/> </p>
+		<p><input type="submit" value="Go!" /> </p>
 {% endblock %}
