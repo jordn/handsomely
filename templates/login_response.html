@@ -7,8 +7,8 @@
 	<br/>
 	<p>Please log in to your account to register your response to this notification</p> 
 	<br/>
-	<form action="/logged_in_response/" method="get">
-		<p> E-mail: &nbsp; &nbsp; <input type="input" name="email" value="{{ emailAdd }}"/> </p>
+	<form action="/logged_in_response/" method="POST">
+		<p> E-mail: &nbsp; &nbsp; &nbsp; <input type="input" name="email" value="{{ emailAdd }}"/> </p>
 		<p> Password: <input type="password" name="newPassword"/> </p>
 		<input type="hidden" name="answer" value="{{ answer }}"/>
 		<input type="hidden" name="notifID" value="{{ notifID }}"/>
