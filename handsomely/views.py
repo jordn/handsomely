@@ -327,7 +327,7 @@ def response(request):
 	else: 
 		notif = Notification.objects.get(id=notifID)
 		handsomelyUserFromNotification = HandsomelyUser.objects.get(customerID=notif.customerID)
-		if (handsomelyUserFromNotification.djangoUserID == djangoUser.id):
+		if (handsomelyUserFromNotification.djangoUserID.id == djangoUser.id):
 			notif = Notification.objects.get(id=notifID)
 			salonID = notif.salonID
 			salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
