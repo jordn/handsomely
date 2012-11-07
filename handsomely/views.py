@@ -149,6 +149,35 @@ def ajax_user_login(request):
 		return render_to_response('login.html', {'emailAdd': email, 'message' : errorMessage}, context_instance=RequestContext(request))
 	else:
 		return render_to_response('login.html', {}, context_instance=RequestContext(request))
+		
+def logged_in_response(request):
+	if request.method == 'POST':
+	    email = request.POST['email']
+	    password = request.POST['password']
+	    salonMessage = request.POST['message']
+	    notifID = request.POST['notifID']
+	    answer = request.POST['answer']
+	    user = authenticate(username=email, password=password)
+	    if user is not None:
+		if user.is_active:
+		    login(request, user)
+		    handUser = HandsomelyUser.objects.get(djangoUserID=user.id)
+		    salonID = handUser.salonID
+		    cust = Customer.objects.get(id=handUser.customerID)
+		    reqs = Request.objects.filter(customerID = handUser.customerID).order_by('-startDate')[:10]
+		    salonNames = []
+		    for req in reqs:
+			salon = Salon.objects.get(id=req.salonID)
+			salonNames.append(salon.salonName)
+		    reqsWithSalonNames = zip(reqs, salonNames)
+		    return render_to_response('logged_in_response.html', {'user': user, 'handUser' : handUser, 'cust' : cust, 'salonID' : salonID, 'reqs' : reqs, 'reqsWithSalonNames' : reqsWithSalonNames, 'answer' : answer, 'notifID' : notifID, 'message' : salonMessage }, context_instance=RequestContext(request))
+		else:
+		    pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
+	    else:
+	    	errorMessage = "Wrong username or password"
+		return render_to_response('login.html', {'emailAdd': email, 'message' : errorMessage}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('login.html', {}, context_instance=RequestContext(request))
 
 def user_logout(request):
     logout(request)
@@ -258,8 +287,11 @@ def notify_customers(request):
 		text_content += '\nThe salon ' + salon.salonName + ' is now free, why not head down now to avoid a queue?\n'
 		text_content += 'Additional info from salon:"' + additionalInfoFromForm
 		text_content += '"\n\nYour response: Yes: http://www.handsome.ly/response?ans=YES&notifID=' + str(notif.id) 
+		text_content += '&message=' + additionalInfoFromForm
 		text_content += ' -- No: http://www.handsome.ly/response?ans=NO&notifID=' + str(notif.id) 
+		text_content += '&message=' + additionalInfoFromForm
 		text_content += ' -- Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID=' + str(notif.id)
+		text_content += '&message=' + additionalInfoFromForm
 		text_content += '\nthanks\n\nthe Handsome.ly Team '
 		# html email
 		html_content = 'Hi ' + recipientDjangoUser.first_name
@@ -270,9 +302,12 @@ def notify_customers(request):
 		html_content += 'Additional info from salon:<br/>"' 
 		html_content += additionalInfoFromForm
 		html_content += '"<br/><br/>Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
+		html_content += '&message=' + additionalInfoFromForm
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
-		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
-		html_content += '\">CANCEL</a> <br/>'
+		html_content += '&message=' + additionalInfoFromForm
+		html_content += \">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
+		html_content += '\">CANCEL&message=' 
+		html_content += additionalInfoFromForm + '</a> <br/>'
 		html_content += '<br/>thanks, <br/>the Handsome.ly team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
@@ -283,51 +318,59 @@ def notify_customers(request):
 	return response
 
 def response(request):
+	djangoUser = request.user
 	answer = request.GET['ans']
 	notifID = request.GET['notifID']
-	notif = Notification.objects.get(id=notifID)
-	salonID = notif.salonID
-	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
-	customerName = Customer.objects.get(id=notif.customerID).firstName
-	customerPhone = Customer.objects.get(id=notif.customerID).mobile
-	detailsNeeded = False
-	if answer == "NO":
-		notif.status = 'POS' 
-		notif.save()
-		return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
-	if answer == "CANCEL":
-		notif.status = 'CAN'
-		notif.save()
-		return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
-	if answer == "YES":
-		if notif.status == "POS":
-			return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
-		else: 
-			if len(customerPhone) == 0:
-				detailsNeeded = True
-			if len(customerName) == 0:
-				detailsNeeded = True
-			if "@" in customerName:
-				detailsNeeded = True
-			if detailsNeeded:
-				return render_to_response('details_needed.html', { 'number' : customerPhone, 'name' : customerName, 'answer' : answer, 'notifID' : notifID }, context_instance=RequestContext(request))
-			else:
-				notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
-				for notification in notificationsList:
-					notification.status = "POS"
-					notification.save()
-				message = "Hi! \n\n A customer (" 
-				message += customerName + " - " 
-				message += customerPhone + ") has responded to your notification and accepted the appointment"
-				message += "\n\nthanks,\nthe Handsome.ly team"
-				send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
-				notif.status = 'ACC'
+	message = request.GET['message']
+	if djangoUser.is_anonymous():
+		return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
+	else: 
+		handsomelyUserFromNotification = HandsomelyUser.objects.get(id=notif.customerID)
+		if (handsomelyUserFromNotification.djangoUserID == djangoUser.id):
+			notif = Notification.objects.get(id=notifID)
+			salonID = notif.salonID
+			salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
+			customerName = Customer.objects.get(id=notif.customerID).firstName
+			customerPhone = Customer.objects.get(id=notif.customerID).mobile
+			detailsNeeded = False
+			if answer == "NO":
+				notif.status = 'POS' 
 				notif.save()
-				requests = Request.objects.filter(customerID = notif.customerID)
-				for req in requests:
-					req.status = 'FUL'
-					req.save()
-				return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
+				return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
+			if answer == "CANCEL":
+				notif.status = 'CAN'
+				notif.save()
+				return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
+			if answer == "YES":
+				if notif.status == "POS":
+					return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
+				else: 
+					if len(customerPhone) == 0:
+						detailsNeeded = True
+					if len(customerName) == 0:
+						detailsNeeded = True
+					if "@" in customerName:
+						detailsNeeded = True
+					if detailsNeeded:
+						return render_to_response('details_needed.html', { 'number' : customerPhone, 'name' : customerName, 'answer' : answer, 'notifID' : notifID, 'message' : message }, context_instance=RequestContext(request))
+					else:
+						notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
+						for notification in notificationsList:
+							notification.status = "POS"
+							notification.save()
+						message = "Hi! \n\n A customer (" 
+						message += customerName + " - " 
+						message += customerPhone + ") has responded to your notification and accepted the appointment"
+						message += "\n\nthanks,\nthe Handsome.ly team"
+						send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
+						notif.status = 'ACC'
+						notif.save()
+						requests = Request.objects.filter(customerID = notif.customerID)
+						for req in requests:
+							req.status = 'FUL'
+							req.save()
+						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
+			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : message}, context_instance=RequestContext(request))
 				
 				
 def response_yes_after_providing_details(request):
@@ -335,6 +378,7 @@ def response_yes_after_providing_details(request):
 	notifID = request.POST['notifID']
 	name = request.POST['name']
 	number = request.POST['number']
+	salonMessage = request.POST['message']
 	notif = Notification.objects.get(id=notifID)
 	salonID = notif.salonID
 	salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
@@ -349,6 +393,7 @@ def response_yes_after_providing_details(request):
 	message = "Hi! \n\n A customer (" 
 	message += customer.firstName + " - " 
 	message += customer.mobile +  ") has responded to your notification and accepted the appointment"
+	message += "\n\n Details of the appointment:" + salonMessage
 	message += "\n\nthanks,\nthe Handsome.ly team"
 	send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 	notif.status = 'ACC'
