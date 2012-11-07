@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Response{% endblock %}
+
+{% block content %}
+	<h1>Confirm response</h1>
+	<br/>
+	<p>Please click the button below to confirm your response of <b>{{ answer }}</b></p> 
+	<br/>
+	<form action="/response/" method="get">
+		<input type="hidden" name="notifID" value="{{ notifID }}"/>
+		<input type="hidden" name="answer" value="{{ answer }}"/>
+		<input type="hidden" name="message" value="{{ message }}"/>
+		<p> <input type="submit" value="Go!" /> </p>
+{% endblock %}
