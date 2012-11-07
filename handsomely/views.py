@@ -321,7 +321,7 @@ def response(request):
 	djangoUser = request.user
 	answer = request.GET['ans']
 	notifID = request.GET['notifID']
-	message = request.GET['message']
+	salonMessage = request.GET['message']
 	if djangoUser.is_anonymous():
 		return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID, 'message' : message}, context_instance=RequestContext(request))
 	else: 
@@ -355,7 +355,8 @@ def response(request):
 							notification.save()
 						message = "Hi! \n\n A customer (" 
 						message += customerName + " - " 
-						message += customerPhone + ") has responded to your notification and accepted the appointment"
+						message += customerPhone + ") has responded to your notification and accepted the appointment."
+						message += "\n\nDetails of the appointment:\n" + salonMessage
 						message += "\n\nthanks,\nthe Handsome.ly team"
 						send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 						notif.status = 'ACC'
