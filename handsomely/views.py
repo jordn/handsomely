@@ -365,7 +365,7 @@ def response(request):
 							req.status = 'FUL'
 							req.save()
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
-		return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : message}, context_instance=RequestContext(request))
+		return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : message, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification.djangoUserID' : handsomelyUserFromNotification.djangoUserID }, context_instance=RequestContext(request))
 				
 				
 def response_yes_after_providing_details(request):
