@@ -356,7 +356,7 @@ def response(request):
 						message = "Hi! \n\n A customer has responded to your notification and accepted the appointment."
 						message += "\n\nCustomer name: " + customerName
 						message += "\n\nCustomer number: " + customerPhone
-						message += "\n\nDetails of the appointment:\n" + salonMessage
+						message += "\n\nDetails of the appointment: " + salonMessage
 						message += "\n\nthanks,\nthe Handsome.ly team"
 						send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
 						notif.status = 'ACC'
