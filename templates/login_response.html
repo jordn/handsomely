@@ -9,7 +9,7 @@
 	<br/>
 	<form action="/logged_in_response/" method="POST"> {% csrf_token %}
 		<p> E-mail: &nbsp; &nbsp; &nbsp; <input type="input" name="email" value="{{ emailAdd }}"/> </p>
-		<p> Password: <input type="password" name="newPassword"/> </p>
+		<p> Password: <input type="password" name="password"/> </p>
 		<input type="hidden" name="answer" value="{{ answer }}"/>
 		<input type="hidden" name="notifID" value="{{ notifID }}"/>
 		<input type="hidden" name="message" value="{{ message }}"/>
