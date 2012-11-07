@@ -38,6 +38,7 @@ urlpatterns = patterns('',
     url(r'^cancel_request/$', cancel_request_ajax),
     url(r'^salon_signup/$', salon_signup),
     url(r'^response_yes_after_providing_details/$', response_yes_after_providing_details),
+    url(r'^logged_in_response/$', logged_in_response),
     )
 	
 
