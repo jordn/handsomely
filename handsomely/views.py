@@ -303,11 +303,11 @@ def notify_customers(request):
 		html_content += additionalInfoFromForm
 		html_content += '"<br/><br/>Your response: <a href=\"http://www.handsome.ly/response/?ans=YES&notifID=' + str(notif.id) 
 		html_content += '&message=' + additionalInfoFromForm
-		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
+		html_content += '\">YES</a> &nsbp; <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
 		html_content += '&message=' + additionalInfoFromForm
-		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
-		html_content += '\">CANCEL&message=' 
-		html_content += additionalInfoFromForm + '</a> <br/>'
+		html_content += '\">NO</a> &nsbp; <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
+		html_content += '&message=' + additionalInfoFromForm 
+		html_content += '\">CANCEL</a> <br/>'
 		html_content += '<br/>thanks, <br/>the Handsome.ly team.'
 		# send email
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
@@ -325,6 +325,7 @@ def response(request):
 	if djangoUser.is_anonymous():
 		return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
 	else: 
+		notif = Notification.objects.get(id=notifID)
 		handsomelyUserFromNotification = HandsomelyUser.objects.get(id=notif.customerID)
 		if (handsomelyUserFromNotification.djangoUserID == djangoUser.id):
 			notif = Notification.objects.get(id=notifID)
