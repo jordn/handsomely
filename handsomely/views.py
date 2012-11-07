@@ -305,7 +305,7 @@ def notify_customers(request):
 		html_content += '&message=' + additionalInfoFromForm
 		html_content += '\">YES</a> <a href=\"http://www.handsome.ly/response/?ans=NO&notifID=' + str(notif.id) 
 		html_content += '&message=' + additionalInfoFromForm
-		html_content += \">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
+		html_content += '\">NO</a> <a href=\"http://www.handsome.ly/response/?ans=CANCEL&notifID=' + str(notif.id) 
 		html_content += '\">CANCEL&message=' 
 		html_content += additionalInfoFromForm + '</a> <br/>'
 		html_content += '<br/>thanks, <br/>the Handsome.ly team.'
