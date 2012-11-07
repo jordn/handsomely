@@ -326,7 +326,7 @@ def response(request):
 		return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
 	else: 
 		notif = Notification.objects.get(id=notifID)
-		handsomelyUserFromNotification = HandsomelyUser.objects.get(id=notif.customerID)
+		handsomelyUserFromNotification = HandsomelyUser.objects.get(customerID=notif.customerID)
 		if (handsomelyUserFromNotification.djangoUserID == djangoUser.id):
 			notif = Notification.objects.get(id=notifID)
 			salonID = notif.salonID
