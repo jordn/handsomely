@@ -358,7 +358,7 @@ def response(request):
 						message += "\n\nCustomer number: " + customerPhone
 						message += "\n\nDetails of the appointment: " + salonMessage
 						message += "\n\nthanks,\nthe Handsome.ly team"
-						send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
+						send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail, 'team@handsome.ly'], fail_silently=False)
 						notif.status = 'ACC'
 						notif.save()
 						requests = Request.objects.filter(customerID = notif.customerID)
@@ -392,7 +392,7 @@ def response_yes_after_providing_details(request):
 	message += customer.mobile +  ") has responded to your notification and accepted the appointment"
 	message += "\n\n Details of the appointment:" + salonMessage
 	message += "\n\nthanks,\nthe Handsome.ly team"
-	send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail], fail_silently=False)
+	send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail, 'team@handsome.ly'], fail_silently=False)
 	notif.status = 'ACC'
 	notif.save()
 	requests = Request.objects.filter(customerID = notif.customerID)
