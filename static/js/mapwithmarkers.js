@@ -22,7 +22,8 @@
 //this extracts the data from the PriceMenu model and is called from the initializeme loop. Arguments are salon PK (identifier), and index for list.
 			function parsePrice(key, index){
 				//extracts data in a same way as that done in initializeme from http://handsome.ly/get_salons_price_menu/?salonID=6
-				jQuery.get("../get_salons_price_menu?salonID=" + key, function(data){
+				var csrftoken = getCookie('csrftoken'); 
+				jQuery.post("../get_salons_price_menu/", { salonID : key,  csrfmiddlewaretoken : csrftoken}, function(data){
 				//define this data as dat_price
 				dat_price = JSON.parse(data);
 				//for each data set in dat_price
@@ -39,8 +40,9 @@
 
 //called from initializeme  with arguments of salon primary key (basically identifier) and index for lists
 			function parseHours(key, index){
+				var csrftoken = getCookie('csrftoken'); 
 				//does same data extraction from eg http://handsome.ly/get_salons_opening_hours/?salonID=6
-				jQuery.get("/get_salons_opening_hours?salonID=" + key, function(data){
+				jQuery.post("/get_salons_opening_hours/", {salonID : key, csrfmiddlewaretoken : csrftoken}, function(data){
 				//define this data as dat_hours (this is the data for just one salon)
 				dat_hours = JSON.parse(data);
 				k = 0
