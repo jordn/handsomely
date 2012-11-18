@@ -60,7 +60,7 @@
                   Login<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                  <form name="nav-bar-login" action="/user_login/" method="post" accept-charset="UTF-8">
+                  <form name="nav-bar-login" action="/user_login/" method="post" accept-charset="UTF-8" style="padding:5px;">
                     {% csrf_token %} <!-- what does the csrf token do? Jordan 2012 10 08) -required by every POST form, mansour 2012 10 09-->
                     e-mail: &nbsp; &nbsp;<input id="user_username" style="margin-bottom: 15px;" type="text" name="email" size="30" />
                     password: <input id="user_password" style="margin-bottom: 15px;" type="password" name="password" size="30" />
