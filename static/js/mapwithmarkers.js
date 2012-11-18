@@ -97,7 +97,7 @@
 				window.LoggedInStatus = isLoggedIn		//global variable isLoggedIn
 				window.djangoUserID = djangoUserID
 				//This uses the data at http://handsome.ly/get_salons/?city=cambridge 
-				jQuery.get("/get_salons", { city : city }, function(data){
+				jQuery.post("../get_salons", { city : city }, function(data){
 				//This extracts the data in a useful form. Try putting it in http://json.parser.online.fr/ and see what the output is.
 				var dat = JSON.parse(data);
 				//define this extracted data as dat. If there actually is some data
