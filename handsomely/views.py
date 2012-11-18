@@ -22,7 +22,7 @@ def about(request):
     return render_to_response('about.html', {}, context_instance=RequestContext(request))
 
 def get_salons(request):
-	queryCity = request.GET.get('city', '')
+	queryCity = request.POST['city']
 	if queryCity:
 		qset = ( Q(city__icontains=queryCity))
 		results = Salon.objects.filter(qset).distinct()
