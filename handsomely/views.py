@@ -252,7 +252,9 @@ def create_notification_request(request):
 	djangoUser = User.objects.get(id=djangoUserID) # look up salon in db to get id
 	if (request.user.is_anonymous()):
 		return render_to_response("incorrect_user2.html", {'userid' : djangoUserID}, context_instance=RequestContext(request))
-	if (request.user == djangoUser):
+	if (request.user != djangoUser):
+		return render_to_response("incorrect_user2.html", {'userid' : djangoUserID, 'requserid' : request.user.id}, context_instance=RequestContext(request))
+	else:
 		handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
 		salonID = request.GET.get('salonID', '')
 		salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
@@ -265,8 +267,7 @@ def create_notification_request(request):
 		#email user and us
 		send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
 		return render_to_response("thank_you.html", {"name" : djangoUser.email}, context_instance=RequestContext(request))
-	else: 
-		return render_to_response("incorrect_user2.html", {'userid' : djangoUserID, 'requserid' : request.user.id}, context_instance=RequestContext(request))
+		
 
 def notify_customers(request):
 	userIDFromForm = request.POST['djangoUserID']
