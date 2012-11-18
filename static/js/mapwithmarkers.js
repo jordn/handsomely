@@ -90,14 +90,31 @@
 			}
 
 
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 
 //This is where the javascript is first called from the index.html file. Hence the name, initializeme. ;)
 //city is, in this instance Cambridge.
 			function initialize_map_with_markers(city, isLoggedIn, djangoUserID) {
 				window.LoggedInStatus = isLoggedIn		//global variable isLoggedIn
 				window.djangoUserID = djangoUserID
+				var csrftoken = getCookie('csrftoken'); 
 				//This uses the data at http://handsome.ly/get_salons/?city=cambridge 
-				jQuery.post("../get_salons/", { 'city' : city }, function(data){
+				jQuery.post("../get_salons/", { city : city, csrfmiddlewaretoken : csrftoken }, function(data){
 				//This extracts the data in a useful form. Try putting it in http://json.parser.online.fr/ and see what the output is.
 				var dat = JSON.parse(data);
 				//define this extracted data as dat. If there actually is some data
