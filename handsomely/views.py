@@ -252,20 +252,21 @@ def create_notification_request(request):
 	if (request.user.is_anonymous()):
 		return render_to_response("incorrect_user2.html", {'userid' : djangoUserID}, context_instance=RequestContext(request))
 	if (request.user == djangoUserID):
+		djangoUser = User.objects.get(id=djangoUserID) # look up salon in db to get id
+		handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
+		salonID = request.GET.get('salonID', '')
+		salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
+		admin_mail = 'team@handsome.ly'
+		email = djangoUser.email
+		# add new notification request
+		newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") 
+		newNotifReq.save()
+		message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for '+salon.salonName
+		#email user and us
+		send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
+		return render_to_response("thank_you.html", {"name" : djangoUser.email}, context_instance=RequestContext(request))
+	else: 
 		return render_to_response("incorrect_user2.html", {'userid' : djangoUserID, 'requserid' : request.user.id}, context_instance=RequestContext(request))
-	djangoUser = User.objects.get(id=djangoUserID) # look up salon in db to get id
-	handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
-	salonID = request.GET.get('salonID', '')
-	salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
-	admin_mail = 'team@handsome.ly'
-	email = djangoUser.email
-	# add new notification request
-	newNotifReq = Request(customerID=handsomelyUser.customerID, salonID=salonID, startDate="null", status="REQ", noSoonerThan="null") 
-	newNotifReq.save()
-	message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for '+salon.salonName
-	#email user and us
-	send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
-	return render_to_response("thank_you.html", {"name" : djangoUser.email}, context_instance=RequestContext(request))
 
 def notify_customers(request):
 	userIDFromForm = request.POST['djangoUserID']
