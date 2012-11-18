@@ -249,10 +249,10 @@ def get_notified(request):
 
 def create_notification_request(request):
 	djangoUserID = request.GET['djangoUserID']
+	djangoUser = User.objects.get(id=djangoUserID) # look up salon in db to get id
 	if (request.user.is_anonymous()):
 		return render_to_response("incorrect_user2.html", {'userid' : djangoUserID}, context_instance=RequestContext(request))
-	if (request.user == djangoUserID):
-		djangoUser = User.objects.get(id=djangoUserID) # look up salon in db to get id
+	if (request.user == djangoUser):
 		handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
 		salonID = request.GET.get('salonID', '')
 		salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
