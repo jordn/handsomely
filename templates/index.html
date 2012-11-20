@@ -17,6 +17,7 @@
     <!--- Popup styling etc -->
     <link href="{% static 'css/main.css' %}" rel="stylesheet">
     <script type="text/javascript" src="{% static "js/main.js"%}"></script>
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
   {% endblock %}
   
   {% block content %}
@@ -28,8 +29,13 @@
       }
     </script>
 
-      <div class="row-fluid">
-        <p class="lead">Choose your favourite Cambridge haircutterie and don't miss out on massive savings</p>
+      <div class="row-fluid" style="margin: 0px 0 60px 0;">
+        <div class="span6 satisfy billboard">
+          Cheaper haircuts for going at off-peak times
+        </div>
+        <div class="span3 offset1"><a href="/register"><button class="btn btn-large btn-primary" type="button" style="margin-top:40px;"><span class="satisfy big-register">Register now</span><br><span class="satisfy button-subtitle">to not miss out on massive savings</span></button></a>
+        </div>
+
       </div>
 
 

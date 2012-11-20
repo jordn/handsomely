@@ -32,3 +32,30 @@
   border: solid #000000 2px; 
    visibility: hidden; 
   }
+
+  .billboard {
+    font-size: 30px;
+    line-height: 60px;
+    color: #333;
+    padding-top: 30px;
+    font-size: 58px;
+    letter-spacing: 0;
+    text-indent: 5px;
+    margin: 0 px 0 30px 0;
+    text-align: right;
+}
+
+.satisfy {
+    font-family: 'Satisfy',sans-serif;
+}
+
+  .big-register {
+    font-size: 40px;
+    line-height: 40px;
+    margin-bottom: 5px;
+  }
+
+  .button-subtitle {
+    font-size: 20px;
+    line-height: 20px;
+  }
