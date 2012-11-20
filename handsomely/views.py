@@ -199,6 +199,7 @@ def register(request):
 	newUser.first_name = confCode
      	newUser.save()
 	send_mail('Handsomely - Confirmation - Action Required', message, 'team@handsome.ly', [email], fail_silently=False)
+	send_mail('Handsomely - User signup', 'Hi. A user has signed up, and has been sent a confirmation email to: ' + email, 'team@handsome.ly', ['team@handsome.ly'], fail_silently=False)
 	return render_to_response('index.html', {}, context_instance=RequestContext(request))
      else:
 	return render_to_response('register.html', {}, context_instance=RequestContext(request)) 
@@ -257,6 +258,7 @@ def create_notification_request(request):
 	else:
 		handsomelyUser = HandsomelyUser.objects.get(email=djangoUser.email) # look up handsomelyuser in db
 		salonID = request.GET.get('salonID', '')
+		salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
 		salon = Salon.objects.get(id=salonID) # look up handsomelyuser in db
 		admin_mail = 'team@handsome.ly'
 		email = djangoUser.email
@@ -266,6 +268,7 @@ def create_notification_request(request):
 		message = 'Thanks for using Handsomely, this is confirmation of your Handsome.ly request for '+salon.salonName
 		#email user and us
 		send_mail('Handsomely submission confirmation', message, admin_mail, [email, admin_mail], fail_silently=False)
+		send_mail('Handsomely - user request', 'Hi!\n A user has made a request for your salon. Please log-on to www.handsome.ly to notify them of available appointments!', admin_mail, [salonEmail], fail_silently=False)
 		return render_to_response("thank_you.html", {"name" : djangoUser.email}, context_instance=RequestContext(request))
 		
 
