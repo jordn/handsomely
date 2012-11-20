@@ -200,9 +200,9 @@ def register(request):
      	newUser.save()
 	send_mail('Handsomely - Confirmation - Action Required', message, 'team@handsome.ly', [email], fail_silently=False)
 	send_mail('Handsomely - User signup', 'Hi. A user has signed up, and has been sent a confirmation email to: ' + email, 'team@handsome.ly', ['team@handsome.ly'], fail_silently=False)
-	return render_to_response('register_thank_you.html', {}, context_instance=RequestContext(request))
+	return render_to_response('register_thank_you.html', {'email' : email}, context_instance=RequestContext(request))
      else:
-	return render_to_response('register.html', {'email' : email}, context_instance=RequestContext(request)) 
+	return render_to_response('register.html', {}, context_instance=RequestContext(request)) 
 
 def confirm(request): #if this point is reached, the email is real
     confCode = request.GET['code']
