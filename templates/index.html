@@ -30,7 +30,25 @@
           Cheaper haircuts for going at off-peak times
         </div>
         <div class="span5 offset1">
-          <a href="/register"><button class="btn btn-large btn-primary" type="button" style="height:100px; margin-top:40px;"><span class="satisfy big-register">Register now</span><br><span class="satisfy button-subtitle">to not miss out on massive savings</span></button></a>
+          
+          {% if user.is_authenticated %}
+          <a href="/profile">
+            <button class="btn btn-large" type="button" style="height:100px; margin-top:40px;">
+              <span class="satisfy big-register">Welcome</span><br>
+              <span class="satisfy button-subtitle">Click here to check your requests</span>
+            </button>
+          </a>
+          {% endif %}
+
+
+          {% if not user.is_authenticated %} 
+          <a href="/register">
+            <button class="btn btn-large btn-primary" type="button" style="height:100px; margin-top:40px;">
+              <span class="satisfy big-register">Register now</span><br>
+              <span class="satisfy button-subtitle">to not miss out on massive savings</span>
+            </button>
+          </a>
+          {% endif %}
 
           <a href="/about"><button class="btn btn-large btn-info satisfy" style="height:100px; margin-top:40px; font-size:20px">or learn more</button></a>
         </div>
