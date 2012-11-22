@@ -15,6 +15,7 @@
 			var fri = new Array();
 			var sat = new Array();
 			var sund = new Array();
+			var websites = new Array();
 
 //-------------------------Javascript origin starts further down-----------------------------------
 
@@ -131,6 +132,7 @@
 						names[i] = (dat[i].fields.salonName);
 						phones[i] = (dat[i].fields.phone);
 						addresses[i] = (dat[i].fields.address);
+						websites[i] = (dat[i].fields.webAddress);
 						//call the function parsePrice with the arguments of salons primary key (identifier) and index
 						parsePrice(dat[i].pk, i)
 						//call the function parseHours with the arguments of salons primary key (identifier) and index		
@@ -233,6 +235,7 @@
 									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
 								}
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
+								marker_content += "<br><center><a href = '" + websites[index] + "'>" + names[index] +  " website</a></center>";
 								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
 								if (mon[index][0] == mon[index][1]){  
@@ -352,6 +355,7 @@
 									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
 								}								
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
+								marker_content += "<br><center><a href = '" + websites[index] + "'>" + names[index] +  " website</a></center>";
 								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
 								if (mon[index][0] == mon[index][1]){  
