@@ -235,7 +235,7 @@
 									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
 								}
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
-								marker_content += "<br><center><a href = '" + websites[index] + "'>" + names[index] +  " website</a></center>";
+								marker_content += "<br><span class="'website'><a href = '" + websites[index] + "'>" + names[index] +  " website</a></span>";
 								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
 								if (mon[index][0] == mon[index][1]){  
@@ -288,12 +288,10 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								if (names[index] == "Directors"){
-									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
+								if (names[index] == "Directors" or names[index] = "Hairy Canary"){
+									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Email me of any available haircut appointments and deals\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
-								if (names[index] == "Hairy Canary"){
-									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Notify me when it's quiet\" id=\"getNotifiedButton" + salonID + "\">"; 
-								}
+
 								//defined all the infobox parameters.
 								var myboxOptions = {
 		                 			content: marker_content 
