@@ -235,7 +235,7 @@
 									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
 								}
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
-								marker_content += "<br><span class="'website'><a href = '" + websites[index] + "'>" + names[index] +  " website</a></span>";
+								marker_content += "<br><span class='website'><a href = '" + websites[index] + "'>" + names[index] +  " website</a></span>";
 								marker_content += "<span class='timetable'>"
 								//if the opening and closing hours are the same then it is closed.
 								if (mon[index][0] == mon[index][1]){  
