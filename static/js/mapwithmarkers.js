@@ -288,7 +288,7 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								if (names[index] == "Directors" or names[index] = "Hairy Canary"){
+								if (names[index] == "Directors" or names[index] == "Hairy Canary"){
 									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Email me of any available haircut appointments and deals\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
 
@@ -406,7 +406,7 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								if (names[index] == "Directors" or names[index] = "Hairy Canary"){
+								if (names[index] == "Directors" or names[index] == "Hairy Canary"){
 									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Email me of any available haircut appointments and deals\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
 								//defined all the infobox parameters.
