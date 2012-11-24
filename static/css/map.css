@@ -32,6 +32,6 @@
  	margin:10px;
  }
 
-.infobox .website {
+.infobox > .website {
 	font-size: 13px;
 }

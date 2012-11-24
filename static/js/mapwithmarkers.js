@@ -214,12 +214,10 @@
 			          		position: results[0].geometry.location
 			      		});
 			      		//CODE ADDED TO MAKE DIRECTORS GREEN
-			      		if (names[index] == "Directors"){
+			      		if (names[index] == "Directors" || names[index] == "Hairy Canary" || names[index] == "Matthew Luke Men's Lounge"){
 			      			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
 			      		}
-			      		if (names[index] == "Hairy Canary"){
-			      			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
-			      		}
+
 						//This code does the infoboxes. Infobox allows for greater flexibility that infowindow
 						var infowindow = new InfoBox();
 						//listener is the click.
@@ -234,6 +232,7 @@
 								if (names[index] == "Hairy Canary"){
 									marker_content += "<br><i>Typical handsome.ly price: £21</i>"
 								}
+
 								marker_content += "<br><span class='phone_number'>" + phones[index] + "</span>";
 								marker_content += "<br><span class='website'><a href = '" + websites[index] + "'>" + names[index] +  " website</a></span>";
 								marker_content += "<span class='timetable'>"
@@ -288,7 +287,7 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								if (names[index] == "Directors" || names[index] == "Hairy Canary"){
+								if (names[index] == "Directors" || names[index] == "Hairy Canary" || names[index] == "Matthew Luke Men's Lounge"){
 									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Email me any available haircuts\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
 
@@ -335,9 +334,10 @@
 		          		map: map,
 		          		position: location
 		      		});
-		      	if (names[index] == "Hairy Canary"){
-			      	marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
-			    }
+	      		//CODE ADDED TO MAKE DIRECTORS GREEN
+	      		if (names[index] == "Directors" || names[index] == "Hairy Canary" || names[index] == "Matthew Luke Men's Lounge"){
+	      			marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+	      		}
 
 				//This code does the infoboxes
 				var infowindow = new InfoBox();
@@ -406,7 +406,7 @@
 								}
 								marker_content += "</span>" //this is closing the timetable class
 								//this is the "let me know" button
-								if (names[index] == "Directors" || names[index] == "Hairy Canary"){
+								if (names[index] == "Directors" || names[index] == "Hairy Canary" || names[index] == "Matthew Luke Men's Lounge"){
 									marker_content += "<br><input type='button' onClick='tellUsers(" + salonID + ")' class='getNotifiedButton btn-block btn-primary' value=\"Email me any available haircuts\" id=\"getNotifiedButton" + salonID + "\">"; 
 								}
 								//defined all the infobox parameters.
