@@ -5,12 +5,11 @@
 {% block content %}
 	<h1>Registration</h1>
 	<br/>
-	<p>Please enter your e-mail address below to register.</p>
-	 <p> We'll email you a confirmation link straight away. Please click on it to get started</p> 
+	<p class="lead">Please enter your e-mail address below to register and we'll send a confirmation link straight away</p>
 	<br/>
-	<form action="/register/" method="post"> {% csrf_token %}
+	<form action="/register/" method="post" class="form-inline"> {% csrf_token %}
 		<p> 
-			e-mail: <input type="text" name="email"/>
-			<input type="submit" value="Go!" /> 
+			<strong>email: </strong><input type="text" name="email"/>
+			<input type="submit" class="btn btn-primary" value="Go!" /> 
 		</p>
 {% endblock %}

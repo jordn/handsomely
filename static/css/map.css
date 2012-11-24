@@ -31,3 +31,7 @@
  	line-height: 14px;
  	margin:10px;
  }
+
+.infobox > .website {
+	font-size: 13px;
+}
