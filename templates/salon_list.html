@@ -32,7 +32,7 @@
     {% if user.is_authenticated %}
       <form action="/request_haircut/" method="POST">
     {% else %}
-      <form action="/ajax_login/" method="POST">
+      <form action="/register/" method="POST">
     {% endif %}
       {% csrf_token %}
       {% for salon in list_of_salons %}
