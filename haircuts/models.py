@@ -1,5 +1,5 @@
 from django.db import models
-from django_localflavor_gb.forms import GBPostcodeField
+from addons.django_localflavor_gb.forms import GBPostcodeField
 
 class HandsomelyUser(User): 
 	django_user_id = models.OneToOneField(User) 
