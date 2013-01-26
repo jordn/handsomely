@@ -11,6 +11,9 @@ class HandsomelyUser(models.Model):
 	is_salon = models.BooleanField(default=False)
 	confirmed = models.BooleanField(default=False)
 	
+	def __unicode__(self):
+		return self.django_user_id.email
+	
 class Salon(models.Model):
 	handsomely_user_id = models.ForeignKey('HandsomelyUser')
 	salon_name = models.CharField(max_length=50)
