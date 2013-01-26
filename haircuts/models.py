@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 import datetime
 
 class HandsomelyUser(User): 
-	django_user_id = models.OneToOneField(User) 
+#class HandsomelyUser(models.Model): 
+#	django_user_id = models.OneToOneField(User) 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
 	is_salon = models.BooleanField(default=False)
@@ -24,6 +25,9 @@ class Salon(models.Model):
 	mens_handsomely_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True)
 	womens_standard_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True)
 	womens_handsomely_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True) 
+	
+	def __unicode__(self):
+		return self.salon_name
 	
 class Request(models.Model):
 	handsomely_user_id = models.ForeignKey('HandsomelyUser')
