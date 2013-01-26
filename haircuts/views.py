@@ -96,6 +96,7 @@ def notify_customers(request):
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
 		custID = recipientHandsomelyUser.customerID
 		to_email = recipientDjangoUser.email
+		#TODO!!!!!!!!!!!!!! Are emails being sent ?
 		# content
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
 				       "salon_name" : salon.salonName, 
