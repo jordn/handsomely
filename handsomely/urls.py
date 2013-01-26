@@ -16,7 +16,7 @@ urlpatterns = patterns('',
 urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
     url(r'index/$', 'index'),
-
+    url(r'notify/$', 'notify_customers'),
 )
 	
 
