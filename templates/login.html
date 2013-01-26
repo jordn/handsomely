@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section>
+      <form action="" method="post" class="form-very-large">
+        {% csrf_token %}      
+        <ul class="unstyled">
+        {% for error in form.errors %}
+            <li class="text-error"><strong>{{ error }}</strong></li>
+        {% endfor %}
+        </ul>
+        <table>
+          <tr><td>{{ form.email }}</td></tr>
+          <tr><td>{{ form.password }}</td></tr>
+          <tr><td>{{ form.remember_me }}{{ form.remember_me.label_tag }}</td><td><input class="btn btn-large btn-primary" type="submit" value="Log in"></td></tr>
+        </table>
+      </form>
+
+  </section>
+
+{% endblock %}
