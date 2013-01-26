@@ -26,9 +26,9 @@ class Request(models.Model):
 	handsomely_user_id = models.ForeignKey('HandsomelyUser')
 	salon_id = models.ForeignKey('Salon')
 	haircut_choices = ( ('M', 'Male'), ('F', 'Female') )
-	haircut_type = (max_length=1, choices=haircut_choices) 
+	haircut_type = models.CharField(max_length=1, choices=haircut_choices) 
 	status_choices =  ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
-	status = (max_length=4, choices=status_choices) 
+	status = models.CharField(max_length=4, choices=status_choices) 
 	start_date_time = models.DateTimeField(default=datetime.now) 
 	
 class Notification(models.Model):
@@ -37,7 +37,7 @@ class Notification(models.Model):
 	request_ids = models.ManyToManyField(Request)
 	filled_by = models.ForeignKey('HandsomelyUser')
 	status_choices = ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
-	status = (max_length=4, choices=haircut_choices) 
+	status = models.CharField(max_length=4, choices=haircut_choices) 
 	appointment_date_time = models.DateTimeField()
 	appointment_price = models.DecimalField(max_digits=4, decimal_places=2)
 	original_price = models.DecimalField(max_digits=4, decimal_places=2)
