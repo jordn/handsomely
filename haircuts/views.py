@@ -9,6 +9,7 @@ from django.template import Context
 from django.contrib.auth.models import User
 from models import *
 import datetime
+import time
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
