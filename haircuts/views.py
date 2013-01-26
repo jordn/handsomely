@@ -6,6 +6,7 @@ from haircuts.forms import RegisterForm, LoginForm
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.contrib import auth
 from django.contrib.auth.models import User
 from models import *
 
@@ -66,7 +67,14 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('requests/')
+			username = request.POST.get('username', '')
+			password = request.POST.get('password', '')
+		    user = auth.authenticate(username=username, password=password)
+		    if user is not None and user.is_active:
+		        # Correct password, and the user is marked "active"
+		        auth.login(request, user)
+		        # Redirect to a success page.
+		        return HttpResponseRedirect("/requests/")
     else:
         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
     return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
