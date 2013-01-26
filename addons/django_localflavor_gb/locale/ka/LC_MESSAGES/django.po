@@ -1,0 +1,334 @@
+# This file is distributed under the same license as the Django package.
+# 
+# Translators:
+# avsd05 <avsd05@gmail.com>, 2011.
+# Jannis Leidel <jannis@leidel.info>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-localflavor-gb\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-20 16:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: forms.py:25
+msgid "Enter a valid postcode."
+msgstr "შეიყვანეთ სწორი საფოსტო კოდი."
+
+#: gb_regions.py:11
+msgid "Bedfordshire"
+msgstr "ბედფორდშირი"
+
+#: gb_regions.py:12
+msgid "Berkshire"
+msgstr ""
+
+#: gb_regions.py:13
+msgid "Bristol"
+msgstr ""
+
+#: gb_regions.py:14
+msgid "Buckinghamshire"
+msgstr "ბუკინჰემშირი"
+
+#: gb_regions.py:15
+msgid "Cambridgeshire"
+msgstr ""
+
+#: gb_regions.py:16
+msgid "Cheshire"
+msgstr "ჩეშირი"
+
+#: gb_regions.py:17
+msgid "City of London"
+msgstr ""
+
+#: gb_regions.py:18
+msgid "Cornwall"
+msgstr ""
+
+#: gb_regions.py:19
+msgid "County Durham"
+msgstr ""
+
+#: gb_regions.py:20
+msgid "Cumbria"
+msgstr "კამბრია"
+
+#: gb_regions.py:21
+msgid "Derbyshire"
+msgstr "დერბიშირი"
+
+#: gb_regions.py:22
+msgid "Devon"
+msgstr "დევონი"
+
+#: gb_regions.py:23
+msgid "Dorset"
+msgstr "დორსეტი"
+
+#: gb_regions.py:24
+msgid "East Riding of Yorkshire"
+msgstr ""
+
+#: gb_regions.py:25
+msgid "East Sussex"
+msgstr "აღმოსავლეთ სასექსი"
+
+#: gb_regions.py:26
+msgid "Essex"
+msgstr "ესექსი"
+
+#: gb_regions.py:27
+msgid "Gloucestershire"
+msgstr "გლოსტეშირი"
+
+#: gb_regions.py:28
+msgid "Greater London"
+msgstr "დიდი ლონდონი"
+
+#: gb_regions.py:29
+msgid "Greater Manchester"
+msgstr "დიდი მანჩესტერი"
+
+#: gb_regions.py:30
+msgid "Hampshire"
+msgstr "ჰემპშირი"
+
+#: gb_regions.py:31
+msgid "Herefordshire"
+msgstr ""
+
+#: gb_regions.py:32
+msgid "Hertfordshire"
+msgstr "ჰარტფორდშირი"
+
+#: gb_regions.py:33
+msgid "Isle of Wight"
+msgstr ""
+
+#: gb_regions.py:34
+msgid "Kent"
+msgstr "კენტი"
+
+#: gb_regions.py:35
+msgid "Lancashire"
+msgstr "ლანკაშირი"
+
+#: gb_regions.py:36
+msgid "Leicestershire"
+msgstr "ლაიჩესტეშირი"
+
+#: gb_regions.py:37
+msgid "Lincolnshire"
+msgstr "ლინკოლნშირი"
+
+#: gb_regions.py:38
+msgid "Merseyside"
+msgstr "მერსისაიდი"
+
+#: gb_regions.py:39
+msgid "Norfolk"
+msgstr "ნორფოლკი"
+
+#: gb_regions.py:40
+msgid "North Yorkshire"
+msgstr "ჩრდილოეთ იოკშირი"
+
+#: gb_regions.py:41
+msgid "Northamptonshire"
+msgstr "ნორტჰემპტონშირი"
+
+#: gb_regions.py:42
+msgid "Northumberland"
+msgstr "ნორტუმბერლანდი"
+
+#: gb_regions.py:43
+msgid "Nottinghamshire"
+msgstr "ნოტინგემშირი"
+
+#: gb_regions.py:44
+msgid "Oxfordshire"
+msgstr "ოქსფორდშირი"
+
+#: gb_regions.py:45
+msgid "Rutland"
+msgstr ""
+
+#: gb_regions.py:46
+msgid "Shropshire"
+msgstr "შროპშირი"
+
+#: gb_regions.py:47
+msgid "Somerset"
+msgstr "სომერსეტი"
+
+#: gb_regions.py:48
+msgid "South Yorkshire"
+msgstr "სამხრეთ იოკშირი"
+
+#: gb_regions.py:49
+msgid "Staffordshire"
+msgstr "სტაფორდშირი"
+
+#: gb_regions.py:50
+msgid "Suffolk"
+msgstr "საფოლკი"
+
+#: gb_regions.py:51
+msgid "Surrey"
+msgstr "სურეი"
+
+#: gb_regions.py:52
+msgid "Tyne and Wear"
+msgstr "თაინ და უირი"
+
+#: gb_regions.py:53
+msgid "Warwickshire"
+msgstr "უარვიკშირი"
+
+#: gb_regions.py:54
+msgid "West Midlands"
+msgstr "დასავლეთ მიდლენდსი"
+
+#: gb_regions.py:55
+msgid "West Sussex"
+msgstr "დასავლეთ სასექსი"
+
+#: gb_regions.py:56
+msgid "West Yorkshire"
+msgstr "დასავლეთ იოკშირი"
+
+#: gb_regions.py:57
+msgid "Wiltshire"
+msgstr "უილტშირი"
+
+#: gb_regions.py:58
+msgid "Worcestershire"
+msgstr "უორსესტერშირი"
+
+#: gb_regions.py:62
+msgid "County Antrim"
+msgstr "ანტრიმის ქვეყანა"
+
+#: gb_regions.py:63
+msgid "County Armagh"
+msgstr "არმაგის ქვეყანა"
+
+#: gb_regions.py:64
+msgid "County Down"
+msgstr "დაუნის ქვეყანა"
+
+#: gb_regions.py:65
+msgid "County Fermanagh"
+msgstr "ფერმანაგის ქვეყანა"
+
+#: gb_regions.py:66
+msgid "County Londonderry"
+msgstr "ლონდონდერის ქვეყანა"
+
+#: gb_regions.py:67
+msgid "County Tyrone"
+msgstr "ტაირონის ქვეყანა"
+
+#: gb_regions.py:71
+msgid "Clwyd"
+msgstr "კლოუიდი"
+
+#: gb_regions.py:72
+msgid "Dyfed"
+msgstr "დაიფიდი"
+
+#: gb_regions.py:73
+msgid "Gwent"
+msgstr "გვენტი"
+
+#: gb_regions.py:74
+msgid "Gwynedd"
+msgstr "გუაინიდი"
+
+#: gb_regions.py:75
+msgid "Mid Glamorgan"
+msgstr "შუა გლემორგენი"
+
+#: gb_regions.py:76
+msgid "Powys"
+msgstr "პოუისი"
+
+#: gb_regions.py:77
+msgid "South Glamorgan"
+msgstr "სამხრეთ გლემორგენი"
+
+#: gb_regions.py:78
+msgid "West Glamorgan"
+msgstr "დასავლეთ გლემორგენი"
+
+#: gb_regions.py:82
+msgid "Borders"
+msgstr "საზღვრები"
+
+#: gb_regions.py:83
+msgid "Central Scotland"
+msgstr "ცენტრალური შოტლანდია"
+
+#: gb_regions.py:84
+msgid "Dumfries and Galloway"
+msgstr "დამფრაის და გელოუეი"
+
+#: gb_regions.py:85
+msgid "Fife"
+msgstr "ფაიფი"
+
+#: gb_regions.py:86
+msgid "Grampian"
+msgstr "გრემპაინი"
+
+#: gb_regions.py:87
+msgid "Highland"
+msgstr "ჰაილენდი"
+
+#: gb_regions.py:88
+msgid "Lothian"
+msgstr "ლოთიენი"
+
+#: gb_regions.py:89
+msgid "Orkney Islands"
+msgstr "ორკნის კუნძულები"
+
+#: gb_regions.py:90
+msgid "Shetland Islands"
+msgstr "შიტლენდის კუნძულები"
+
+#: gb_regions.py:91
+msgid "Strathclyde"
+msgstr "სტრესკლაიდი"
+
+#: gb_regions.py:92
+msgid "Tayside"
+msgstr "თეისაიდი"
+
+#: gb_regions.py:93
+msgid "Western Isles"
+msgstr "დასავლეთ კუნძულები"
+
+#: gb_regions.py:97
+msgid "England"
+msgstr "ინგლისი"
+
+#: gb_regions.py:98
+msgid "Northern Ireland"
+msgstr "ჩრდილოეთ ირლანდია"
+
+#: gb_regions.py:99
+msgid "Scotland"
+msgstr "შოტლანდია"
+
+#: gb_regions.py:100
+msgid "Wales"
+msgstr "უელსი"
