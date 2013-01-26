@@ -1,46 +1,3 @@
-.billboard {
-    line-height: 63px;
-    color: #333;
-    padding-top: 30px;
-    font-size: 58px;
-    letter-spacing: 0;
-    text-indent: 5px;
-    text-align: right;
-}
-
-.satisfy {
-    font-family: 'Satisfy', cursive, sans-serif;
-}
-
-.shadows {
-      font-family: 'Shadows Into Light Two', 'Satisfy', cursive, sans-serif;
-}
-
-.big-register {
-    font-size: 40px;
-    line-height: 50px;
-    margin-bottom: 5px;
-  }
-
-.button-subtitle {
-    font-size: 20px;
-    line-height: 20px;
-  }
-
-.arrow-text {
--webkit-transform: rotate(-16deg);
--moz-transform: rotate(-16deg);
-transform: rotate(-16deg);
-font-size: 20px;
-line-height: 24px;    
-}
-
-.to-do-list li{
-    padding: 5px;  
-    font-size: 20px;
-    line-height: 24px;   
-}
-
 
 .btn-lady {
   background-color: hsl(307, 100%, 21%) !important;
@@ -97,6 +54,14 @@ line-height: 24px;
 .delicious { 
   font-family: 'Marko One', serif;
   font-weight: 400; 
+}
+
+
+.form-very-large #id_email, #id_password {
+  font-size: 24px;
+  line-height: 36px;
+  height: 34px;
+  width: 350px;
 }
 
 .salon-select {

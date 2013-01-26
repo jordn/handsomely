@@ -1,13 +1,14 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from models import HandsomelyUser, Salon, Request, Notification
-from haircuts.forms import RegisterForm
+from haircuts.forms import RegisterForm, LoginForm
+from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.contrib.auth.models import User
 from models import *
+import datetime
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
@@ -55,17 +56,29 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('requests/')
     else:
         form = RegisterForm(
             initial={'email': ''}
             )
     return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('requests/')
+    else:
+        form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
+    return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+
+
 		
 def notify_customers(request):
 	userIDFromForm = request.GET['duid']
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
+	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
 	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'
@@ -73,7 +86,7 @@ def notify_customers(request):
 	reqIds = []
 	for req in requestsList:
 		reqIds.append(req.id)
-	notif = Notification(request_ids=reqIds, salon_id=salon.id, timeSent=datetime.now(), timeReplied=datetime.max, status='PEN')
+	notif = Notification(request_ids=reqIds, salon_id=salon, timeSent=datetime.datetime.now(), timeReplied=datetime.datetime.max, status='PEN')
 	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
@@ -156,4 +169,4 @@ def respond_to_notification(request):
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
 		else:
 			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
-			
+

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 import datetime
 
 class HandsomelyUser(models.Model): 
-	django_user_id = models.OneToOneField(User) 
+	django_user_id = models.OneToOneField(User, related_name='profile') 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
 	is_salon = models.BooleanField(default=False)
@@ -43,7 +43,7 @@ class Request(models.Model):
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
 	salon_id = models.ForeignKey('Salon')
-	request_ids = models.ManyToManyField(Request)
+	request_ids = models.ManyToManyField(Request, related_name='request_notification')
 	filled_by = models.ForeignKey('Request', blank=True, null=True)
 	status_choices = ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
 	status = models.CharField(max_length=4, choices=status_choices) 

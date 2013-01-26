@@ -20,5 +20,6 @@ urlpatterns += patterns('haircuts.views',
     url(r'salon_list/$', 'salon_list'),
     url(r'request_haircut/$', 'request_haircut'),
     url(r'register/$', 'register'),
+    url(r'login/$', 'login'),
     url(r'notify/$', 'notify_customers'),
 )
