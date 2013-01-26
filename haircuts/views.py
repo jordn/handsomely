@@ -1,8 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from haircuts.forms import RegisterForm
-
+from haircuts.forms import RegisterForm, LoginForm
 
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
@@ -16,16 +15,63 @@ def index (request):
 def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
 
+def salon_list(request):
+	if request.method == 'GET':
+		sex = request.GET['sex']
+		list_of_salons = []
+		salons = Salon.objects.all()
+	if sex == 'lady':
+		for salon in salons:
+			if salon.womens_standard_price:
+				list_of_salons.append(salon)
+		if list_of_salons == []:
+			list_of_salons = 'No salons were found :('
+		return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+	else:
+		for salon in salons:
+			if salon.mens_standard_price:
+				list_of_salons.append(salon)
+		if list_of_salons == []:
+			list_of_salons = 'No salons were found :('
+		return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+	
+def request_haircut(request):
+	if request.method == 'POST':
+		gender = request.POST['gender']
+		salon_to_be_requested = request.POST['salon']
+		#NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
+		salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
+		requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+		new_request = Request(
+			handsomely_user_id = requester.id,
+			salon_id = salon_for_request,
+			haircut_type = gender,
+			status = 'WAIT',
+			)
+		new_request.save()
+		return render_to_response('index.html', {}, context_instance=RequestContext(request))
+
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('requests/')
     else:
         form = RegisterForm(
             initial={'email': ''}
             )
     return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('requests/')
+    else:
+        form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
+    return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+
+
 		
 def notify_customers(request):
 	userIDFromForm = request.GET['duid']
@@ -122,4 +168,4 @@ def respond_to_notification(request):
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
 		else:
 			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
-			
+
