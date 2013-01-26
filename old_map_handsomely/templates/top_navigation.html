@@ -1,0 +1,55 @@
+<!-- Not currently used as to get the active tab meant I've shoved this code in base.html instead -->
+
+{% block top_navigation %}
+      <div class="navbar navbar-static-top">
+        <div class="navbar-inner" style="padding-top: 10px; margin-bottom: 20px;">
+        <div class="container-fluid">  
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <!-- 3 little horizontal bars -->
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+
+          <span class="logo pull-left" style="color:black; font-size:36px; line-height: 40px; font-weight:bold;"><a href="/">handsome.ly</a></span>
+
+          <!-- Everything you want hidden at 940px or less, place within here -->
+          <div class="nav-collapse collapse">
+          <!-- .nav, .navbar-search, .navbar-form, etc -->
+            <ul class="nav nav-tabs pull-right">
+
+              <li class="{% block nav-index-active %}{% endblock %}">
+              <a href="/">For Customers</a>
+              </li>
+
+              <li class="{% block nav-salons-active %}{% endblock %}">
+              <a href="/salons">For Salons</a>
+              </li>
+
+              <li class="{% block nav-about-active %}{% endblock %}">
+              <a href="/about">About Us</a>
+              </li>
+
+              <li class="dropdown">
+                <a href="/profile" class="dropdown-toggle {% block nav-profile-active %}{% endblock %}" data-toggle="dropdown">
+                  My Account<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="/profile">Edit Profile</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="/logout">Sign Out</a>
+                  </li>
+                </ul><!--/dropdownmenu-->
+              </li>
+
+            </ul>
+          </div><!-- nav collapse -->
+
+        </div> <!--/container-->
+      </div>
+      </div>
+{% endblock %}
