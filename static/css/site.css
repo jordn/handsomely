@@ -16,6 +16,15 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.btn-lady:hover,
+.btn-lady.active,
+.btn-lady.disabled {
+  color: #333333;
+  text-decoration: underline;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
 .btn-man {
   background-color: hsl(219, 100%, 21%) !important;
   background-repeat: repeat-x;
@@ -33,10 +42,20 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.btn-man:hover,
+.btn-man.active,
+.btn-man.disabled {
+  color: #333333;
+  text-decoration: underline;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
 .delicious { 
   font-family: 'Marko One', serif;
   font-weight: 400; 
 }
+
 
 .form-very-large #id_email, #id_password {
   font-size: 24px;
@@ -44,3 +63,9 @@
   height: 34px;
   width: 350px;
 }
+
+.salon-select {
+    font-size: 15px;
+    line-height: 20px;
+    margin-bottom: 5px;
+  }

@@ -3,7 +3,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from haircuts.forms import RegisterForm, LoginForm
 
-
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
@@ -15,6 +14,42 @@ def index (request):
 
 def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
+
+def salon_list(request):
+	if request.method == 'GET':
+		sex = request.GET['sex']
+		list_of_salons = []
+		salons = Salon.objects.all()
+	if sex == 'lady':
+		for salon in salons:
+			if salon.womens_standard_price:
+				list_of_salons.append(salon)
+		if list_of_salons == []:
+			list_of_salons = 'No salons were found :('
+		return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+	else:
+		for salon in salons:
+			if salon.mens_standard_price:
+				list_of_salons.append(salon)
+		if list_of_salons == []:
+			list_of_salons = 'No salons were found :('
+		return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+	
+def request_haircut(request):
+	if request.method == 'POST':
+		gender = request.POST['gender']
+		salon_to_be_requested = request.POST['salon']
+		#NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
+		salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
+		requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+		new_request = Request(
+			handsomely_user_id = requester.id,
+			salon_id = salon_for_request,
+			haircut_type = gender,
+			status = 'WAIT',
+			)
+		new_request.save()
+		return render_to_response('index.html', {}, context_instance=RequestContext(request))
 
 def register(request):
     if request.method == 'POST':
@@ -42,18 +77,21 @@ def notify_customers(request):
 	userIDFromForm = request.GET['duid']
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
-	salon = Salon.objects.get(user_id=djangoUser)
-	requestsList = Request.objects.filter(salonID=salonID).filter(Q(status="REQ") | Q(status="HOL"))
+	salon = Salon.objects.get(handsomely_user_id=djangoUser)
+	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
+	reqIds = []
+	for req in requestsList:
+		reqIds.append(req.id)
+	notif = Notification(request_ids=reqIds, salon_id=salon.id, timeSent=datetime.now(), timeReplied=datetime.max, status='PEN')
+	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
 		req.save()
-		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
-		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID.id)
+		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id)
+		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
 		custID = recipientHandsomelyUser.customerID
-		notif = Notification(customerID=custID, salonID=salonID, timeSent=datetime.now(), timeReplied=datetime.max, status='PEN')
-		notif.save()
 		to_email = recipientDjangoUser.email
 		# content
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
@@ -129,3 +167,4 @@ def respond_to_notification(request):
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
 		else:
 			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
+

@@ -4,12 +4,15 @@ from django_localflavor_gb.forms import GBPostcodeField
 from django.contrib.auth.models import User
 import datetime
 
-class HandsomelyUser(User): 
+class HandsomelyUser(models.Model): 
 	django_user_id = models.OneToOneField(User) 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
 	is_salon = models.BooleanField(default=False)
 	confirmed = models.BooleanField(default=False)
+	
+	def __unicode__(self):
+		return self.django_user_id.email
 	
 class Salon(models.Model):
 	handsomely_user_id = models.ForeignKey('HandsomelyUser')
@@ -25,6 +28,9 @@ class Salon(models.Model):
 	womens_standard_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True)
 	womens_handsomely_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True) 
 	
+	def __unicode__(self):
+		return self.salon_name
+	
 class Request(models.Model):
 	handsomely_user_id = models.ForeignKey('HandsomelyUser')
 	salon_id = models.ForeignKey('Salon')
@@ -38,7 +44,7 @@ class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
 	salon_id = models.ForeignKey('Salon')
 	request_ids = models.ManyToManyField(Request)
-	filled_by = models.ForeignKey('HandsomelyUser')
+	filled_by = models.ForeignKey('Request', blank=True, null=True)
 	status_choices = ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
 	status = models.CharField(max_length=4, choices=status_choices) 
 	appointment_date_time = models.DateTimeField()
