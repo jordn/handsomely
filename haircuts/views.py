@@ -43,8 +43,9 @@ def request_haircut(request):
 		#NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
 		salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
 		requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+		hu = HandsomelyUser.objects.get(django_user_id = requester)
 		new_request = Request(
-			handsomely_user_id = requester.id,
+			handsomely_user_id = hu,
 			salon_id = salon_for_request,
 			haircut_type = gender,
 			status = 'WAIT',
