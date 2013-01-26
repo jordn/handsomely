@@ -23,8 +23,8 @@ def register(request):
 		return render_to_response('salon_list.html', {'sex' : sex, 'womens_salons' : womens_salons}, context_instance=RequestContext(request))
 		
 def notify_customers(request):
-	userIDFromForm = request.POST['djangoUserID']
-	additionalInfoFromForm = request.POST['additionalInfoFromSalon']
+	userIDFromForm = request.GET['duid']
+	additionalInfoFromForm = request.get['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser)
 	salonID = handsomelyUser.salonID
