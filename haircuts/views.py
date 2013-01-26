@@ -5,3 +5,6 @@ from django.template import RequestContext
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
+
+def comingsoon (request):
+    return render_to_response('comingsoon.html', {'path': request.path})
