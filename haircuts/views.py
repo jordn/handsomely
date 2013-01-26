@@ -9,6 +9,7 @@ from django.template import Context
 from django.contrib.auth.models import User
 from models import *
 import datetime
+import time
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
@@ -85,9 +86,9 @@ def notify_customers(request):
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	reqIds = []
+	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
 	for req in requestsList:
-		reqIds.append(req.id)
-	notif = Notification(request_ids=reqIds, salon_id=salon, timeSent=datetime.datetime.now(), timeReplied=datetime.datetime.max, status='PEN')
+		notif.request_ids.add(req.id)
 	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
