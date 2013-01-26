@@ -31,6 +31,7 @@ def notify_customers(request):
 	userIDFromForm = request.GET['duid']
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
+	handsomely_user = HansomelyUser.objects.get(django_user_id=djangoUser)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
 	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'

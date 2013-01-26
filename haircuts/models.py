@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 import datetime
 
 class HandsomelyUser(models.Model): 
-	django_user_id = models.OneToOneField(User) 
+	django_user_id = models.OneToOneField(User, related_name='profile') 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
 	is_salon = models.BooleanField(default=False)
