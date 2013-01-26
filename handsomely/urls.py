@@ -16,10 +16,6 @@ urlpatterns = patterns('',
 urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
     url(r'index/$', 'index'),
+    url(r'register/$', 'register'),
     url(r'notify/$', 'notify_customers'),
 )
-	
-
-# # #this is to try and get local static files to be served. might not be needed.
-# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-# urlpatterns += staticfiles_urlpatterns()

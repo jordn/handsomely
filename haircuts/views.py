@@ -1,6 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from haircuts.forms import RegisterForm
+
+
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
@@ -14,15 +17,15 @@ def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
 
 def register(request):
-	if request.method == 'GET':
-		sex = request.GET['sex']
-	if sex == 'lady':
-		womens_salons = []
-		salons = Salon.objects.all()
-		for salon in salons:
-			if salon.womens_standard_price:
-				womens_salons.append(salon)
-		return render_to_response('salon_list.html', {'sex' : sex, 'womens_salons' : womens_salons}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/')
+    else:
+        form = RegisterForm(
+            initial={'email': ''}
+            )
+    return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
 		
 def notify_customers(request):
 	userIDFromForm = request.GET['duid']
@@ -115,3 +118,4 @@ def respond_to_notification(request):
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
 		else:
 			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
+			
