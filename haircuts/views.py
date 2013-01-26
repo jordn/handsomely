@@ -2,13 +2,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from haircuts.forms import RegisterForm, LoginForm
-
+from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
 from django.contrib import auth
 from django.contrib.auth.models import User
 from models import *
+import datetime
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
@@ -85,14 +86,15 @@ def notify_customers(request):
 	userIDFromForm = request.GET['duid']
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
+	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
 	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	reqIds = []
+	notif = Notification(salon_id=salon, issue_date_time=datetime.datetime.now, timeReplied=datetime.datetime.max, status='OPEN', appointment_date_time=datetime.datetime.now, appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
 	for req in requestsList:
-		reqIds.append(req.id)
-	notif = Notification(request_ids=reqIds, salon_id=salon.id, timeSent=datetime.now(), timeReplied=datetime.max, status='PEN')
+		notif.request_ids.add(req.id)
 	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
