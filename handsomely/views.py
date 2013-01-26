@@ -322,6 +322,11 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
+		text_content += "\n - Customer email: " + to_email
+		html_content += "<br> - Customer email: " + to_email
+		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
 	result = 'done'
 	response = HttpResponse(result)
 	return response
@@ -376,7 +381,7 @@ def response(request):
 							req.save()
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
 		else:
-			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : message, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
+			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 				
 				
 def response_yes_after_providing_details(request):
