@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
-from haircuts.views import *
+from django.contrib.auth.views import login, logout
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -20,6 +21,12 @@ urlpatterns += patterns('haircuts.views',
     url(r'^salon_list/$', 'salon_list'),
     url(r'^request_haircut/$', 'request_haircut'),
     url(r'^register/$', 'register'),
-    url(r'^login/$', 'login'),
+    #url(r'^login/$', 'login'),
     url(r'^notify/$', 'notify_customers'),
+)
+
+urlpatterns += patterns('',
+    #  user accounts
+    (r'^login/$',  login),
+    (r'^logout/$', logout),
 )
