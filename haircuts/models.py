@@ -42,6 +42,6 @@ class Notification(models.Model):
 	appointment_price = models.DecimalField(max_digits=4, decimal_places=2)
 	original_price = models.DecimalField(max_digits=4, decimal_places=2)
 	haircut_choices = (( ('M', 'Male'), ('F', 'Female') )
-	haircut_type = (max_length=1, choices=haircut_choices) 
+	haircut_type = models.CharField(max_length=1, choices=haircut_choices) 
 	additional_info = models.TextField()
 		
