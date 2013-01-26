@@ -32,7 +32,7 @@ def notify_customers(request):
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
-	requestsList = Request.objects.filter(salonID=salonID).filter(Q(status="REQ") | Q(status="HOL"))
+	requestsList = Request.objects.filter(salonID=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	for req in requestsList:
