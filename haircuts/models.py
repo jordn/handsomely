@@ -13,7 +13,7 @@ class Salon(models.Model):
 	salon_name = models.CharField(max_length=50)
 	address_line_1 = models.CharField(max_length=100)
 	address_line_2 = models.CharField(max_length=100)
-	city = models.CharField(max_length=100)
+	city = models.CharField(max_length=30)
 	postcode = GBPostcodeField()
 	phone_number = models.CharField(max_length=20)
 	website = models.URLField()
@@ -30,12 +30,11 @@ class Request(models.Model):
 	status_choices =  ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
 	status = (max_length=4, choices=status_choices) 
 	start_date_time = models.DateTimeField(default=datetime.now) 
-	#notification_id
 	
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.now)
 	salon_id = models.ForeignKey('Salon')
-	#request_ids = models.ManyToManyField() #TODO
+	request_ids = models.ManyToManyField(Request)
 	filled_by = models.ForeignKey('HandsomelyUser')
 	status_choices = ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
 	status = (max_length=4, choices=haircut_choices) 
