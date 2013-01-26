@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<nav class="row">
+  <h3>handsome.ly</h3>
+</nav>
+
+<section>
+
+      <form action="" method="post" class="form-inline">
+        {% csrf_token %}      
+        <ul class="unstyled">
+        {% for error in form.email.errors %}
+            <li class="text-error"><strong>{{ error }}</strong></li>
+        {% endfor %}
+        </ul>
+          {{ form.email }}
+        <input class="btn" type="submit" value="Submit">
+      </form>
+
+  </section>
+
+{% endblock %}

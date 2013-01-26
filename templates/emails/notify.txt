@@ -1,0 +1,9 @@
+Hi! {{users_first_name}} \n\
+The salon {{salon_name}} is now free, why not head down now to avoid a queue?\n\
+Additional info from salon:" {{additional_info_from_salon}} "\n\n\
+Your response: \n\
+- Yes: http://www.handsome.ly/response?ans=YES&notifID={{notification_id}} \n\
+- No: http://www.handsome.ly/response?ans=NO&notifID={{notification_id}} \n\
+- Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID={{notification_id}} \n\
+Thanks,\n\n\
+the Handsome.ly Team
