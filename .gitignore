@@ -1,3 +1,4 @@
 *.pyc
 handsomely/settings.py
 handsomely/sqlite.db
+*.DS_Store

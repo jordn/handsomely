@@ -8,19 +8,14 @@ from django.template import Context
 def index (request):
     return render_to_response('index.html', {'path': request.path})
 
-def hackathon_index (request):
-    return render_to_response('hackathon_index.html', {'path': request.path})
-
 def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
 
 def register(request):
 	if request.method == 'GET':
 		sex = request.GET['sex']
-	if request.method == 'GET':
-		sex = request.GET['sex']
+	if sex == 'lady':
 		womens_salons = []
-
 		salons = Salon.objects.all()
 		for salon in salons:
 			if salon.womens_standard_price:

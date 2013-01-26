@@ -1,19 +1,47 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}   {% block nav-index-active %}active{% endblock %}
+{% load staticfiles %}
 
-{% block content %}
-<nav class="row">
-  <h3>handsome.ly</h3>
-</nav>
+{% block title %}Off-peak haircuts for beautiful discounts |  Handsome.ly{% endblock %}
 
-<section>
-  <h1>Discounted off-peak haircuts (in Cambridge) <a href="about">Learn more</a></h1>
-</section>
+  {% block page_specific_headers %}
 
-<section>
-  <form>
-    <button class="btn btn-super">Ladies' cut</button>
-    <button class="btn btn-super">Gents' cut</button>
-  </form>
-</section>
+  {% endblock %}
+  
+  {% block content %}
 
-{% endblock %}
+
+      <div class="row-fluid" style="margin: 20px 0 20px 0;">
+        <div class="span8 offset2 delicious billboard">
+          <center>
+            <p style="font-size:30px">
+              Reduced price haircuts at off peak times.
+            </p>
+            <p style="font-size:30px">
+              It's as simple ass that. <a href="/about">Learn more.</a>
+            </p>
+          </center>
+        </div>
+        <div class="span12"> 
+            <form action="/register/" method="GET">
+                <button name="sex" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value="lady" style="height:100px; margin-top:40px;"><i class="icon-girl icon-white"></i>
+                <span class="delicious big-register" style="font-size: 29px">Ladies' Haircut ></span><br>
+                </button>
+              </div>
+              <div class="span12">
+                <button name="sex" class="span4 offset4 btn-man btn-large btn-primary" type="submit" value="man" style="height:100px; margin-top:10px;">
+                  <span class="delicious big-register" style="font-size: 29px">Gentlemen's Haircut ></span><br>
+                </button>
+              </div>
+            </form>
+        </div>
+
+      </div>
+
+
+      <div class="row-fluid"><br>
+        <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small> <br><br><br>
+      </div>
+
+
+
+  {% endblock %}
