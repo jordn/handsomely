@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+from django.contrib.auth.models import User
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
