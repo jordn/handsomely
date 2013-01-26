@@ -9,6 +9,7 @@
         {% for error in form.errors %}
             <li class="text-error"><strong>{{ error }}</strong></li>
         {% endfor %}
+        {{message}}
         </ul>
         <table>
           <tr><td>{{ form.email }}</td></tr>
