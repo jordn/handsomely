@@ -86,7 +86,7 @@ def notify_customers(request):
 	reqIds = []
 	for req in requestsList:
 		reqIds.append(req.id)
-	notif = Notification(request_ids=reqIds, salon_id=salon.id, timeSent=datetime.datetime.now(), timeReplied=datetime.max, status='PEN')
+	notif = Notification(request_ids=reqIds, salon_id=salon.id, timeSent=datetime.datetime.now(), timeReplied=datetime.datetime.max, status='PEN')
 	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
