@@ -1,0 +1,34 @@
+{% extends "hackathonbase.html" %}   {% block nav-index-active %}active{% endblock %}
+{% load staticfiles %}
+
+{% block title %}Off-peak haircuts for beautiful discounts |  Handsome.ly{% endblock %}
+
+  {% block page_specific_headers %}
+
+  {% endblock %}
+  
+  {% block content %}
+
+
+
+  {% if sex = 'lady' %}
+
+  {% for salon in womens_salons %}
+
+  <div class = "span12">
+    <button name={{sex}} class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value="lady" style="height:100px; margin-top:40px;"><i class="icon-girl icon-white"></i>
+    <span class="delicious big-register" style="font-size: 10px">"{{salon.salon_name}}"></span><br>
+  </div>
+  </button>
+
+  {% end for %}
+
+  {% else %}
+
+  wtf
+
+  {% endif %}
+
+ 
+
+  {% endblock %}

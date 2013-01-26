@@ -1,0 +1,108 @@
+{% extends "base.html" %}   {% block nav-index-active %}active{% endblock %}
+{% load staticfiles %}
+
+{% block title %}Off-peak haircuts for beautiful discounts |  Handsome.ly{% endblock %}
+
+  {% block page_specific_headers %}
+
+  {% endblock %}
+  
+  {% block content %}
+
+
+      <div class="row-fluid" style="margin: 20px 0 20px 0;">
+        <div class="span8 offset2 delicious billboard">
+          <center>
+            <p style="font-size:30px">
+              Reduced price haircuts at off peak times.
+            </p>
+            <p style="font-size:30px">
+              It's as simple as that. <a href="/about">Learn more.</a>
+            </p>
+          </center>
+        </div>
+        <div class="span12"> 
+            {% if user.is_authenticated %}
+            <a href="/profile">
+              <button class="btn btn-large" type="button" style="height:100px; margin-top:40px;">
+                <span class="satisfy big-register">Welcome</span><br>
+                <span class="satisfy button-subtitle">Click here to check your requests</span>
+              </button>
+            </a>
+            {% endif %}
+
+            <form action="/hackathon_register/" method="GET">
+                <button name="sex" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value="lady" style="height:100px; margin-top:40px;"><i class="icon-girl icon-white"></i>
+                <span class="delicious big-register" style="font-size: 29px">Ladies' Haircut ></span><br>
+                </button>
+              </div>
+              <div class="span12">
+                <button name="sex" class="span4 offset4 btn-man btn-large btn-primary" type="submit" value="man" style="height:100px; margin-top:10px;">
+                  <span class="delicious big-register" style="font-size: 29px">Gentlemen's Haircut ></span><br>
+                </button>
+              </div>
+            </form>
+        </div>
+
+      </div>
+
+
+
+          <!-- uggo popups. COMMENT AND IMPROVE ME! -->
+          <div id="register-modal" class="modal">
+            <div class="modal-header">
+              <a href="javascript:register_popup('hide');"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+              <h3>Register</h3>
+            </div> 
+            <div class="modal-body">
+              <form name="register" action="/register/" method="post">
+               {% csrf_token %}
+                Email: <input type="text" name="email" />
+                <div class="form-actions">
+                  <button type="submit" name="submit" class="btn btn-primary pull-right">Register</button>
+                  <a href="javascript:register_popup('hide');"><button type="button" class="btn pull-right">Cancel</button></a>
+                </div>
+                <p>You'll receive a a confirmation email but no spam, never.</p>
+              </form>
+            </div>
+          </div> 
+
+          <!-- POPUPS -->
+          <!-- can we name the variables nicely, what is tell user? and is having 'ajax' in there relevant? -->
+          <div id="login-modal" class="modal"> 
+
+            <div class="modal-header">
+              <a href="javascript:ajax_login('hide');"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></a>
+              <h3>Login</h3>
+            </div>
+
+            <div class="modal-body">
+              <form name="ajaxLogin" action="" method="POST">
+                <div class="row">
+                  {% csrf_token %}
+                  <span class="pull-right">Email: <input type="text" name="email" id="email_ajaxLogin"/></span><br>
+                </div>
+
+                <div class="row">
+                  <span class="pull-right">Password: <input type="password" name="password" id="password_ajaxLogin" /></span>
+                </div>
+                <input type="hidden" name="djangoUserID_ajaxLogin" id="djangoUserID_ajaxLogin" value="">
+
+                <div class="form-actions">
+                  <button type="button" class="btn btn-primary pull-right" name="login" value="login" onclick="doAjaxLogin();">Log in</button>
+                  <a href="javascript:ajax_login('hide');"><button type="button" class="btn pull-right">Cancel</button></a>
+                  <a href="javascript:ajax_login('hide'); javascript:register_popup('show');" class="btn btn-link pull-right">Register for an account</a>
+                </div>
+
+                <button class="btn btn-primary btn-block" type="button" name="ajax_tellUser" id="ajax_tellUser" value="" onclick="ajax_tellU(Ajax_salonID);" style="visibility: hidden;">Email me when this salon is free</button>
+              </form>
+            </div>
+        </div> 
+
+      <div class="row-fluid"><br>
+        <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small> <br><br><br>
+      </div>
+
+
+
+  {% endblock %}
