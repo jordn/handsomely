@@ -32,17 +32,20 @@ def notify_customers(request):
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
-	requestsList = Request.objects.filter(salonID=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
+	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
+	reqIds = []
+	for req in requestsList:
+		reqIds.append(req.id)
+	notif = Notification(request_ids=reqIds, salon_id=salon.id, timeSent=datetime.now(), timeReplied=datetime.max, status='PEN')
+	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
 		req.save()
-		recipientHandsomelyUser = HandsomelyUser.objects.get(customerID = req.customerID)
-		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.djangoUserID.id)
+		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id)
+		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
 		custID = recipientHandsomelyUser.customerID
-		notif = Notification(customerID=custID, salonID=salonID, timeSent=datetime.now(), timeReplied=datetime.max, status='PEN')
-		notif.save()
 		to_email = recipientDjangoUser.email
 		# content
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 

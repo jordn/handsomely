@@ -44,7 +44,7 @@ class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
 	salon_id = models.ForeignKey('Salon')
 	request_ids = models.ManyToManyField(Request)
-	filled_by = models.ForeignKey('HandsomelyUser')
+	filled_by = models.ForeignKey('Request', blank=True, null=True)
 	status_choices = ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
 	status = models.CharField(max_length=4, choices=status_choices) 
 	appointment_date_time = models.DateTimeField()
