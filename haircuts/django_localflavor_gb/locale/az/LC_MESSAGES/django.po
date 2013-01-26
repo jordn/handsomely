@@ -1,0 +1,333 @@
+# This file is distributed under the same license as the Django package.
+# 
+# Translators:
+# Ali Ismayilov <ali@ismailov.info>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-localflavor-gb\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-20 16:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Ali Ismayilov <ali@ismailov.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: forms.py:25
+msgid "Enter a valid postcode."
+msgstr "Düzgün poçt indeksini daxil edin."
+
+#: gb_regions.py:11
+msgid "Bedfordshire"
+msgstr "Bedfordşir"
+
+#: gb_regions.py:12
+msgid "Berkshire"
+msgstr ""
+
+#: gb_regions.py:13
+msgid "Bristol"
+msgstr ""
+
+#: gb_regions.py:14
+msgid "Buckinghamshire"
+msgstr "Bakinqemşir"
+
+#: gb_regions.py:15
+msgid "Cambridgeshire"
+msgstr ""
+
+#: gb_regions.py:16
+msgid "Cheshire"
+msgstr "Çeşir"
+
+#: gb_regions.py:17
+msgid "City of London"
+msgstr ""
+
+#: gb_regions.py:18
+msgid "Cornwall"
+msgstr ""
+
+#: gb_regions.py:19
+msgid "County Durham"
+msgstr ""
+
+#: gb_regions.py:20
+msgid "Cumbria"
+msgstr "Kambriya"
+
+#: gb_regions.py:21
+msgid "Derbyshire"
+msgstr "Derbişir"
+
+#: gb_regions.py:22
+msgid "Devon"
+msgstr ""
+
+#: gb_regions.py:23
+msgid "Dorset"
+msgstr ""
+
+#: gb_regions.py:24
+msgid "East Riding of Yorkshire"
+msgstr ""
+
+#: gb_regions.py:25
+msgid "East Sussex"
+msgstr "Şərqi Sasseks"
+
+#: gb_regions.py:26
+msgid "Essex"
+msgstr "Esseks"
+
+#: gb_regions.py:27
+msgid "Gloucestershire"
+msgstr "Qlosesterşir"
+
+#: gb_regions.py:28
+msgid "Greater London"
+msgstr "Böyük London"
+
+#: gb_regions.py:29
+msgid "Greater Manchester"
+msgstr "Böyük Mançester"
+
+#: gb_regions.py:30
+msgid "Hampshire"
+msgstr "Hempşir"
+
+#: gb_regions.py:31
+msgid "Herefordshire"
+msgstr ""
+
+#: gb_regions.py:32
+msgid "Hertfordshire"
+msgstr "Hertfordşir"
+
+#: gb_regions.py:33
+msgid "Isle of Wight"
+msgstr ""
+
+#: gb_regions.py:34
+msgid "Kent"
+msgstr ""
+
+#: gb_regions.py:35
+msgid "Lancashire"
+msgstr "Lankaşir"
+
+#: gb_regions.py:36
+msgid "Leicestershire"
+msgstr "Lesterşir"
+
+#: gb_regions.py:37
+msgid "Lincolnshire"
+msgstr "Linkolnşir"
+
+#: gb_regions.py:38
+msgid "Merseyside"
+msgstr "Mersisayd"
+
+#: gb_regions.py:39
+msgid "Norfolk"
+msgstr ""
+
+#: gb_regions.py:40
+msgid "North Yorkshire"
+msgstr "Şimali Yorkşir"
+
+#: gb_regions.py:41
+msgid "Northamptonshire"
+msgstr "Northemptonşir"
+
+#: gb_regions.py:42
+msgid "Northumberland"
+msgstr "Nortumberlend"
+
+#: gb_regions.py:43
+msgid "Nottinghamshire"
+msgstr "Nottinqemşir"
+
+#: gb_regions.py:44
+msgid "Oxfordshire"
+msgstr "Oksfordşir"
+
+#: gb_regions.py:45
+msgid "Rutland"
+msgstr ""
+
+#: gb_regions.py:46
+msgid "Shropshire"
+msgstr "Şropşir"
+
+#: gb_regions.py:47
+msgid "Somerset"
+msgstr ""
+
+#: gb_regions.py:48
+msgid "South Yorkshire"
+msgstr "Cənubi Yorkşir"
+
+#: gb_regions.py:49
+msgid "Staffordshire"
+msgstr "Staffordşir"
+
+#: gb_regions.py:50
+msgid "Suffolk"
+msgstr "Saffolk"
+
+#: gb_regions.py:51
+msgid "Surrey"
+msgstr "Sürrey"
+
+#: gb_regions.py:52
+msgid "Tyne and Wear"
+msgstr "Tayn və Uir"
+
+#: gb_regions.py:53
+msgid "Warwickshire"
+msgstr "Uoruikşir"
+
+#: gb_regions.py:54
+msgid "West Midlands"
+msgstr "Uest-Minlends"
+
+#: gb_regions.py:55
+msgid "West Sussex"
+msgstr "Qərbi Sasseks"
+
+#: gb_regions.py:56
+msgid "West Yorkshire"
+msgstr "Qərbi Yorkşir"
+
+#: gb_regions.py:57
+msgid "Wiltshire"
+msgstr "Uiltşir"
+
+#: gb_regions.py:58
+msgid "Worcestershire"
+msgstr "Vursterşir"
+
+#: gb_regions.py:62
+msgid "County Antrim"
+msgstr "Antrim qraflığı"
+
+#: gb_regions.py:63
+msgid "County Armagh"
+msgstr "Arma qraflığı"
+
+#: gb_regions.py:64
+msgid "County Down"
+msgstr "Daun qraflığı"
+
+#: gb_regions.py:65
+msgid "County Fermanagh"
+msgstr "Fermana qraflığı"
+
+#: gb_regions.py:66
+msgid "County Londonderry"
+msgstr "Londonderri qraflığı"
+
+#: gb_regions.py:67
+msgid "County Tyrone"
+msgstr "Tiron qraflığı"
+
+#: gb_regions.py:71
+msgid "Clwyd"
+msgstr "Kluid"
+
+#: gb_regions.py:72
+msgid "Dyfed"
+msgstr "Dived"
+
+#: gb_regions.py:73
+msgid "Gwent"
+msgstr "Quent"
+
+#: gb_regions.py:74
+msgid "Gwynedd"
+msgstr "Quinet"
+
+#: gb_regions.py:75
+msgid "Mid Glamorgan"
+msgstr "Mid Qlamorqan"
+
+#: gb_regions.py:76
+msgid "Powys"
+msgstr "Pouis"
+
+#: gb_regions.py:77
+msgid "South Glamorgan"
+msgstr "Cənubi Qlamorqan"
+
+#: gb_regions.py:78
+msgid "West Glamorgan"
+msgstr "Qərbi Qlamorqan"
+
+#: gb_regions.py:82
+msgid "Borders"
+msgstr ""
+
+#: gb_regions.py:83
+msgid "Central Scotland"
+msgstr "Mərkəzi Şotlandiya"
+
+#: gb_regions.py:84
+msgid "Dumfries and Galloway"
+msgstr "Damfris və Qallouey"
+
+#: gb_regions.py:85
+msgid "Fife"
+msgstr "Fayf"
+
+#: gb_regions.py:86
+msgid "Grampian"
+msgstr "Qrampian"
+
+#: gb_regions.py:87
+msgid "Highland"
+msgstr "Haylend"
+
+#: gb_regions.py:88
+msgid "Lothian"
+msgstr "Lotian"
+
+#: gb_regions.py:89
+msgid "Orkney Islands"
+msgstr "Orkni adaları"
+
+#: gb_regions.py:90
+msgid "Shetland Islands"
+msgstr "Şetlend adaları"
+
+#: gb_regions.py:91
+msgid "Strathclyde"
+msgstr "Stratklayd"
+
+#: gb_regions.py:92
+msgid "Tayside"
+msgstr "Taysayd"
+
+#: gb_regions.py:93
+msgid "Western Isles"
+msgstr "Qərbi adalar"
+
+#: gb_regions.py:97
+msgid "England"
+msgstr "İngiltərə"
+
+#: gb_regions.py:98
+msgid "Northern Ireland"
+msgstr "Şimali İrlandiya"
+
+#: gb_regions.py:99
+msgid "Scotland"
+msgstr "Şotlandiya"
+
+#: gb_regions.py:100
+msgid "Wales"
+msgstr "Uels"
