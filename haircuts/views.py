@@ -4,13 +4,13 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 def index (request):
-    return render_to_response('coming_soon.html', {'path': request.path})
+    return render_to_response('index.html', {'path': request.path})
 
 def hackathon_index (request):
     return render_to_response('hackathon_index.html', {'path': request.path})
 
-def comingsoon (request):
-    return render_to_response('comingsoon.html', {'path': request.path})
+def coming_soon (request):
+    return render_to_response('coming_soon.html', {'path': request.path})
 
 def register(request):
 	if request.method == 'GET':
