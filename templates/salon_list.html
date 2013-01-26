@@ -15,14 +15,14 @@
     {% if user.is_authenticated %}
       <form action="/request_haircut/" method="POST">
     {% else %}
-      <form action="/ajax_login/" method="POST">
+      <form action="/login/" method="POST">
     {% endif %}
       {% csrf_token %}
       {% for salon in list_of_salons %}
           <input type="hidden" value="F" name="gender">
-          <button name="salon" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value={{salon.salon_name}} style="height:120px; margin-top:40px;" data-toggle="button">
+          <button name="salon" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value={{salon.salon_name}} style="height:120px; margin-top:40px; margin" data-toggle="button">
           <span class="delicious salon-select span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}, {{salon.address_line_2}}</span><br>
-          <span class="delicious salon-select">Typically:<br><del>£{{salon.womens_standard_price}}</del> -> £{{salon.womens_handsomely_price}}</span>
+          <span class="delicious salon-select span1">Typically:<br><del>£{{salon.womens_standard_price}}</del> -> £{{salon.womens_handsomely_price}}</span>
         </button><br>
       {% endfor %}
       </form>
@@ -32,7 +32,7 @@
     {% if user.is_authenticated %}
       <form action="/request_haircut/" method="POST">
     {% else %}
-      <form action="/ajax_login/" method="POST">
+      <form action="/register/" method="POST">
     {% endif %}
       {% csrf_token %}
       {% for salon in list_of_salons %}
