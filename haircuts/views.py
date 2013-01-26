@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from haircuts.forms import RegisterForm
+from haircuts.forms import RegisterForm, LoginForm
 
 
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -20,12 +20,23 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('requests/')
     else:
         form = RegisterForm(
             initial={'email': ''}
             )
     return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('requests/')
+    else:
+        form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
+    return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+
+
 		
 def notify_customers(request):
 	userIDFromForm = request.GET['duid']
@@ -118,4 +129,3 @@ def respond_to_notification(request):
 						return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
 		else:
 			return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
-			

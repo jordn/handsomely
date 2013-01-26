@@ -2,13 +2,11 @@
 
 {% block content %}
 
-<nav class="row">
-  <h3>handsome.ly</h3>
-</nav>
+
 
 <section>
 
-      <form action="" method="post" class="form-inline">
+      <form action="" method="post" class="form-inline form-very-large">
         {% csrf_token %}      
         <ul class="unstyled">
         {% for error in form.email.errors %}
@@ -16,7 +14,7 @@
         {% endfor %}
         </ul>
           {{ form.email }}
-        <input class="btn" type="submit" value="Submit">
+        <input class="btn btn-large btn-primary" type="submit" value="Request haircut">
       </form>
 
   </section>
