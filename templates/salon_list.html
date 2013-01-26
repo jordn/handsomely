@@ -1,4 +1,4 @@
-{% extends "hackathonbase.html" %}   {% block nav-index-active %}active{% endblock %}
+{% extends "base.html" %}   {% block nav-index-active %}active{% endblock %}
 {% load staticfiles %}
 
 {% block title %}Off-peak haircuts for beautiful discounts |  Handsome.ly{% endblock %}
@@ -8,27 +8,49 @@
   {% endblock %}
   
   {% block content %}
+  <!--This does not call with whole name eg only calls "Hairy" instead of "Hairy Canary"-->
 
+  {% if sex == 'lady' %}
 
-
-  {% if sex = 'lady' %}
-
-  {% for salon in womens_salons %}
-
-  <div class = "span12">
-    <button name={{sex}} class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value="lady" style="height:100px; margin-top:40px;"><i class="icon-girl icon-white"></i>
-    <span class="delicious big-register" style="font-size: 10px">"{{salon.salon_name}}"></span><br>
-  </div>
-  </button>
-
-  {% end for %}
+    {% if user.is_authenticated %}
+      <form action="/request_haircut/" method="POST">
+    {% else %}
+      <form action="/ajax_login/" method="POST">
+    {% endif %}
+      {% csrf_token %}
+      {% for salon in list_of_salons %}
+          <input type="hidden" value="F" name="gender">
+          <button name="salon" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value={{salon.salon_name}} style="height:120px; margin-top:40px;" data-toggle="button">
+          <span class="delicious salon-select span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}, {{salon.address_line_2}}</span><br>
+          <span class="delicious salon-select">Typically:<br><del>£{{salon.womens_standard_price}}</del> -> £{{salon.womens_handsomely_price}}</span>
+        </button><br>
+      {% endfor %}
+      </form>
 
   {% else %}
 
-  wtf
+    {% if user.is_authenticated %}
+      <form action="/request_haircut/" method="POST">
+    {% else %}
+      <form action="/ajax_login/" method="POST">
+    {% endif %}
+      {% csrf_token %}
+      {% for salon in list_of_salons %}
+          <input type="hidden" value="M" name="gender">
+          <button name="salon" class="span4 offset4 btn-man btn-large btn-primary" type="submit" value={{salon.salon_name}} style="height:120px; margin-top:40px;" data-toggle="button">
+          <span class="delicious salon-select span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}, {{salon.address_line_2}}</span><br>
+          <span class="delicious salon-select">Typically:<br><del>£{{salon.mens_standard_price}}</del> -> £{{salon.mens_handsomely_price}}</span>
+        </button><br>
 
+      {% endfor %}
+      </form>
+ 
   {% endif %}
 
- 
-
   {% endblock %}
+
+
+
+
+
+
