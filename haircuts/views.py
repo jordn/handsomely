@@ -85,7 +85,7 @@ def notify_customers(request):
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	reqIds = []
-	notif = Notification(salon_id=salon, issue_date_time=datetime.datetime.now().strftime('%Y-%m-%d-%H:%M'), status='OPEN', appointment_date_time=datetime.datetime.now, appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
+	notif = Notification(salon_id=salon, issue_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), status='OPEN', appointment_date_time=datetime.datetime.now, appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
 	for req in requestsList:
 		notif.request_ids.add(req.id)
 	notif.save()
