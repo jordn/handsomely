@@ -2,6 +2,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from haircuts.forms import RegisterForm
 
 def index (request):
     return render_to_response('index.html', {'path': request.path})
@@ -10,12 +11,12 @@ def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
 
 def register(request):
-	if request.method == 'GET':
-		sex = request.GET['sex']
-	if sex == 'lady':
-		womens_salons = []
-		salons = Salon.objects.all()
-		for salon in salons:
-			if salon.womens_standard_price:
-				womens_salons.append(salon)
-		return render_to_response('salon_list.html', {'sex' : sex, 'womens_salons' : womens_salons}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/')
+    else:
+        form = RegisterForm(
+            initial={'email': ''}
+            )
+    return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))

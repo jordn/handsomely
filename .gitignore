@@ -1,4 +1,4 @@
 *.pyc
 handsomely/settings.py
 handsomely/sqlite.db
-*.DS_Store
+.DS_Store

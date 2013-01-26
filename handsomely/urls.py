@@ -15,7 +15,9 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
-    url(r'index/$', 'index'),
+    url(r'index', 'index'),
+    url(r'register/$', 'register'),
+
 
 )
 	
