@@ -24,7 +24,7 @@ def register(request):
 		
 def notify_customers(request):
 	userIDFromForm = request.GET['duid']
-	additionalInfoFromForm = request.get['addinfo']
+	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
 	handsomelyUser = HandsomelyUser.objects.get(djangoUserID = djangoUser)
 	salonID = handsomelyUser.salonID
