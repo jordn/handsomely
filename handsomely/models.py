@@ -42,6 +42,9 @@ class SalonOpeningHours(models.Model):
 	openingTime = models.CharField(max_length=5)
 	closingTime = models.CharField(max_length=5)
 
+	def __unicode__(self):
+		return self.dayOfTheWeek
+
 class SalonDetails(models.Model):
 	salonID = models.IntegerField() #FK
 	contactName = models.CharField(max_length=50)
