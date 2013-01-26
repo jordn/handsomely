@@ -17,7 +17,7 @@ class Salon(models.Model):
 	address_line_1 = models.CharField(max_length=100, blank = True, null = True)
 	address_line_2 = models.CharField(max_length=100, blank = True, null = True)
 	city = models.CharField(max_length=30, blank = True, null = True)
-	postcode = GBPostcodeField(blank = True, null = True)
+	postcode = CharField(blank = True, null = True)
 	phone_number = models.CharField(max_length=20, blank = True, null = True)
 	website = models.URLField(blank = True, null = True)
 	mens_standard_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True)
