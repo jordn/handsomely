@@ -4,9 +4,8 @@ from django_localflavor_gb.forms import GBPostcodeField
 from django.contrib.auth.models import User
 import datetime
 
-class HandsomelyUser(User): 
-#class HandsomelyUser(models.Model): 
-#	django_user_id = models.OneToOneField(User) 
+class HandsomelyUser(models.Model): 
+	django_user_id = models.OneToOneField(User) 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
 	is_salon = models.BooleanField(default=False)
