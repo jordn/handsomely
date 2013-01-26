@@ -1,0 +1,334 @@
+# This file is distributed under the same license as the Django package.
+# 
+# Translators:
+# Alex Gaynor <alex.gaynor@gmail.com>, 2011.
+# Jannis Leidel <jannis@leidel.info>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-localflavor-gb\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-20 16:38-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Alex Gaynor <alex.gaynor@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: forms.py:25
+msgid "Enter a valid postcode."
+msgstr "יש להזין מיקוד חוקי."
+
+#: gb_regions.py:11
+msgid "Bedfordshire"
+msgstr " בדפורשייר"
+
+#: gb_regions.py:12
+msgid "Berkshire"
+msgstr ""
+
+#: gb_regions.py:13
+msgid "Bristol"
+msgstr ""
+
+#: gb_regions.py:14
+msgid "Buckinghamshire"
+msgstr "באקינגהמשייר"
+
+#: gb_regions.py:15
+msgid "Cambridgeshire"
+msgstr ""
+
+#: gb_regions.py:16
+msgid "Cheshire"
+msgstr " צ'שייר"
+
+#: gb_regions.py:17
+msgid "City of London"
+msgstr ""
+
+#: gb_regions.py:18
+msgid "Cornwall"
+msgstr ""
+
+#: gb_regions.py:19
+msgid "County Durham"
+msgstr ""
+
+#: gb_regions.py:20
+msgid "Cumbria"
+msgstr " קאמבריה"
+
+#: gb_regions.py:21
+msgid "Derbyshire"
+msgstr "דרבישייר"
+
+#: gb_regions.py:22
+msgid "Devon"
+msgstr " דבון"
+
+#: gb_regions.py:23
+msgid "Dorset"
+msgstr "דורסט"
+
+#: gb_regions.py:24
+msgid "East Riding of Yorkshire"
+msgstr ""
+
+#: gb_regions.py:25
+msgid "East Sussex"
+msgstr "מזרח אסקס"
+
+#: gb_regions.py:26
+msgid "Essex"
+msgstr "אסקס"
+
+#: gb_regions.py:27
+msgid "Gloucestershire"
+msgstr "גלוסטרשייר"
+
+#: gb_regions.py:28
+msgid "Greater London"
+msgstr "לונדון רבתי"
+
+#: gb_regions.py:29
+msgid "Greater Manchester"
+msgstr "מנצ'סטר רבתי"
+
+#: gb_regions.py:30
+msgid "Hampshire"
+msgstr "המפשייר"
+
+#: gb_regions.py:31
+msgid "Herefordshire"
+msgstr ""
+
+#: gb_regions.py:32
+msgid "Hertfordshire"
+msgstr "הארטפורדשייר"
+
+#: gb_regions.py:33
+msgid "Isle of Wight"
+msgstr ""
+
+#: gb_regions.py:34
+msgid "Kent"
+msgstr "קנט"
+
+#: gb_regions.py:35
+msgid "Lancashire"
+msgstr "לנקשייר"
+
+#: gb_regions.py:36
+msgid "Leicestershire"
+msgstr "ליסטרשייר"
+
+#: gb_regions.py:37
+msgid "Lincolnshire"
+msgstr " לינקולנשייר"
+
+#: gb_regions.py:38
+msgid "Merseyside"
+msgstr "מרסיסייד"
+
+#: gb_regions.py:39
+msgid "Norfolk"
+msgstr "נורפולק"
+
+#: gb_regions.py:40
+msgid "North Yorkshire"
+msgstr "צפון יורקשייר"
+
+#: gb_regions.py:41
+msgid "Northamptonshire"
+msgstr "נורת'המפטונשייר"
+
+#: gb_regions.py:42
+msgid "Northumberland"
+msgstr "נורת'אמברלנד"
+
+#: gb_regions.py:43
+msgid "Nottinghamshire"
+msgstr "נוטינגהאמשייר"
+
+#: gb_regions.py:44
+msgid "Oxfordshire"
+msgstr "אוקספורדשייר"
+
+#: gb_regions.py:45
+msgid "Rutland"
+msgstr ""
+
+#: gb_regions.py:46
+msgid "Shropshire"
+msgstr "שרופשייר"
+
+#: gb_regions.py:47
+msgid "Somerset"
+msgstr "סומרסט"
+
+#: gb_regions.py:48
+msgid "South Yorkshire"
+msgstr "דרום יורקשייר"
+
+#: gb_regions.py:49
+msgid "Staffordshire"
+msgstr "סטאפורדשייר"
+
+#: gb_regions.py:50
+msgid "Suffolk"
+msgstr " סאפוק"
+
+#: gb_regions.py:51
+msgid "Surrey"
+msgstr "סוריי"
+
+#: gb_regions.py:52
+msgid "Tyne and Wear"
+msgstr "טיין ו־וויר"
+
+#: gb_regions.py:53
+msgid "Warwickshire"
+msgstr " וורוויקשייר"
+
+#: gb_regions.py:54
+msgid "West Midlands"
+msgstr "מערב המידלנדס"
+
+#: gb_regions.py:55
+msgid "West Sussex"
+msgstr "מערב סאסקס"
+
+#: gb_regions.py:56
+msgid "West Yorkshire"
+msgstr "מערב יורקשייר"
+
+#: gb_regions.py:57
+msgid "Wiltshire"
+msgstr " ווילטשייר"
+
+#: gb_regions.py:58
+msgid "Worcestershire"
+msgstr " ווסטרשייר"
+
+#: gb_regions.py:62
+msgid "County Antrim"
+msgstr "מחוז אנטרים"
+
+#: gb_regions.py:63
+msgid "County Armagh"
+msgstr "ארמה"
+
+#: gb_regions.py:64
+msgid "County Down"
+msgstr "מחוז דאון"
+
+#: gb_regions.py:65
+msgid "County Fermanagh"
+msgstr "מחוז פרמאנה"
+
+#: gb_regions.py:66
+msgid "County Londonderry"
+msgstr "מחוז לונדונברי"
+
+#: gb_regions.py:67
+msgid "County Tyrone"
+msgstr "מחוז טיירון"
+
+#: gb_regions.py:71
+msgid "Clwyd"
+msgstr "קלוויד"
+
+#: gb_regions.py:72
+msgid "Dyfed"
+msgstr "דייפד"
+
+#: gb_regions.py:73
+msgid "Gwent"
+msgstr "גוונט"
+
+#: gb_regions.py:74
+msgid "Gwynedd"
+msgstr "גווינד"
+
+#: gb_regions.py:75
+msgid "Mid Glamorgan"
+msgstr "מרכז גלמורגן"
+
+#: gb_regions.py:76
+msgid "Powys"
+msgstr "ַפואיס"
+
+#: gb_regions.py:77
+msgid "South Glamorgan"
+msgstr "דרום גלמורגן"
+
+#: gb_regions.py:78
+msgid "West Glamorgan"
+msgstr "מערב גלמורגן"
+
+#: gb_regions.py:82
+msgid "Borders"
+msgstr "גבולות"
+
+#: gb_regions.py:83
+msgid "Central Scotland"
+msgstr "מרכז סקוטלנד"
+
+#: gb_regions.py:84
+msgid "Dumfries and Galloway"
+msgstr "דמפרייס וגאלוויי"
+
+#: gb_regions.py:85
+msgid "Fife"
+msgstr "פייף"
+
+#: gb_regions.py:86
+msgid "Grampian"
+msgstr " גרמפיאן"
+
+#: gb_regions.py:87
+msgid "Highland"
+msgstr "רמה"
+
+#: gb_regions.py:88
+msgid "Lothian"
+msgstr "לודיאן"
+
+#: gb_regions.py:89
+msgid "Orkney Islands"
+msgstr "איי אורקיי"
+
+#: gb_regions.py:90
+msgid "Shetland Islands"
+msgstr "איי שטלנד"
+
+#: gb_regions.py:91
+msgid "Strathclyde"
+msgstr "סטראת'קלייד"
+
+#: gb_regions.py:92
+msgid "Tayside"
+msgstr "טייסייד"
+
+#: gb_regions.py:93
+msgid "Western Isles"
+msgstr "האיים המערביים"
+
+#: gb_regions.py:97
+msgid "England"
+msgstr "אנגליה"
+
+#: gb_regions.py:98
+msgid "Northern Ireland"
+msgstr "צפון אירלנד"
+
+#: gb_regions.py:99
+msgid "Scotland"
+msgstr "סקוטלנד"
+
+#: gb_regions.py:100
+msgid "Wales"
+msgstr "וויילס"
