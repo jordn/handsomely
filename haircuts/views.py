@@ -38,27 +38,6 @@ def salon_list(request):
             list_of_salons = 'No salons were found :('
         return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
     
-def request_haircut(request):
-	if request.method == 'POST':
-		gender = request.POST['gender']
-		salon_to_be_requested = request.POST['salon']
-		#NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
-		salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
-		requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-		try:
-			hu = HandsomelyUser.objects.get(django_user_id = requester)
-			new_request = Request(
-				handsomely_user_id = hu,
-				salon_id = salon_for_request,
-				haircut_type = gender,
-				status = 'WAIT',
-				)
-			new_request.save()
-			return render_to_response('index.html', {}, context_instance=RequestContext(request))
-		except:
-			message = 'Please log in or register to continue :)'
-			return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
-
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -81,7 +60,7 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return HttpResponseRedirect("/requests/")
+                return HttpResponseRedirect("/index")
     else:
         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
     return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
@@ -183,4 +162,29 @@ def respond_to_notification(request):
                         return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
         else:
             return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
+
+def customer_status(request):
+    if request.method == 'POST':
+        gender = request.POST['gender']
+        salon_to_be_requested = request.POST['salon']
+        #NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
+        salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
+        requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+        try:
+            hu = HandsomelyUser.objects.get(django_user_id = requester)
+            new_request = Request(
+                handsomely_user_id = hu,
+                salon_id = salon_for_request,
+                haircut_type = gender,
+                status = 'WAIT',
+                )
+            new_request.save()
+            user_details = request.user
+            requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
+            return render_to_response('status.html', {'user_details' : user_details, 'requests': requests, 'salon_for_request': salon_for_request}, context_instance=RequestContext(request))
+        except:
+            message = 'Please log in or register to continue :)'
+            return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
+
+
 

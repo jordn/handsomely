@@ -1,22 +1,21 @@
-{% extends "base.html" %}   {% block nav-index-active %}active{% endblock %}
+{% extends "base.html" %}  
 {% load staticfiles %}
-
-{% block title %}Off-peak haircuts for beautiful discounts |  Handsome.ly{% endblock %}
-
-  {% block page_specific_headers %}
-
-  {% endblock %}
   
   {% block content %}
+
   <!--This does not call with whole name eg only calls "Hairy" instead of "Hairy Canary"-->
+
+
   <!--Load necessaries for maps-->
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD1JfFEzGVrbz1eXFV-0Zk9DbetZh07ESo&amp;sensor=false"></script>
   <script type="text/javascript" src="{% static "js/map.js" %}"></script>
- 
+ <!--***********************-->
+
+
   {% if sex == 'lady' %}
 
     {% if user.is_authenticated %}
-      <form action="/request_haircut/" method="POST">
+      <form action="/status/" method="POST">
     {% else %}
       <form action="/login/" method="POST">
     {% endif %}
@@ -46,7 +45,7 @@
   {% else %}
 
     {% if user.is_authenticated %}
-      <form action="/request_haircut/" method="POST">
+      <form action="/status/" method="POST">
     {% else %}
       <form action="/register/" method="POST">
     {% endif %}
