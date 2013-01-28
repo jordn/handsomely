@@ -9,7 +9,10 @@
   
   {% block content %}
   <!--This does not call with whole name eg only calls "Hairy" instead of "Hairy Canary"-->
-
+  <!--Load necessaries for maps-->
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD1JfFEzGVrbz1eXFV-0Zk9DbetZh07ESo&amp;sensor=false"></script>
+  <script type="text/javascript" src="{% static "js/map.js" %}"></script>
+ 
   {% if sex == 'lady' %}
 
     {% if user.is_authenticated %}
@@ -21,9 +24,22 @@
       {% for salon in list_of_salons %}
           <input type="hidden" value="F" name="gender">
           <button name="salon" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value={{salon.salon_name}} style="height:120px; margin-top:40px; margin" data-toggle="button">
-          <span class="delicious salon-select span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}, {{salon.address_line_2}}</span><br>
-          <span class="delicious salon-select span1">Typically:<br><del>£{{salon.womens_standard_price}}</del> -> £{{salon.womens_handsomely_price}}</span>
-        </button><br>
+            <span class="delicious salon-select span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}, {{salon.address_line_2}}</span><br>
+            <span class="delicious salon-select span1">Typically:<br><del>£{{salon.womens_standard_price}}</del> -> £{{salon.womens_handsomely_price}}</span>
+        </button>
+
+        <div class = "span4 offset4">
+          <div class="accordion" id="accordion2">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" onclick="initialize('{{salon.address_line_1}}, {{salon.city}}, {{salon.postcode}}, UK');">
+                Where is {{salon.salon_name}}?
+              </a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse">
+                <div id="map_canvas" class="span4" style="background-color: #efefef; height:300px"></div>
+            </div>
+          </div>
+        </div>
       {% endfor %}
       </form>
 
@@ -42,10 +58,25 @@
           <span class="delicious salon-select">Typically:<br><del>£{{salon.mens_standard_price}}</del> -> £{{salon.mens_handsomely_price}}</span>
         </button><br>
 
+        <div class = "span4 offset4">
+          <div class="accordion" id="accordion2">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" onclick="initialize('{{salon.address_line_1}}, {{salon.city}}, {{salon.postcode}}, UK');">
+                Where is {{salon.salon_name}}?
+              </a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse">
+                <div id="map_canvas" class="span4" style="background-color: #efefef; height:300px"></div>
+            </div>
+          </div>
+        </div>
+
       {% endfor %}
       </form>
- 
+  
   {% endif %}
+
+
 
   {% endblock %}
 
