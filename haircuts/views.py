@@ -178,7 +178,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	result = 'done'
+	result = 'done: ' + text
 	response = HttpResponse(result)
 	return response
 		
@@ -235,26 +235,28 @@ def respond_to_notification(request):
             return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 
 def customer_status(request):
-	gender = request.POST['gender']
-	salon_to_be_requested = request.POST['salon']
-	#NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
-	salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
-	requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-	try:
-	    hu = HandsomelyUser.objects.get(django_user_id = requester)
-	    new_request = Request(
-		handsomely_user_id = hu,
-		salon_id = salon_for_request,
-		haircut_type = gender,
-		status = 'WAIT',
-		)
-	    new_request.save()
-	    user_details = request.user
-	    requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
-	    return render_to_response('status.html', {'user_details' : user_details, 'requests': requests, 'salon_for_request': salon_for_request}, context_instance=RequestContext(request))
-	except:
-	    message = 'Please log in or register to continue :)'
-	    return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
+    if request.method == 'POST':
+        gender = request.POST['gender']
+        salon_to_be_requested = request.POST['salon']
+        #NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
+        salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
+        requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+        try:
+            hu = HandsomelyUser.objects.get(django_user_id = requester)
+            new_request = Request(
+                handsomely_user_id = hu,
+                salon_id = salon_for_request,
+                haircut_type = gender,
+                status = 'WAIT',
+                )
+            new_request.save()
+            user_details = request.user
+            requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
+            return render_to_response('status.html', {'user_details' : user_details, 'requests': requests, 'salon_for_request': salon_for_request}, context_instance=RequestContext(request))
+        except:
+            message = 'Please log in or register to continue :)'
+            return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
+
 
 def cancel_request_ajax(request):
     requestID = request.POST['reqID']
