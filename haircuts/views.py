@@ -156,7 +156,6 @@ def notify_customers(request):
 		req.save()
 		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id.id)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
-		custID = recipientHandsomelyUser.customerID
 		to_email = recipientDjangoUser.email
 		#TODO!!!!!!!!!!!!!! Are emails being sent ?
 		# content
