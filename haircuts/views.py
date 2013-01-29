@@ -114,7 +114,7 @@ def login(request):
         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
    
 def notify_customers(request):
-    form = NotifyForm()
+    form = NotifyForm()	
     return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
 
 def success(request):
@@ -178,7 +178,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	result = 'done: ' + text
+	result = 'done: ' + text_content
 	response = HttpResponse(result)
 	return response
 		
