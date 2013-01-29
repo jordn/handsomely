@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django import forms
 from haircuts.forms import RegisterForm, LoginForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -8,6 +9,8 @@ from django.template.loader import get_template
 from django.template import Context
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout, authenticate
 from models import *
 import datetime
 import time
@@ -17,6 +20,9 @@ def index (request):
 
 def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
+
+def thanks(request):
+    return render_to_response('thanks.html', {}, context_instance=RequestContext(request))
 
 def salon_list(request):
     if request.method == 'GET':
@@ -39,15 +45,56 @@ def salon_list(request):
         return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
     
 def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect('requests/')
+    form = RegisterForm(request.POST)
+    if form.is_valid():
+        if request.method == 'POST':
+            email_address = request.POST['email']
+            confCode = User.objects.make_random_password()
+            message = "Hi! Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code="
+            message += confCode
+            message += " \nThanks, the Handsome.ly team"
+            newUser = User.objects.create_user(email_address, email_address, confCode)
+            newUser.first_name = confCode
+            newUser.save()
+            send_mail('Handsomely - Confirmation - Action Required', message, 'team@handsome.ly', [email_address], fail_silently=False)
+            send_mail('Handsomely - User signup', 'Hi. A user has signed up, and has been sent a confirmation email to: ' + email_address, 'team@handsome.ly', ['team@handsome.ly'], fail_silently=False)
+            return HttpResponseRedirect('/thanks/')
     else:
         form = RegisterForm(
             initial={'email': ''}
             )
     return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
+
+
+def confirm(request): #if this point is reached, the email is real. This code is the same as the old handsome.ly project (pretty much)
+    confCode = request.GET['code']
+    try: 
+        findUser = User.objects.get(first_name = confCode)
+        findUser.first_name = " "
+        email = findUser.email
+        djangoUserID = findUser.id
+        findUser.save()
+        return render_to_response("account_confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
+    except ObjectDoesNotExist:
+        return render_to_response("invalid_confirmation.html", {"confCode" : confCode}, context_instance=RequestContext(request))
+
+def create_user(request):
+    newPassword = request.POST['newPassword']
+    email = request.POST['email']
+    djangoUserID = request.POST['djangoUserID']
+    djangoUser = User.objects.get(id = djangoUserID)
+    djangoUser.username = email
+    djangoUser.set_password(newPassword)
+    djangoUser.save()
+    findUser = User.objects.get(id = request.POST['djangoUserID'])
+    new_handsomely_user = HandsomelyUser(
+        django_user_id = findUser, #wtf should this be?
+        gender = 'U',
+        is_salon = False,
+        confirmed = True
+        )
+    new_handsomely_user.save()
+    return render_to_response("index.html", {"name" : email}, context_instance=RequestContext(request))
 
 def login(request):
     if request.method == 'POST':
@@ -60,10 +107,10 @@ def login(request):
                 # Correct password, and the user is marked "active"
                 auth.login(request, user)
                 # Redirect to a success page.
-                return HttpResponseRedirect("/index")
+                return render_to_response('index.html', {}, context_instance=RequestContext(request))
     else:
         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
-    return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+        return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
 
 
         
@@ -187,4 +234,10 @@ def customer_status(request):
             return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
 
 
-
+def cancel_request_ajax(request):
+    requestID = request.POST['reqID']
+    req = Request.objects.get(id=requestID)
+    req.delete()
+    result = req.id
+    response = HttpResponse(result)
+    return response
