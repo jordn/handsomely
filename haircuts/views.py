@@ -121,6 +121,7 @@ def success(request):
     #THIS STILL NEEDS PLENTY OF WORK! need to sort out dattime objects
     #just submitting now as the appointment date and time
     #need to send emails
+    #need to determine appropriate recipients
     if request.method == 'POST':
         submitting_salon = request.user
         hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
