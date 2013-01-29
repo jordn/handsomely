@@ -147,14 +147,14 @@ def notify_customers(request):
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
 	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
-	notif.save()
+	notif.save()	
 	for req in requestsList:
 		notif.request_ids.add(req.id)
 	notif.save()
 	for req in requestsList:
 		req.status = "HOL"
 		req.save()
-		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id)
+		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id.id)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
 		custID = recipientHandsomelyUser.customerID
 		to_email = recipientDjangoUser.email
