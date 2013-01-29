@@ -57,7 +57,7 @@
 }
 
 
-.form-very-large #id_email, #id_password {
+.form-very-large #username, #password {
   font-size: 24px;
   line-height: 36px;
   height: 34px;
@@ -69,3 +69,5 @@
     line-height: 20px;
     margin-bottom: 5px;
   }
+
+.header-login {text-align:left}

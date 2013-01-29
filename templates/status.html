@@ -1,0 +1,47 @@
+{% extends "base.html" %}  
+{% load staticfiles %}
+  
+  {% block content %}
+
+
+<div class = "container">
+  <div class = "row">
+    <div class = "span12">
+
+      <br>
+      <p>{{user_details}}! Your request for {{salon_for_request}} has successfully been processed.</p>
+
+      <p>Keep your eyes peeled for notifications!</p>
+
+      <p>You can view the status of your last 10 requests below.</p>
+
+      <br>
+
+      {% if user.is_authenticated %}
+
+          <div id="tabs-2">
+          <h3>Recent requests</h3>
+          {% if requests %}
+            <table border="1" cellpadding="5" class="table table-striped">
+            <tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
+            {% for request in requests %}
+              <tr><td>{{ request.salon_id }}</td><td>{{request.start_date_time}}</td>
+              <td>{{request.status}}</td><td id="reqtd{{ request.id }}"><a href="#" onclick="cancelRequestAjax({{ request.id }}, {{ user.id }});">Cancel</a></td></tr>
+            {% endfor %}
+            </table>
+          {% else %}
+            <b>None</b>
+          {% endif %}
+          </div>
+        
+      {% else %} 
+          <p><b>Please <a href="/login">log in</a> or <a href="../register">register</a>!</b></p>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+
+
+  {% endblock %}

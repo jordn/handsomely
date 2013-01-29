@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
-from haircuts.views import *
+from django.contrib.auth.views import login, logout
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -11,15 +12,25 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-
     )
 
 urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
-    url(r'index/$', 'index'),
-    url(r'salon_list/$', 'salon_list'),
-    url(r'request_haircut/$', 'request_haircut'),
-    url(r'register/$', 'register'),
-    url(r'login/$', 'login'),
-    url(r'notify/$', 'notify_customers'),
+    url(r'^index/$', 'index'),
+    url(r'^salon_list/$', 'salon_list'),
+    url(r'^register/$', 'register'),
+    url(r'^login/$', 'login'),
+    url(r'^notify/$', 'notify_customers'),
+    url(r'^status/$', 'customer_status'),
+    url(r'^thanks/$', 'thanks'),
+    url(r'^confirm/$', 'confirm'), 
+    url(r'^create_user/$', 'create_user'), 
+    url(r'^notify/$', 'notify_customers'), 
+    url(r'^success/$', 'success'), 
+)
+
+urlpatterns += patterns('',
+    #  user accounts
+    (r'^login/$',  login),
+    (r'^logout/$', logout),
 )
