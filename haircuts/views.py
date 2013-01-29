@@ -170,7 +170,7 @@ def notify_customers(request):
 		text_content = notification_email_text
 		html_content = notification_email_html
 		# send email
-		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
+		msg = EmailMultiAlternatives (subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
 		text_content += "\n - Customer email: " + to_email
@@ -178,7 +178,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	result = 'done: ' + text_content
+	result = 'done ' + requestsList
 	response = HttpResponse(result)
 	return response
 		
