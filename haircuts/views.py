@@ -160,7 +160,7 @@ def notify_customers(request):
 		#TODO!!!!!!!!!!!!!! Are emails being sent ?
 		# content
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
-				       "salon_name" : salon.salonName, 
+				       "salon_name" : salon.salon_name, 
 				       "additional_info_from_salon" : additionalInfoFromForm, 
 				       "notification_id" : str(notif.id),
 				       "user_email" : to_email
