@@ -123,9 +123,8 @@ def success(request):
         submitting_salon = request.user
         hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
         new_notification = Notification(
-            salon_id = hu
+            salon_id = hu,
             haircut_type = 'M'
-
             )
         new_notification.save()   
         return render_to_response('success.html', {'salon':salon}, context_instance=RequestContext(request))
