@@ -118,16 +118,23 @@ def notify_customers(request):
     return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
 
 def success(request):
-    #THIS STILL NEEDS PLENTY OF WORK!
+    #THIS STILL NEEDS PLENTY OF WORK! need to sort out dattime objects
+    #just submitting now as the appointment date and time
+    #need to send emails
     if request.method == 'POST':
         submitting_salon = request.user
         hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
+        salon_desired = Salon.objects.get(handsomely_user_id = hu.id)
         new_notification = Notification(
-            salon_id = hu,
-            haircut_type = 'M'
+            salon_id = salon_desired,
+            status = 'OPEN',
+            appointment_date_time = datetime.datetime.now(),
+            appointment_price = request.POST['discounted_price'],
+            original_price = request.POST['original_price'],
+            haircut_type = request.POST['gender']
             )
         new_notification.save()   
-        return render_to_response('success.html', {'salon':salon}, context_instance=RequestContext(request))
+        return render_to_response('success.html', {'hu': hu}, context_instance=RequestContext(request))
 
 		
 def respond_to_notification(request):
