@@ -165,8 +165,8 @@ def notify_customers(request):
 				       "notification_id" : str(notif.id),
 				       "user_email" : to_email
 				     })
-		text = get_template('template/emails/notify.txt')
-		html = get_template('templates/emails/notify.html')
+		text = get_template('emails/notify.txt')
+		html = get_template('emails/notify.html')
 		text_content = notification_email_text
 		html_content = notification_email_html
 		# send email
