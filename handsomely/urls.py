@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-
     )
 
 urlpatterns += patterns('haircuts.views',
@@ -26,6 +25,8 @@ urlpatterns += patterns('haircuts.views',
     url(r'^thanks/$', 'thanks'),
     url(r'^confirm/$', 'confirm'), 
     url(r'^create_user/$', 'create_user'), 
+    url(r'^notify/$', 'notify_customers'), 
+    url(r'^success/$', 'success'), 
 )
 
 urlpatterns += patterns('',

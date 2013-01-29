@@ -1,0 +1,17 @@
+{% extends "base.html" %}  
+{% load staticfiles %}
+  
+  {% block content %}
+
+
+<div class = "container">
+    <p>Customers have been notified successfully. Keep an eye on your email to be informed of acceptances!</p>
+    <p>Below are the recent appointments you have offered out:</p>
+    <h1>Table goes here</h1>
+    {{submitting_salon}}
+    <a href = "/notify/"><p>Or submit another appointment!</p></a>
+</div>
+
+
+
+  {% endblock %}

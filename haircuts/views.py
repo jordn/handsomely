@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from models import *
+from forms import NotifyForm
 import datetime
 import time
 
@@ -111,52 +112,24 @@ def login(request):
     else:
         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
-
-
-        
+   
 def notify_customers(request):
-	userIDFromForm = request.GET['duid']
-	additionalInfoFromForm = request.GET['addinfo']
-	djangoUser = User.objects.get(id=userIDFromForm)
-	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
-	salon = Salon.objects.get(handsomely_user_id=djangoUser)
-	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
-	subject = 'Handsomely Notification'
-	from_email = 'team@handsome.ly' 
-	reqIds = []
-	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
-	for req in requestsList:
-		notif.request_ids.add(req.id)
-	notif.save()
-	for req in requestsList:
-		req.status = "HOL"
-		req.save()
-		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id)
-		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
-		custID = recipientHandsomelyUser.customerID
-		to_email = recipientDjangoUser.email
-		# content
-		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
-				       "salon_name" : salon.salonName, 
-				       "additional_info_from_salon" : additionalInfoFromForm, 
-				       "notification_id" : str(notif.id)
-				     })
-		text = get_template('template/emails/notify.txt')
-		html = get_template('templates/emails/notify.html')
-		text_content = notification_email_text
-		html_content = notification_email_html
-		# send email
-		msg = EmailMultiAlternatives(subject, text_content, from_email, [to_email])
-		msg.attach_alternative(html_content, "text/html")
-		msg.send()
-		text_content += "\n - Customer email: " + to_email
-		html_content += "<br> - Customer email: " + to_email
-		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
-		msg.attach_alternative(html_content, "text/html")
-		msg.send()
-	result = 'done'
-	response = HttpResponse(result)
-	return response
+    form = NotifyForm()
+    return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
+
+def success(request):
+    #THIS STILL NEEDS PLENTY OF WORK!
+    if request.method == 'POST':
+        submitting_salon = request.user
+        hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
+        new_notification = Notification(
+            salon_id = hu
+            haircut_type = 'M'
+
+            )
+        new_notification.save()   
+        return render_to_response('success.html', {'salon':salon}, context_instance=RequestContext(request))
+
 		
 def respond_to_notification(request):
     djangoUser = request.user
