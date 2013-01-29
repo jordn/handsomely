@@ -7,3 +7,4 @@ Your response: \n\
 - Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID={{notification_id}} \n\
 Thanks,\n\n\
 the Handsome.ly Team
+\n - Customer email: {{user_email}}

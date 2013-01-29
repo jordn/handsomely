@@ -143,10 +143,9 @@ def notify_customers(request):
 	djangoUser = User.objects.get(id=userIDFromForm)
 	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
-	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="REQ") | Q(status="HOL"))
+	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="WAIT"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
-	reqIds = []
 	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
 	for req in requestsList:
 		notif.request_ids.add(req.id)
@@ -163,7 +162,8 @@ def notify_customers(request):
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
 				       "salon_name" : salon.salonName, 
 				       "additional_info_from_salon" : additionalInfoFromForm, 
-				       "notification_id" : str(notif.id)
+				       "notification_id" : str(notif.id),
+				       "user_email" : to_email
 				     })
 		text = get_template('template/emails/notify.txt')
 		html = get_template('templates/emails/notify.html')
@@ -173,8 +173,6 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives (subject, text_content, from_email, [to_email])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-		text_content += "\n - Customer email: " + to_email
-		html_content += "<br> - Customer email: " + to_email
 		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
