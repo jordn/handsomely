@@ -178,7 +178,7 @@ def notify_customers(request):
 		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
 		msg.attach_alternative(html_content, "text/html")
 		msg.send()
-	result = 'done ' + requestsList
+	result = 'done'
 	response = HttpResponse(result)
 	return response
 		
