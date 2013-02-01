@@ -113,7 +113,7 @@ def login(request):
         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
    
-def notify_customers(request):
+def notify(request):
     form = NotifyForm()	
     return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
 
@@ -162,6 +162,7 @@ def success(request):
         return render_to_response('success.html', {'hu': hu, 'test': person_to_send_to.django_user_id.email}, context_instance=RequestContext(request))
 
 def notify_customers(request):
+    #DO NOT USE THIS- USE NOTIFY ABOVE AS IT WORKS fa 02.02.13
 	userIDFromForm = request.GET['duid']
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
