@@ -109,6 +109,9 @@ def login(request):
                 auth.login(request, user)
                 # Redirect to a success page.
                 return render_to_response('index.html', {}, context_instance=RequestContext(request))
+            else: 
+                form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
+        	return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
     else:
         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
@@ -167,14 +170,26 @@ def notify_customers(request):
     #DO NOT USE THIS- USE NOTIFY ABOVE AS IT WORKS fa 02.02.13
     # ?? ma 02.02.13
 	userIDFromForm = request.GET['duid']
-	additionalInfoFromForm = request.GET['addinfo']
+	gender = request.GET['gender']
+	day = request.GET['day']
+	time = request.GET['time']
+	original_price_fromForm = request.GET['original_price']
+	discounted_price = request.GET['discounted_price']
+	additionalInfoFromForm = request.GET['notes']
 	djangoUser = User.objects.get(id=userIDFromForm)
 	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
 	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="WAIT"))
 	subject = 'Handsomely Notification'
 	from_email = 'team@handsome.ly' 
-	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
+	date_and_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+	date_and_time.replace(hour = time.hour)
+	date_and_time.replace(hour = time.minute)
+	if day == "TOMORROW":
+		date_and_time += datetime.timedelta(days=1)
+	elif day == "TDA": 
+		date_and_time += datetime.timedelta(days=2)
+	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=date_and_time, appointment_price=discounted_price, original_price=original_price_fromForm, haircut_type=gender, additional_info=additionalInfoFromForm)
 	notif.save()	
 	for req in requestsList:
 		notif.request_ids.add(req.id)
@@ -277,10 +292,15 @@ def customer_status(request):
             new_request.save()
             user_details = request.user
             requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
-            return render_to_response('status.html', {'user_details' : user_details, 'requests': requests, 'salon_for_request': salon_for_request}, context_instance=RequestContext(request))
+            return render_to_response('status_requested.html', {'user_details' : user_details, 'requests': requests, 'salon_for_request': salon_for_request}, context_instance=RequestContext(request))
         except:
             message = 'Please log in or register to continue :)'
             return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
+    else:
+      	    requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+      	    hu = HandsomelyUser.objects.get(django_user_id = requester)
+      	    requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
+            return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
 
 def cancel_request_ajax(request):

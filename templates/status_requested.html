@@ -1,7 +1,7 @@
 {% extends "base.html" %}  
 {% load staticfiles %}
-
-{% block page_specific_headers %}
+  
+  {% block page_specific_headers %}
     <script language="JavaScript" type="text/javascript">
   
 	    function getCookie(name) {
@@ -27,6 +27,7 @@
 
   </script>
 {% endblock %}
+  
   {% block content %}
 
 
@@ -35,7 +36,12 @@
     <div class = "span12">
 
       <br>
-      <p>Hi {{user_details}}! You can view the status of your last 10 requests below.</p>
+      <p>{{user_details}}! Your request for {{salon_for_request}} has successfully been processed.</p>
+
+      <p>Keep your eyes peeled for notifications!</p>
+
+      <p>You can view the status of your last 10 requests below.</p>
+
       <br>
 
       {% if user.is_authenticated %}

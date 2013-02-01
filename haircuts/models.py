@@ -40,6 +40,9 @@ class Request(models.Model):
 	status = models.CharField(max_length=4, choices=status_choices) 
 	start_date_time = models.DateTimeField(default=datetime.datetime.now) 
 	
+	def __unicode__(self):
+		return str(self.id)
+	
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
 	salon_id = models.ForeignKey('Salon')

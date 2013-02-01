@@ -20,7 +20,7 @@
         {% if not user.is_authenticated %}
           <a href = "/login">Login</a> | <a href = "/register">Register</a> | <a href = "/notify/">For Salons</a>
         {% else %}
-          You are logged in as {{request.user.email}}
+          You are logged in as {{request.user}}
         {% endif %}
       </div>
     {% block content %}{% endblock %}
