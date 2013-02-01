@@ -117,6 +117,8 @@ def notify(request):
     form = NotifyForm()	
     return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
 
+
+# What does this function do exactly? 
 def success(request):
     #THIS STILL NEEDS PLENTY OF WORK! need to sort out dattime objects
     #just submitting now as the appointment date and time
@@ -163,6 +165,7 @@ def success(request):
 
 def notify_customers(request):
     #DO NOT USE THIS- USE NOTIFY ABOVE AS IT WORKS fa 02.02.13
+    # ?? ma 02.02.13
 	userIDFromForm = request.GET['duid']
 	additionalInfoFromForm = request.GET['addinfo']
 	djangoUser = User.objects.get(id=userIDFromForm)
@@ -182,7 +185,6 @@ def notify_customers(request):
 		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id.id)
 		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
 		to_email = recipientDjangoUser.email
-		#TODO!!!!!!!!!!!!!! Are emails being sent ?
 		# content
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
 				       "salon_name" : salon.salon_name, 
