@@ -1,7 +1,5 @@
 {% extends "base.html" %}  
 {% load staticfiles %}
-<link href="{% static 'css/timepicker.css' %}" rel="stylesheet">
-<script type="text/javascript" src="{% static 'js/bootstrap-timepicker.js' %}"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   {% block content %}
 
@@ -12,65 +10,71 @@
 	    <div class="row well" style="margin-top: 80px; margin-left: 0px !important;">
 	    	<form action = "/success/" method="post">
 	    	{% csrf_token %}
-	        <div class="span10">
-	        	<h1>Let your customers know about a haircut</h1>
+	        <div class="span12">
+	        	<h1>Let them know</h1>
 	    	</div>
 	        <hr style="clear: both"/>
 	        </span>
-	        <div class="span3">
-		        <h4>Lady or Gentleman?</h4>
-		        <div class="input-prepend">
-			        <span class="add-on"><i class="icon-gift"></i></span>
-			        {{form.gender}}
-		        </div>
-		    </div>
 
-	        <div class="span3">
-		        <h4>Day?</h4>
-		        <div class="input-prepend">
-			        <span class="add-on"><i class="icon-gift"></i></span>
-			        {{form.day}}
-		        </div>
-	       </div>
+	        <div class = "span12">
 
-	        <div class="span3">
-		        <h4>Time?</h4>
-		        <div class="input-prepend">
-			        <span class="add-on"><i class="icon-gift"></i></span>
-			        {{form.time}}
-		        </div>
+		        <div class="span5">
+			        <h4>Lady or Gentleman?</h4>
+			        <div class="input-prepend">
+				        <span class="add-on"><i class="icon-user"></i></span>
+				        {{form.gender}}
+			        </div>
+			    </div>
 
-		        <div class="input-append bootstrap-timepicker-component">
-            		<input id="timepicker1" type="text" class="input-small">
-            		<span class="add-on"><i class="icon-time"></i></span>
-        		</div>
- 
-		        <script type="text/javascript">
-		            $('#timepicker1').timepicker();
-		        </script>
-		        
-	       </div>
+		        <div class="span5">
+			        <h4>Day?</h4>
+			        <div class="input-prepend">
+				        <span class="add-on"><i class="icon-calendar"></i></span>
+				        {{form.day}}
+			        </div>
+		       </div>
 
-	        <div class="span3">
+		        <div class="span5">
+			        <h4>Time?</h4>
+			        <div class="input-prepend">
+				        <span class="add-on"><i class="icon-time"></i></span>
+				        {{form.time}}
+			        </div>
+			        
+		       	</div>
+	   		</div>
+
+	   		<div class = "span12">
+	   			<hr style="clear: both"/>
+	        <div class="span5">
 		        <h4>Original Price?</h4>
 		        <div class="input-prepend">
-			        <span class="add-on"><i class="icon-gift"></i></span>
+			        <span class="add-on"><i>£</i></span>
 			        {{form.original_price}}
 		        </div>
 	       </div>
 
-	        <div class="span3">
+	        <div class="span5">
 		        <h4>Discounted Price?</h4>
 		        <div class="input-prepend">
-			        <span class="add-on"><i class="icon-gift"></i></span>
+			        <span class="add-on"><i>£</i></span>
 			        {{form.discounted_price}}
 		        </div>
-	       </div>
+	       	</div>
 	      
-	        <div class="span3">
+	       	<div class="span5">
+		        <h4>Any additional information?</h4>
+		        <div class="input-prepend">
+			        <span class="add-on"><i>?</i></span>
+			        {{form.notes}}
+		        </div>
+	       	</div>
+
+	        <div class="span5 offset4">
 	        	<br>
 	            <button class="btn btn-success btn-large" type="submit">Submit!</a>
 	        </div>
+	    </div>
 	    </div>
     {% else %}
     	<p>You must be a registered salon to be here!</p>

@@ -126,16 +126,40 @@ def success(request):
         submitting_salon = request.user
         hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
         salon_desired = Salon.objects.get(handsomely_user_id = hu.id)
+        #Get date:
+        if request.POST['day'] == 'TODAY':
+            date = datetime.datetime.now()
+        if request.POST['day'] == 'TOMORROW':
+            date = datetime.datetime.now() + datetime.timedelta(days=1)
+        if request.POST['day'] == 'TDA':
+            date = datetime.datetime.now() + datetime.timedelta(days=2)
+        #else:
+            #should put an error in here
+        #Need to add error checking to return if inputs are not valid
+        time_of_appointment = request.POST['time']
+        extract_hour_and_min = time_of_appointment.partition(':')
+        hour = extract_hour_and_min[0]
+        minute = extract_hour_and_min[2]
+        datetime_of_appointment = date.replace(hour = int(hour), minute=int(minute), second = 0)
         new_notification = Notification(
             salon_id = salon_desired,
             status = 'OPEN',
-            appointment_date_time = datetime.datetime.now(),
+            appointment_date_time = datetime_of_appointment,
             appointment_price = request.POST['discounted_price'],
             original_price = request.POST['original_price'],
-            haircut_type = request.POST['gender']
+            haircut_type = request.POST['gender'],
+            additional_info = request.POST['notes']
             )
-        new_notification.save()   
-        return render_to_response('success.html', {'hu': hu}, context_instance=RequestContext(request))
+        new_notification.save() 
+        #Now send out emails
+        requests_to_send = Request.objects.filter(salon_id = salon_desired)
+        requests_to_send = requests_to_send.filter(status = 'WAIT')
+        requests_to_send = requests_to_send.filter(haircut_type = request.POST['gender'])
+        for requester in requests_to_send:
+            person_to_send_to = HandsomelyUser.objects.get(django_user_id = requester.handsomely_user_id)
+            message ='Hello there my friend. ' + str(submitting_salon) + ' has a free appointment at ' + str(datetime_of_appointment) + '. Usual price is ' + str(request.POST['original_price']) + '. Price through handsome.ly is: ' + str(request.POST['discounted_price']) + '. The following additional information is given: ' + str(request.POST['notes']) + '. Do you fancy it? Hurry, because it is first-come; first-served!'
+            send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user_id.email], fail_silently=False)
+        return render_to_response('success.html', {'hu': hu, 'test': person_to_send_to.django_user_id.email}, context_instance=RequestContext(request))
 
 		
 def respond_to_notification(request):
