@@ -114,7 +114,7 @@ def login(request):
         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
    
 def notify_customers(request):
-    form = NotifyForm()
+    form = NotifyForm()	
     return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
 
 def success(request):
@@ -161,6 +161,48 @@ def success(request):
             send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user_id.email], fail_silently=False)
         return render_to_response('success.html', {'hu': hu, 'test': person_to_send_to.django_user_id.email}, context_instance=RequestContext(request))
 
+def notify_customers(request):
+	userIDFromForm = request.GET['duid']
+	additionalInfoFromForm = request.GET['addinfo']
+	djangoUser = User.objects.get(id=userIDFromForm)
+	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
+	salon = Salon.objects.get(handsomely_user_id=djangoUser)
+	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="WAIT"))
+	subject = 'Handsomely Notification'
+	from_email = 'team@handsome.ly' 
+	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M'), appointment_price=10.5, original_price=11, haircut_type="M", additional_info="testing")
+	notif.save()	
+	for req in requestsList:
+		notif.request_ids.add(req.id)
+	notif.save()
+	for req in requestsList:
+		req.status = "HOL"
+		req.save()
+		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id.id)
+		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
+		to_email = recipientDjangoUser.email
+		#TODO!!!!!!!!!!!!!! Are emails being sent ?
+		# content
+		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
+				       "salon_name" : salon.salon_name, 
+				       "additional_info_from_salon" : additionalInfoFromForm, 
+				       "notification_id" : str(notif.id),
+				       "user_email" : to_email
+				     })
+		notification_email_text = get_template('emails/notify.txt')
+		notification_email_html = get_template('emails/notify.html')
+		text_content = notification_email_text
+		html_content = notification_email_html
+		# send email
+		msg = EmailMultiAlternatives (subject, text_content, from_email, [to_email])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
+		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
+		msg.attach_alternative(html_content, "text/html")
+		msg.send()
+	result = 'done'
+	response = HttpResponse(result)
+	return response
 		
 def respond_to_notification(request):
     djangoUser = request.user
