@@ -10,8 +10,9 @@
 	    <div class="row well" style="margin-top: 80px; margin-left: 0px !important;">
 	    	<form action = "/success/" method="post">
 	    	{% csrf_token %}
-	        <div class="span12">
+	        <div class="span10">
 	        	<h1>Let them know</h1>
+    			<h3>There are {{number_male}} customers waiting for men's haircuts; and {{number_female}} waiting for women's haircuts at {{salon_desired}}</h3>
 	    	</div>
 	        <hr style="clear: both"/>
 	        </span>

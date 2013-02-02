@@ -117,16 +117,20 @@ def login(request):
         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
    
 def notify(request):
-    form = NotifyForm()	
-    return render_to_response('notify_customers.html', {'form': form}, context_instance=RequestContext(request))
+    form = NotifyForm()
+    salon_logged_in = request.user
+    hu = HandsomelyUser.objects.get(django_user_id = salon_logged_in)
+    salon_desired = Salon.objects.get(handsomely_user_id = hu.id)	
+    requesters = Request.objects.filter(salon_id = salon_desired)
+    male_requesters = requesters.filter(haircut_type = 'M')
+    female_requesters = requesters.filter(haircut_type = 'F')
+    number_male = len(male_requesters)
+    number_female = len(female_requesters)
+    return render_to_response('notify_customers.html', {'form': form, 'number_male': number_male, 'number_female': number_female, 'salon_desired': salon_desired}, context_instance=RequestContext(request))
 
 
 # What does this function do exactly? 
 def success(request):
-    #THIS STILL NEEDS PLENTY OF WORK! need to sort out dattime objects
-    #just submitting now as the appointment date and time
-    #need to send emails
-    #need to determine appropriate recipients
     if request.method == 'POST':
         submitting_salon = request.user
         hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
@@ -162,13 +166,14 @@ def success(request):
         requests_to_send = requests_to_send.filter(haircut_type = request.POST['gender'])
         for requester in requests_to_send:
             person_to_send_to = HandsomelyUser.objects.get(django_user_id = requester.handsomely_user_id)
-            message ='Hello there my friend. ' + str(submitting_salon) + ' has a free appointment at ' + str(datetime_of_appointment) + '. Usual price is ' + str(request.POST['original_price']) + '. Price through handsome.ly is: ' + str(request.POST['discounted_price']) + '. The following additional information is given: ' + str(request.POST['notes']) + '. Do you fancy it? Hurry, because it is first-come; first-served!'
+            message ='Hello there my friend. ' + str(submitting_salon) + ' has a free appointment at ' + str(datetime_of_appointment) + '. Usual price is ' + str(request.POST['original_price']) + '. Price through handsome.ly is ' + str(request.POST['discounted_price']) + '. The following additional information is given: ' + str(request.POST['notes']) + '. Do you fancy it? Hurry, because it is first-come; first-served!'
             send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user_id.email], fail_silently=False)
-        return render_to_response('success.html', {'hu': hu, 'test': person_to_send_to.django_user_id.email}, context_instance=RequestContext(request))
+        return render_to_response('success.html', {}, context_instance=RequestContext(request))
 
 def notify_customers(request):
     #DO NOT USE THIS- USE NOTIFY ABOVE AS IT WORKS fa 02.02.13
     # ?? ma 02.02.13
+    #I mean success, not notify
 	userIDFromForm = request.GET['duid']
 	gender = request.GET['gender']
 	day = request.GET['day']
