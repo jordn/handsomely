@@ -50,10 +50,8 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            #Email looks legit. Let's check it's unique.
-            email_address = form.clean_username()
-
-            #new user (they still need to confirm email). Send them a confirmation email and send them on to the requests.
+            #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
+            email_address = form.clean_email()
             confirmation_code = User.objects.make_random_password()
             new_user = User.objects.create_user(username=email_address, email=email_address, password=confirmation_code)
             new_user.save()
