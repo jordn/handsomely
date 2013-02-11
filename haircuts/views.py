@@ -1,12 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.template import RequestContext, Context
+from django.template.loader import get_template
 from django import forms
 from haircuts.forms import RegisterForm, LoginForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
-from django.template.loader import get_template
-from django.template import Context
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -45,30 +44,46 @@ def salon_list(request):
             list_of_salons = 'No salons were found :('
         return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
     
+
+
 def register(request):
-    form = RegisterForm(request.POST)
-    if form.is_valid():
-        if request.method == 'POST':
-            email_address = request.POST['email']
-            confCode = User.objects.make_random_password()
-            message = "Hi! Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code="
-            message += confCode
-            message += " \nThanks, the Handsome.ly team"
-            newUser = User.objects.create_user(email_address, email_address, confCode)
-            newUser.first_name = confCode
-            newUser.save()
-            send_mail('Handsomely - Confirmation - Action Required', message, 'team@handsome.ly', [email_address], fail_silently=False)
-            send_mail('Handsomely - User signup', 'Hi. A user has signed up, and has been sent a confirmation email to: ' + email_address, 'team@handsome.ly', ['team@handsome.ly'], fail_silently=False)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            #Email looks legit. Let's check it's unique.
+            email_address = form.clean_username()
+
+            #new user (they still need to confirm email). Send them a confirmation email and send them on to the requests.
+            confirmation_code = User.objects.make_random_password()
+            new_user = User.objects.create_user(username=email_address, email=email_address, password=confirmation_code)
+            new_user.save()
+
+            #Send them an email to confirm their email address.
+            message = "Hello! \n\
+            This email was just registered to be informed of any discounted haircuts in Cambridge.\n\n\
+            Before we can send you notice of any appointments, Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code=" + confirmation_code + "\nThanks,\n\
+            Team Handsome.ly"
+            send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
+            message=message, from_email='team@handsome.ly', recipient_list=[email_address], fail_silently=False)
+
+
+            #Send the team an email to notify them of this momentous occasion.
+            send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
+            message='Hey Team,\n\
+             Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
+            from_email='team@handsome.ly', recipient_list=['team@handsome.ly'], fail_silently=False)
+
             return HttpResponseRedirect('/thanks/')
     else:
-        form = RegisterForm(
-            initial={'email': ''}
-            )
-    return render_to_response('register.html', {'form': form}, context_instance=RequestContext(request))
+        form = RegisterForm()
+    return render_to_response("registration/register.html", {
+        'form': form,
+    }, context_instance=RequestContext(request))
 
 
-def confirm(request): #if this point is reached, the email is real. This code is the same as the old handsome.ly project (pretty much)
-    confCode = request.GET['code']
+
+def confirm(request): #if this point is reached, the email is genuine. This code is the same as the old handsome.ly project (pretty much)
+    confirmation_code = request.GET['code']
     try: 
         findUser = User.objects.get(first_name = confCode)
         findUser.first_name = " "
@@ -97,24 +112,24 @@ def create_user(request):
     new_handsomely_user.save()
     return render_to_response("index.html", {"name" : email}, context_instance=RequestContext(request))
 
-def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = request.POST['email']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user is not None and user.is_active:
-                # Correct password, and the user is marked "active"
-                auth.login(request, user)
-                # Redirect to a success page.
-                return render_to_response('index.html', {}, context_instance=RequestContext(request))
-            else: 
-                form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
-        	return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
-    else:
-        form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
-        return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+# def login(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             username = request.POST['email']
+#             password = request.POST['password']
+#             user = auth.authenticate(username=username, password=password)
+#             if user is not None and user.is_active:
+#                 # Correct password, and the user is marked "active"
+#                 auth.login(request, user)
+#                 # Redirect to a success page.
+#                 return render_to_response('index.html', {}, context_instance=RequestContext(request))
+#             else: 
+#                 form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
+#         	return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
+#     else:
+#         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
+#         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
    
 def notify(request):
     form = NotifyForm()

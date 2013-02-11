@@ -1,18 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <section>
+    {% if form.errors %}
+      <p class="error">Sorry, that's not a valid username or password</p>
+    {% endif %}
 
-  {% if form.errors %}
-    <p class="error">Sorry, that's not a valid username or password</p>
-  {% endif %}
-
-  <form action="" method="post" class="form-very-large">
-    {% csrf_token %}
-    <input type="text" name="username" value="" id="username" autofocus="autofocus" placeholder="email@address.com">
-    <input type="password" name="password" value="" id="password" placeholder="password">
-    <br>
-    <input type="submit"  value="login" class="btn btn-large btn-primary"  />
-    <input type="hidden" name="next" value="/requests" />
-  </form>
+    <form action="" method="post" class="form-very-large">
+      {% csrf_token %}
+      <input type="text" name="username" value="" id="username" autofocus="autofocus" placeholder="email@address.com">
+      <input type="password" name="password" value="" id="password" placeholder="password">
+      <br>
+      <input type="submit"  value="login" class="btn btn-large btn-primary"  />
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next|escape }}" />
+      {% else %}
+        <input type="hidden" name="next" value="/requests" />
+      {% endif %}
+    </form>
+</section>
 
 {% endblock %}
