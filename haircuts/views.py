@@ -15,6 +15,7 @@ from forms import NotifyForm
 import datetime
 import time
 
+
 def index (request):
     return render_to_response('index.html', {'path': request.path})
 
@@ -53,7 +54,12 @@ def register(request):
             #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
             email_address = form.clean_email()
             confirmation_code = User.objects.make_random_password()
-            new_user = User.objects.create_user(username=email_address, email=email_address, password=confirmation_code)
+            random_password = User.objects.make_random_password()
+            new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
+            #first_name is used as a placeholder to hold the confirmation code.
+            new_user.first_name = confirmation_code
+            print new_user
+            print new_user.first_name
             new_user.save()
 
             #Send them an email to confirm their email address.
@@ -61,11 +67,11 @@ def register(request):
             This email was just registered to be informed of any discounted haircuts in Cambridge.\n\n\
             Before we can send you notice of any appointments, Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code=" + confirmation_code + "\nThanks,\n\
             Team Handsome.ly"
-            send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
+            # send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
             message=message, from_email='team@handsome.ly', recipient_list=[email_address], fail_silently=False)
 
 
-            #Send the team an email to notify them of this momentous occasion.
+            # Send the team an email to notify them of this momentous occasion.
             send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
             message='Hey Team,\n\
              Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
@@ -79,18 +85,24 @@ def register(request):
     }, context_instance=RequestContext(request))
 
 
-
 def confirm(request): #if this point is reached, the email is genuine. This code is the same as the old handsome.ly project (pretty much)
-    confirmation_code = request.GET['code']
-    try: 
-        findUser = User.objects.get(first_name = confCode)
-        findUser.first_name = " "
-        email = findUser.email
-        djangoUserID = findUser.id
-        findUser.save()
-        return render_to_response("account_confirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
-    except ObjectDoesNotExist:
-        return render_to_response("invalid_confirmation.html", {"confCode" : confCode}, context_instance=RequestContext(request))
+    if request.method == 'GET':
+        try: 
+            confirmation_code = ''
+            confirmation_code = request.GET['code']
+            print confirmation_code
+            user = User.objects.get(first_name = confirmation_code)
+            print user
+            user.first_name = ""
+            user.groups.add(email_confirmed)
+            user.save()
+            return render_to_response("registration/accountconfirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
+        except:
+            return render_to_response("registration/invalidconfirmation.html", {"confirmation_code": confirmation_code}, context_instance=RequestContext(request))
+    else:
+        return render_to_response("registration/login.html", {
+        'message': 'Confirmation code not valid. Please log in.',
+    }, context_instance=RequestContext(request))
 
 def create_user(request):
     newPassword = request.POST['newPassword']

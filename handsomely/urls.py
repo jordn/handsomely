@@ -18,13 +18,16 @@ urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
     url(r'^index/$', 'index'),
     url(r'^salon_list/$', 'salon_list'),
+    
     url(r'^register/$', 'register'),
+    url(r'^confirm/$', 'confirm'),
+
     url(r'^status/$', 'customer_status'),
     url(r'^thanks/$', 'thanks'),
-    url(r'^confirm/$', 'confirm'), 
+
     url(r'^create_user/$', 'create_user'), 
     url(r'^notify/$', 'notify'), 
-    url(r'^success/$', 'success'), 
+    url(r'^success/$', 'success'),
 )
 
 urlpatterns += patterns('',
