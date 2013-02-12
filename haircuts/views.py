@@ -67,7 +67,7 @@ def register(request):
             This email was just registered to be informed of any discounted haircuts in Cambridge.\n\n\
             Before we can send you notice of any appointments, Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code=" + confirmation_code + "\nThanks,\n\
             Team Handsome.ly"
-            # send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
+            send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
             message=message, from_email='team@handsome.ly', recipient_list=[email_address], fail_silently=False)
 
 

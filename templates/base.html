@@ -17,10 +17,11 @@
         <span class="logo" style="color:black; font-size:80px; line-height: 130px; font-weight:bold;">
         <a href="/">handsome.ly</a>
         </span>
-        {% if not user.is_authenticated %}
-          <a href = "/login">Login</a> | <a href = "/register">Register</a> | <a href = "/notify/">For Salons</a>
+        {% if is_logged_in %}
+          You are logged in as {{ request.user }}
         {% else %}
-          You are logged in as {{request.user}}
+          <!-- NB. for salons should be shown regardless -->
+          <a href = "/login">Login</a> | <a href = "/register">Register</a> | <a href = "/notify/">For Salons</a>
         {% endif %}
       </div>
     {% block content %}{% endblock %}
