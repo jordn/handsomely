@@ -1,6 +1,5 @@
 from django.db import models
 from django import forms
-from django_localflavor_gb.forms import GBPostcodeField
 from django.contrib.auth.models import User
 import datetime
 

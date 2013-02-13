@@ -6,9 +6,9 @@
 	<h1>Invalid confirmation</h1>
 	<br/>
 	<p>Your confirmation code <b>{{ confirmation_code }}</b> was invalid. Please try again: </p> 
-	<form action="../confirm/" method="get">
+	<form action="/confirm/" method="get">
 		<p> 
-			Confirmation code: <input type="text" name="confirmation_code" value="{{ code }}"/>
+			Confirmation code: <input type="text" name="confirmation_code" value="{{ confirmation_code }}"/>
 			<input type="submit" value="Go!" /> 
 		</p>
 	</form>

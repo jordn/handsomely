@@ -7,9 +7,11 @@ from haircuts.forms import RegisterForm, LoginForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import auth
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.hashers import make_password
+
 from models import *
 from forms import NotifyForm
 import datetime
@@ -45,7 +47,10 @@ def salon_list(request):
             list_of_salons = 'No salons were found :('
         return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
     
-
+#Used to for register and confirmation of email address
+def make_confirmation_code(original_text):
+    confirmation_code = make_password('salitily' + original_text, 'md5').encode('hex') #make sure decryption follows these magic numbers
+    return confirmation_code
 
 def register(request):
     if request.method == 'POST':
@@ -53,19 +58,19 @@ def register(request):
         if form.is_valid():
             #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
             email_address = form.clean_email()
-            confirmation_code = User.objects.make_random_password()
             random_password = User.objects.make_random_password()
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
-            #first_name is used as a placeholder to hold the confirmation code.
+            #Confirmation code is stored in first_name as it's not used at this point and is an encryption of their email address
+            confirmation_code = make_confirmation_code(email_address)
             new_user.first_name = confirmation_code
-            print new_user
-            print new_user.first_name
+            user_id = str(new_user.id)
             new_user.save()
 
             #Send them an email to confirm their email address.
             message = "Hello! \n\
             This email was just registered to be informed of any discounted haircuts in Cambridge.\n\n\
-            Before we can send you notice of any appointments, Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code=" + confirmation_code + "\nThanks,\n\
+            Before we can send you notice of any appointments, Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code=" + confirmation_code + "&id=" + user_id \
+            + "\nThanks,\n\
             Team Handsome.ly"
             send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
             message=message, from_email='team@handsome.ly', recipient_list=[email_address], fail_silently=False)
@@ -85,24 +90,39 @@ def register(request):
     }, context_instance=RequestContext(request))
 
 
-def confirm(request): #if this point is reached, the email is genuine. This code is the same as the old handsome.ly project (pretty much)
-    if request.method == 'GET':
-        try: 
-            confirmation_code = ''
-            confirmation_code = request.GET['code']
-            print confirmation_code
-            user = User.objects.get(first_name = confirmation_code)
-            print user
-            user.first_name = ""
-            user.groups.add(email_confirmed)
-            user.save()
-            return render_to_response("registration/accountconfirmation.html", {"djangoUserID" : djangoUserID, "email" : email}, context_instance=RequestContext(request))
-        except:
-            return render_to_response("registration/invalidconfirmation.html", {"confirmation_code": confirmation_code}, context_instance=RequestContext(request))
+def confirm(request):
+    if 'code' in request.GET and 'id' in request.GET:    
+        confirmation_code = request.GET['code']
+        user_id = request.GET['id']  
+
+        print confirmation_code
+        print user_id
+        confirming_user = User.objects.get(id = user_id)
+        email_address = confirming_user.email
+
+        if confirming_user.groups.filter(name='email_confirmed').exists():
+            #already confirmed! Show log in with message saying so.
+            return render_to_response("registration/login.html", {
+                'message': 'User already confirmed. Please log in.'
+                }, context_instance=RequestContext(request))
+        else:
+            #check the code is legit to confirm this email
+            recreated_code = make_confirmation_code(email_address)
+            if confirmation_code == recreated_code == confirming_user.first_name:
+                #confirm this user!
+                email_confirmed_group = Group.objects.get(name='email_confirmed')
+                confirming_user.first_name = ""
+                confirming_user.groups.add(email_confirmed_group)
+                confirming_user.save()
+                return render_to_response("registration/accountconfirmation.html", {"email_address" : email_address}, context_instance=RequestContext(request))
+            else: 
+                #invalid code
+                return render_to_response("registration/invalidconfirmation.html", {"confirmation_code": confirmation_code}, context_instance=RequestContext(request))
     else:
         return render_to_response("registration/login.html", {
         'message': 'Confirmation code not valid. Please log in.',
-    }, context_instance=RequestContext(request))
+        }, context_instance=RequestContext(request))
+        
 
 def create_user(request):
     newPassword = request.POST['newPassword']

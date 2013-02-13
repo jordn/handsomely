@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import login, logout, password_reset
 
 
 # Uncomment the next two lines to enable the admin:
@@ -34,4 +34,5 @@ urlpatterns += patterns('',
     #  user accounts
     (r'^login/$',  login),
     (r'^logout/$', logout),
+    (r'^passwordreset/$', password_reset, {'template_name': 'registration/password_reset_form.html', 'post_reset_redirect': '/index'}),
 )

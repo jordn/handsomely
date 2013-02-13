@@ -17,7 +17,7 @@
         <span class="logo" style="color:black; font-size:80px; line-height: 130px; font-weight:bold;">
         <a href="/">handsome.ly</a>
         </span>
-        {% if is_logged_in %}
+        {% if user.is_authenticated %}
           You are logged in as {{ request.user }}
         {% else %}
           <!-- NB. for salons should be shown regardless -->
