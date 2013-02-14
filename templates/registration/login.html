@@ -1,10 +1,12 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load url from future %}
 
 {% block content %}
   <section>
     {% if form.errors %}
       <p class="error">Sorry, that's not a valid username or password</p>
     {% endif %}
+
+    {% url 'haircuts.views.index' %}
 
     <form action="" method="post" class="form-very-large">
       {% csrf_token %}
