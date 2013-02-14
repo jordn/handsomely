@@ -93,7 +93,7 @@ def register(request):
     }, context_instance=RequestContext(request))
 
 
-
+#This is meant to show your current requests to different salons
 def requests(request, message = None):
     # just show a message to confirm email if logged in but not confirmed.
     if request.user.is_authenticated():
