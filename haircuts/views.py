@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext, Context
 from django.template.loader import get_template
 from django import forms
@@ -21,7 +21,7 @@ import time
 
 
 def index (request):
-    return render_to_response('index.html', {'path': request.path})
+    return render_to_response('index.html', {'path': request.path}, context_instance=RequestContext(request))
 
 def coming_soon (request):
     return render_to_response('coming_soon.html', {'path': request.path})
@@ -53,6 +53,7 @@ def salon_list(request):
 def make_confirmation_code(original_text):
     confirmation_code = make_password('salitily' + original_text, 'md5').encode('hex') #make sure decryption follows these magic numbers
     return confirmation_code
+
 
 def register(request):
     if request.method == 'POST':
@@ -91,11 +92,30 @@ def register(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
+
+
+def requests(request, message = None):
+    # just show a message to confirm email if logged in but not confirmed.
+    if request.user.is_authenticated():
+        # Do something for authenticated users.
+        message = "logged in"
+        email_confirmed_group = Group.objects.get(name='email_confirmed')
+        user_groups = request.user.groups.all()
+        if email_confirmed_group in user_groups:
+            print "he's confirmed"
+        else:
+            message = "logged in but you need to confirm your email before you get notifications"
+    else:
+        message = "not inside"
+    return render_to_response('requests.html', {'message' : message}, context_instance=RequestContext(request))
+
+
 def register2reset(request):
     #form gets submitted by email. If it's new a new user is created (with random password) and a password reset form is sent to the user's email.
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            print "VALID!!!!!!!!!!!!!!!!!!!!!!!"
             print form
             #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
             email_address = form.clean_email()
@@ -103,52 +123,64 @@ def register2reset(request):
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
             new_user.save()
 
+            # Send the team an email to notify them of this momentous occasion.
+            # send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
+            # message='Hey Team,\n\
+            #  Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
+            # from_email='team@handsome.ly', recipient_list=['team@handsome.ly'], fail_silently=False)
+
             #Send them an email to confirm and set a password! This uses the django auth reset password stuff
             password_reset(request, 
                 email_template_name='registration/new_user_confirm_email.html',
                  subject_template_name='registration/new_user_confirm_email_subject.txt'
                  )
-            
+
+            #log them in (they won't get notified until email is confirmed.)
+            login_user = authenticate(username=email_address, password=random_password)
+            login(request, login_user)
+
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
-            return render_to_response("registration/password_reset_done.html", {'message' : "We've e-mailed you instructions for setting your password to <strong>" + email_address + "</strong>. You should be receiving it shortly."})
+            return redirect('/requests', context_instance=RequestContext(request))
     else:
         form = RegisterForm()
     return render_to_response("registration/register2reset.html", {
         'form': form,
     }, context_instance=RequestContext(request))
 
-def confirm(request):
-    if 'code' in request.GET and 'id' in request.GET:    
-        confirmation_code = request.GET['code']
-        user_id = request.GET['id']  
 
-        print confirmation_code
-        print user_id
-        confirming_user = User.objects.get(id = user_id)
-        email_address = confirming_user.email
+# NO LONGER USED AS using the default django forgot password stuff instead.
+# def confirm(request):
+#     if 'code' in request.GET and 'id' in request.GET:    
+#         confirmation_code = request.GET['code']
+#         user_id = request.GET['id']  
 
-        if confirming_user.groups.filter(name='email_confirmed').exists():
-            #already confirmed! Show log in with message saying so.
-            return render_to_response("registration/login.html", {
-                'message': 'User already confirmed. Please log in.'
-                }, context_instance=RequestContext(request))
-        else:
-            #check the code is legit to confirm this email
-            recreated_code = make_confirmation_code(email_address)
-            if confirmation_code == recreated_code == confirming_user.first_name:
-                #confirm this user!
-                email_confirmed_group = Group.objects.get(name='email_confirmed')
-                confirming_user.first_name = ""
-                confirming_user.groups.add(email_confirmed_group)
-                confirming_user.save()
-                return render_to_response("registration/accountconfirmation.html", {"email_address" : email_address}, context_instance=RequestContext(request))
-            else: 
-                #invalid code
-                return render_to_response("registration/invalidconfirmation.html", {"confirmation_code": confirmation_code}, context_instance=RequestContext(request))
-    else:
-        return render_to_response("registration/login.html", {
-        'message': 'Confirmation code not valid. Please log in.',
-        }, context_instance=RequestContext(request))
+#         print confirmation_code
+#         print user_id
+#         confirming_user = User.objects.get(id = user_id)
+#         email_address = confirming_user.email
+
+#         if confirming_user.groups.filter(name='email_confirmed').exists():
+#             #already confirmed! Show log in with message saying so.
+#             return render_to_response("registration/login.html", {
+#                 'message': 'User already confirmed. Please log in.'
+#                 }, context_instance=RequestContext(request))
+#         else:
+#             #check the code is legit to confirm this email
+#             recreated_code = make_confirmation_code(email_address)
+#             if confirmation_code == recreated_code == confirming_user.first_name:
+#                 #confirm this user!
+#                 email_confirmed_group = Group.objects.get(name='email_confirmed')
+#                 confirming_user.first_name = ""
+#                 confirming_user.groups.add(email_confirmed_group)
+#                 confirming_user.save()
+#                 return render_to_response("registration/accountconfirmation.html", {"email_address" : email_address}, context_instance=RequestContext(request))
+#             else: 
+#                 #invalid code
+#                 return render_to_response("registration/invalidconfirmation.html", {"confirmation_code": confirmation_code}, context_instance=RequestContext(request))
+#     else:
+#         return render_to_response("registration/login.html", {
+#         'message': 'Confirmation code not valid. Please log in.',
+#         }, context_instance=RequestContext(request))
         
 
 def create_user(request):
@@ -169,25 +201,7 @@ def create_user(request):
     new_handsomely_user.save()
     return render_to_response("index.html", {"name" : email}, context_instance=RequestContext(request))
 
-# def login(request):
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             username = request.POST['email']
-#             password = request.POST['password']
-#             user = auth.authenticate(username=username, password=password)
-#             if user is not None and user.is_active:
-#                 # Correct password, and the user is marked "active"
-#                 auth.login(request, user)
-#                 # Redirect to a success page.
-#                 return render_to_response('index.html', {}, context_instance=RequestContext(request))
-#             else: 
-#                 form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
-#         	return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
-#     else:
-#         form = LoginForm(initial={'email': '', 'password': '', 'remember_me': ''})
-#         return render_to_response('login.html', {'form': form}, context_instance=RequestContext(request))
-   
+
 def notify(request):
     form = NotifyForm()
     salon_logged_in = request.user
