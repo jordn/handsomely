@@ -10,6 +10,8 @@ from django.contrib import auth
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.views import password_reset
+
 from django.contrib.auth.hashers import make_password
 
 from models import *
@@ -62,7 +64,7 @@ def register(request):
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
             #Confirmation code is stored in first_name as it's not used at this point and is an encryption of their email address
             confirmation_code = make_confirmation_code(email_address)
-            new_user.first_name = confirmation_code
+            new_user.first_name = confirmation_code #THIS IS TOO BIG FOR THE FIRST NAME FIELD!!
             user_id = str(new_user.id)
             new_user.save()
 
@@ -89,6 +91,31 @@ def register(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
+def register2reset(request):
+    #form gets submitted by email. If it's new a new user is created (with random password) and a password reset form is sent to the user's email.
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            print form
+            #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
+            email_address = form.clean_email()
+            random_password = User.objects.make_random_password()
+            new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
+            new_user.save()
+
+            #Send them an email to confirm and set a password! This uses the django auth reset password stuff
+            password_reset(request, 
+                email_template_name='registration/new_user_confirm_email.html',
+                 subject_template_name='registration/new_user_confirm_email_subject.txt'
+                 )
+            
+            #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
+            return render_to_response("registration/password_reset_done.html", {'message' : "We've e-mailed you instructions for setting your password to <strong>" + email_address + "</strong>. You should be receiving it shortly."})
+    else:
+        form = RegisterForm()
+    return render_to_response("registration/register2reset.html", {
+        'form': form,
+    }, context_instance=RequestContext(request))
 
 def confirm(request):
     if 'code' in request.GET and 'id' in request.GET:    

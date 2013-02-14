@@ -5,6 +5,8 @@
 {% block reset_link %}
 {{ protocol }}://handsome.ly{% url 'django.contrib.auth.views.password_reset_confirm' uidb36=uid token=token %}
 {% endblock %}
+WELCOME TO HANDSOME.LY
+PLEASE CONFIRM YOUR EMAIL!
 {% trans "Your username, in case you've forgotten:" %} {{ user.username }}
 
 {% trans "Thanks for using our site!" %}
