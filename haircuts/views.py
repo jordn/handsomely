@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext, Context
+from django.template import RequestContext, Context, loader
 from django.template.loader import get_template
 from django import forms
 from haircuts.forms import RegisterForm, LoginForm
@@ -47,12 +47,6 @@ def salon_list(request):
         if list_of_salons == []:
             list_of_salons = 'No salons were found :('
         return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
-    
-#Used to for register and confirmation of email address
-def make_confirmation_code(original_text):
-    confirmation_code = make_password('salitily' + original_text, 'md5').encode('hex') #make sure decryption follows these magic numbers
-    return confirmation_code
-
 
 def register(request):
     if request.method == 'POST':
@@ -112,7 +106,9 @@ def requests(request, message = None):
     return render_to_response('requests.html', {'message' : message}, context_instance=RequestContext(request))
 
 
-def register2reset(request):
+#Registration form.
+# Username is email, password is random and confirmation email uses the forgot password defaults with different template.
+def register(request):
     #form gets submitted by email. If it's new a new user is created (with random password) and a password reset form is sent to the user's email.
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -123,8 +119,6 @@ def register2reset(request):
 
             # Create new user. This gets auto added to the DB
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
-            
-
 
             #Create a handsomely profile for them. Is_confirmed set to FALSE.
             create_handsomely_user(new_user, email_confirmed=False, is_salon=False)
@@ -134,12 +128,15 @@ def register2reset(request):
             login(request, login_user)
 
             # Send the team an email to notify them of this momentous occasion.
-            # send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
-            # message='Hey Team,\n\
-            # Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
-            # from_email='team@handsome.ly', recipient_list=['team@handsome.ly'], fail_silently=False)
+            c = {
+                'email_address': email_address,
+                'request': request,
+                'user': new_user,
+            }
+            team_email = loader.render_to_string('registration/new_user_handsomely_team_email.html', c)
+            send_mail('Handsome.ly team: New customer signup (' + email_address + ')', team_email, from_email='team@handsome.ly', recipient_list=['team@handsome.ly'])
 
-            #Send them an email to confirm and set a password! This uses the django auth reset password stuff
+            #Send the new user an email to confirm and set a password! This uses the django auth reset password stuff
             password_reset(request, 
                 email_template_name='registration/new_user_confirm_email.html',
                  subject_template_name='registration/new_user_confirm_email_subject.txt'
@@ -149,11 +146,10 @@ def register2reset(request):
             return redirect('/requests', context_instance=RequestContext(request))
     else:
         form = RegisterForm()
-    return render_to_response("registration/register2reset.html", {
+    return render_to_response("registration/register.html", {
         'form': form,
     }, context_instance=RequestContext(request))
 
-        
 
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
 def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
