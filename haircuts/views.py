@@ -120,8 +120,14 @@ def register2reset(request):
             #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
             email_address = form.clean_email()
             random_password = User.objects.make_random_password()
+
+            # Create new user. This gets auto added to the DB
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
-            new_user.save()
+            
+
+
+            #Create a handsomely profile for them. Is_confirmed set to FALSE.
+            create_handsomely_user(new_user, email_confirmed=False, is_salon=False)
 
             #log them in (they won't get notified of appointments until email is confirmed hopefully. NB. log in BEFORE password reset as password reset code uses last login date)
             login_user = authenticate(username=email_address, password=random_password)
@@ -130,7 +136,7 @@ def register2reset(request):
             # Send the team an email to notify them of this momentous occasion.
             # send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
             # message='Hey Team,\n\
-            #  Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
+            # Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
             # from_email='team@handsome.ly', recipient_list=['team@handsome.ly'], fail_silently=False)
 
             #Send them an email to confirm and set a password! This uses the django auth reset password stuff
@@ -138,7 +144,6 @@ def register2reset(request):
                 email_template_name='registration/new_user_confirm_email.html',
                  subject_template_name='registration/new_user_confirm_email_subject.txt'
                  )
-
 
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
             return redirect('/requests', context_instance=RequestContext(request))
@@ -148,60 +153,18 @@ def register2reset(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
-
-# NO LONGER USED AS using the default django forgot password stuff instead.
-# def confirm(request):
-#     if 'code' in request.GET and 'id' in request.GET:    
-#         confirmation_code = request.GET['code']
-#         user_id = request.GET['id']  
-
-#         print confirmation_code
-#         print user_id
-#         confirming_user = User.objects.get(id = user_id)
-#         email_address = confirming_user.email
-
-#         if confirming_user.groups.filter(name='email_confirmed').exists():
-#             #already confirmed! Show log in with message saying so.
-#             return render_to_response("registration/login.html", {
-#                 'message': 'User already confirmed. Please log in.'
-#                 }, context_instance=RequestContext(request))
-#         else:
-#             #check the code is legit to confirm this email
-#             recreated_code = make_confirmation_code(email_address)
-#             if confirmation_code == recreated_code == confirming_user.first_name:
-#                 #confirm this user!
-#                 email_confirmed_group = Group.objects.get(name='email_confirmed')
-#                 confirming_user.first_name = ""
-#                 confirming_user.groups.add(email_confirmed_group)
-#                 confirming_user.save()
-#                 return render_to_response("registration/accountconfirmation.html", {"email_address" : email_address}, context_instance=RequestContext(request))
-#             else: 
-#                 #invalid code
-#                 return render_to_response("registration/invalidconfirmation.html", {"confirmation_code": confirmation_code}, context_instance=RequestContext(request))
-#     else:
-#         return render_to_response("registration/login.html", {
-#         'message': 'Confirmation code not valid. Please log in.',
-#         }, context_instance=RequestContext(request))
         
 
-def create_user(request):
-    newPassword = request.POST['newPassword']
-    email = request.POST['email']
-    djangoUserID = request.POST['djangoUserID']
-    djangoUser = User.objects.get(id = djangoUserID)
-    djangoUser.username = email
-    djangoUser.set_password(newPassword)
-    djangoUser.save()
-    findUser = User.objects.get(id = request.POST['djangoUserID'])
-    new_handsomely_user = HandsomelyUser(
-        django_user_id = findUser, #wtf should this be?
-        gender = 'U',
-        is_salon = False,
-        confirmed = True
+# Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
+def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
+    handsomely_user = HandsomelyUser(
+        django_user_id = django_user,
+        gender = gender,
+        confirmed = email_confirmed,
+        is_salon = is_salon,
         )
-    new_handsomely_user.save()
-    return render_to_response("index.html", {"name" : email}, context_instance=RequestContext(request))
-
+    handsomely_user.save()
+    return handsomely_user
 
 def notify(request):
     form = NotifyForm()
