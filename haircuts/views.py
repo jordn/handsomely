@@ -8,10 +8,9 @@ from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import auth
 from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import password_reset
-
 from django.contrib.auth.hashers import make_password
 
 from models import *
@@ -99,10 +98,13 @@ def requests(request, message = None):
     if request.user.is_authenticated():
         # Do something for authenticated users.
         message = "logged in"
-        email_confirmed_group = Group.objects.get(name='email_confirmed')
-        user_groups = request.user.groups.all()
-        if email_confirmed_group in user_groups:
-            print "he's confirmed"
+        try:
+            email_confirmed_group = Group.objects.get(name='email_confirmed')
+            user_groups = request.user.groups.all()
+            if email_confirmed_group in user_groups:
+                print "he's confirmed"
+        except:
+            pass
         else:
             message = "logged in but you need to confirm your email before you get notifications"
     else:
@@ -115,13 +117,15 @@ def register2reset(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            print "VALID!!!!!!!!!!!!!!!!!!!!!!!"
-            print form
             #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
             email_address = form.clean_email()
             random_password = User.objects.make_random_password()
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
             new_user.save()
+
+            #log them in (they won't get notified of appointments until email is confirmed hopefully. NB. log in BEFORE password reset as password reset code uses last login date)
+            login_user = authenticate(username=email_address, password=random_password)
+            login(request, login_user)
 
             # Send the team an email to notify them of this momentous occasion.
             # send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
@@ -135,9 +139,6 @@ def register2reset(request):
                  subject_template_name='registration/new_user_confirm_email_subject.txt'
                  )
 
-            #log them in (they won't get notified until email is confirmed.)
-            login_user = authenticate(username=email_address, password=random_password)
-            login(request, login_user)
 
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
             return redirect('/requests', context_instance=RequestContext(request))

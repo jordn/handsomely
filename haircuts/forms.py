@@ -10,8 +10,8 @@ class RegisterForm(forms.Form):
         'duplicate_username': ("That email has already been registered. Would you like to <a>recover the password?</a>")
     }
 
-    email = forms.EmailField(required=True, label='', widget=forms.TextInput( \
-            attrs={'placeholder': 'email@address.com', 'autofocus': 'autofocus'}))
+    email = forms.EmailField(required=True, label='', max_length=30, widget=forms.TextInput( \
+            attrs={'placeholder': 'email@address.com', 'autofocus': 'autofocus'})) #emaisl are often longer than 30 chars :( but limited by username field atm
 
     def clean_email(self):
         # Since User.username is unique, this check is redundant,
