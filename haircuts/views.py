@@ -134,7 +134,11 @@ def register(request):
                 'user': new_user,
             }
             team_email = loader.render_to_string('registration/new_user_handsomely_team_email.html', c)
-            send_mail('Handsome.ly team: New customer signup (' + email_address + ')', team_email, from_email='team@handsome.ly', recipient_list=['team@handsome.ly'])
+            send_mail(subject='Handsome.ly team: New customer signup (' + email_address + ')',
+                message=team_email,
+                from_email='team@handsome.ly',
+                recipient_list=['jordan@handsome.ly', 'team@handsome.ly']
+                )
 
             #Send the new user an email to confirm and set a password! This uses the django auth reset password stuff
             password_reset(request, 
