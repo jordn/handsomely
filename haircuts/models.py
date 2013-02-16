@@ -31,8 +31,8 @@ class Salon(models.Model):
 		return self.salon_name
 	
 class Request(models.Model):
-	handsomely_user_id = models.ForeignKey('HandsomelyUser')
-	salon_id = models.ForeignKey('Salon')
+	handsomely_user = models.ForeignKey('HandsomelyUser')
+	salon = models.ForeignKey('Salon')
 	haircut_choices = ( ('M', 'Male'), ('F', 'Female'), ('U', 'Unspecified') )
 	haircut_type = models.CharField(max_length=1, choices=haircut_choices) 
 	status_choices =  ( ('FULF', 'Fulfilled'), ('CANC', 'Cancelled'), ('WAIT', 'Waiting') )
@@ -40,8 +40,9 @@ class Request(models.Model):
 	start_date_time = models.DateTimeField(default=datetime.datetime.now) 
 	
 	def __unicode__(self):
-		return str(self.id)
-	
+		# return str(self.id + ' ' + self.handsomely_user + ' for ' + self.haircut_type + ' @ ' + self.salon)
+		return str(self.id) + ' ' + str(self.handsomely_user) + ' for ' + self.haircut_type + ' @ ' + str(self.salon)
+
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
 	salon_id = models.ForeignKey('Salon')

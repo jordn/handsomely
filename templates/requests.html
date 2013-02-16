@@ -15,6 +15,12 @@
   <span="subtitle">THESE ARE YOUR HAIR CUT REQUESTS</span>
 
   {{message}}
+<br><br>
+
+<form action="/status/" method="POST">
+        {% csrf_token %}
+  {{form.as_p}}
+</form>
   
 </section>
 

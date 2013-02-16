@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext, Context, loader
 from django.template.loader import get_template
 from django import forms
-from haircuts.forms import RegisterForm, LoginForm
+from haircuts.forms import RegisterForm, LoginForm, RequestForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import auth
@@ -44,6 +44,7 @@ def salons(request):
         #send them a form to choose their haircut type.
         is_womens = False
         haircut="please select your haircut"
+        return render_to_response('index.html', context_instance=RequestContext(request))
 
     list_of_salons = [] #Salons to show
     salons = Salon.objects.all()
@@ -63,39 +64,44 @@ def salons(request):
 
 # Page to show current status of requests
 def customer_status(request):
+    user = request.user #This current User object that's making the request
+    handsomely_user = HandsomelyUser.objects.get(django_user = user)
+
     if request.method == 'POST':
-        haircut_type = request.POST['haircut_type']
-        salon_id = request.POST['salon_id']
-        salon = Salon.objects.get(id = salon_id)
-        user = request.user #THIS User object that's making the request
-        # try:
-        handsomely_user = HandsomelyUser.objects.get(django_user = user)
+        # Try and add a new request
+        salon = request.POST['salon']
+        salon = Salon.objects.get(id = salon)
+
+        haircut_type = request.POST['haircut_type'] # M, F or U
+
         new_request = Request(
-            handsomely_user_id = handsomely_user,
-            salon_id = salon,
+            handsomely_user = handsomely_user,
+            salon = salon,
             haircut_type = haircut_type,
             status = 'WAIT',
             )
-        new_request.save()
-        user_details = request.user
-        requests = Request.objects.filter(handsomely_user_id = handsomely_user).order_by('-start_date_time')[:10]
-        return render_to_response('status_requested.html', {'user_details' : user_details, 'requests': requests, 'salon': salon}, context_instance=RequestContext(request))
-        # except:
-        #     message = 'Please log in or register to continue :)'
-        #     return render_to_response('registration/login.html', {'message': message}, context_instance=RequestContext(request))
-    else:
-            requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-            hu = HandsomelyUser.objects.get(django_user = requester)
-            requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
-            return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
+        new_request.save()    
+
+    haircut_requests = Request.objects.filter(handsomely_user = handsomely_user).order_by('-start_date_time')[:10]
+    print haircut_requests[0]
+    return render_to_response('status.html', {'user_details' : user, 'haircut_requests': haircut_requests}, context_instance=RequestContext(request))
+    # # except:
+    #     #     message = 'Please log in or register to continue :)'
+    #     #     return render_to_response('registration/login.html', {'message': message}, context_instance=RequestContext(request))
+    # else:
+    #         requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+    #         hu = HandsomelyUser.objects.get(django_user = requester)
+    #         requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
+    #         return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
 
 #This is temporary meant to show your current requests to different salons
 def requests(request):
-    # just show a message to confirm email if logged in but not confirmed.
-    c = {'message':'', 'needs_confirming': False}
     django_user = request.user
+    form = RequestForm
+    # just show a message to confirm email if logged in but not confirmed.
+    c = {'message':'', 'needs_confirming': False, 'form' : form}
     print django_user
     if django_user.is_authenticated():
         # Do something for authenticated users.

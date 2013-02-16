@@ -1,7 +1,7 @@
 {% extends "base.html" %}  
 {% load staticfiles %}
-
-{% block page_specific_headers %}
+  
+  {% block page_specific_headers %}
     <script language="JavaScript" type="text/javascript">
   
 	    function getCookie(name) {
@@ -27,33 +27,43 @@
 
   </script>
 {% endblock %}
+  
   {% block content %}
 
+    <div class="row">
+      <p>{{user_details}}! Your request for {{salon_for_request}} has successfully been processed.</p>
+      <p>Keep your eyes peeled for notifications!</p>
+      <p>You can view the status of your last 10 requests below.</p>
 
-<div class = "container">
-  <div class = "row">
-    <div class = "span12">
+    </div>
 
-      <br>
-      <p>Hi {{user_details}}! You can view the status of your last 10 requests below.</p>
-      <br>
-
+    <div class="row">
       {% if user.is_authenticated %}
 
-          <div id="tabs-2">
           <h3>Recent requests</h3>
-          {% if requests %}
+          {% if haircut_requests %}
             <table border="1" cellpadding="5" class="table table-striped">
-            <tr><th>Salon</th><th>Date & time requested</th><th>Status</th><th>Action</th></tr>
-            {% for request in requests %}
-              <tr><td>{{ request.salon_id }}</td><td>{{request.start_date_time}}</td>
-              <td>{{request.get_status_display}}</td><td id="reqtd{{ request.id }}"><a href="#" onclick="cancelRequestAjax({{ request.id }}, {{ user.id }});">Cancel</a></td></tr>
+            <tr>
+              <th>Haircut</th>
+              <th>Salon</th>
+              <th>Date requested</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+
+            {% for haircut_request in haircut_requests %}
+              <tr>
+                <td>{{haircut_request.haircut_type}}</td>
+                <td>{{haircut_request.salon}}</td>
+                <td>{{haircut_request.start_date_time}}</td>
+                <td>{{haircut_request.get_status_display}}</td>
+                <td id="reqtd{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }}, {{ user.id }});">Cancel</a></td></tr>
             {% endfor %}
+
             </table>
           {% else %}
             <b>None</b>
           {% endif %}
-          </div>
         
       {% else %} 
           <p><b>Please <a href="/login">log in</a> or <a href="../register">register</a>!</b></p>
@@ -61,7 +71,6 @@
 
     </div>
   </div>
-</div>
 
 
 
