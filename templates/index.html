@@ -4,39 +4,43 @@
   {% block content %}
 
 
-      <div class="row-fluid" style="margin: 20px 0 20px 0;">
-        <div class="span8 offset2 delicious billboard">
-          <center>
-            <p style="font-size:30px">
-              Reduced price haircuts at off peak times.
+      <div class="row" style="margin: 20px 0 20px 0;">
+
+        <div class="span6 offset3">
+            <p class="lead">
+              Reduced price haircuts in Cambridge at off-peak times.
             </p>
-            <p style="font-size:30px">
-              It's as simple as that. <a href="/about">Learn more.</a>
+            <p class="lead">
+              Select the type of haircut you'd like to get started. <a href="/about">Learn more.</a>
             </p>
             <br>
-          </center>
-        </div>
-        <div class="span12"> 
-            <form action="/salon_list/" method="GET">
-                <button name="sex" class="span4 offset4 btn-lady btn-large btn-primary" type="submit" value="lady" style="height:100px; margin-top:40px;"><i class="icon-girl icon-white"></i>
-                <span class="delicious big-register" style="font-size: 29px">Ladies' Haircut ></span><br>
+         </div>
+
+        <div class="row span9 offset2"> 
+            <form action="/salons/" method="GET">
+              <div class="span4">
+                <button name="haircut" class="btn-lady btn-large btn-primary" type="submit" value="lady">
+                  <span class="big-register">Ladies' Haircut ></span><br>
                 </button>
               </div>
-              <div class="span12">
-                <button name="sex" class="span4 offset4 btn-man btn-large btn-primary" type="submit" value="man" style="height:100px; margin-top:10px;">
-                  <span class="delicious big-register" style="font-size: 29px">Gentlemen's Haircut ></span><br>
+
+              <div class="span4">
+                <button name="haircut" class="btn-man btn-large btn-primary" type="submit" value="gent">
+                  <span class="big-register">Gentlemen's Haircut ></span><br>
                 </button>
               </div>
+
+
             </form>
         </div>
 
       </div>
 
 
-      <div class="row-fluid"><br>
+      <div class="row-fluid" style="margin:20px 0px 30px;">
         <div class = "span4 offset4">
-        <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small> <br><br><br>
-      </div>
+        <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small>
+        </div>
       </div>
 
 

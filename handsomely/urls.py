@@ -1,6 +1,5 @@
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
-from haircuts.views import index
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -17,8 +16,9 @@ urlpatterns = patterns('',
 urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
     url(r'^index/$', 'index'),
-    url(r'^salon_list/$', 'salon_list'),
     
+    url(r'^salons/$', 'salons'),
+
     url(r'^status/$', 'customer_status'),
     url(r'^requests/$', 'requests'),
 
@@ -33,7 +33,6 @@ urlpatterns += patterns('',
     url(r'^register/$', 'haircuts.views.register'),
     url(r'^register/confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         'haircuts.views.register_email_confirm',
-        # password_reset_redirect='/',
         name='password_reset_confirm'),
 
     url(r'^password_change/$', 'django.contrib.auth.views.password_change', name='password_change'),

@@ -1,10 +1,11 @@
 from django import forms
-from models import Notification
+from models import Notification, Request
 from django.contrib.auth.models import User
+from django.forms import Form, ModelForm #ModelForm helps create forms that closely follow models
 
-class RegisterForm(forms.Form):
+class RegisterForm(Form):
     """
-    A form that creates a user, with no privileges, yet to be validated.
+    A form that creates a (django) user, which is yet to be validated. Nb. to create a handsomely user at the same time.
     """
     error_messages = {
         'duplicate_username': ("That email has already been registered.")
@@ -24,12 +25,20 @@ class RegisterForm(forms.Form):
             return username
         raise forms.ValidationError(self.error_messages['duplicate_username'])
 
-class LoginForm(forms.Form):
+class LoginForm(Form):
     email = forms.EmailField(required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'email@address.com', 'autofocus': 'autofocus'}))
     password = forms.CharField(required=True, label='', widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
     remember_me = forms.BooleanField(required=False, label='Remember Me')
 
-class NotifyForm(forms.Form):
+
+class RequestForm(ModelForm):
+    """Handles taking in the request by a certain user for a certain haircut at a certain salon"""
+    class Meta:
+        model = Request
+                  
+
+
+class NotifyForm(Form):
     gender_choices = (('M', 'Male'), ('F','Female'))
     gender = forms.ChoiceField(gender_choices, required=True)
     day_choices = (('TODAY', 'Today'), ('TOMORROW','Tomorrow'), ('TDA','The Day After'))

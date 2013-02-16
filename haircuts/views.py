@@ -21,36 +21,78 @@ import datetime
 import time
 
 
-def index (request):
-    return render_to_response('index.html', {'path': request.path}, context_instance=RequestContext(request))
-
 def coming_soon (request):
-    return render_to_response('coming_soon.html', {'path': request.path}, context_instance=RequestContext(request))
+    return render_to_response('coming_soon.html', context_instance=RequestContext(request))
 
+#front page and haircut type selection
+def index (request):
+    return render_to_response('index.html', context_instance=RequestContext(request))
 
-def salon_list(request):
-    if request.method == 'GET':
-        sex = request.GET['sex']
-        list_of_salons = []
-        salons = Salon.objects.all()
-    if sex == 'lady':
-        for salon in salons:
-            if salon.womens_standard_price:
-                list_of_salons.append(salon)
-        if list_of_salons == []:
-            list_of_salons = 'No salons were found :('
-        return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+#After choosing haircut type. Choose which salons you'd like to hear form.
+def salons(request):
+    if 'haircut' in request.GET and request.GET['haircut']:
+        haircut = request.GET['haircut']
     else:
-        for salon in salons:
-            if salon.mens_standard_price:
-                list_of_salons.append(salon)
-        if list_of_salons == []:
-            list_of_salons = 'No salons were found :('
-        return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+        haircut = None
+
+    #Crmmy workaround to show the right prices
+    if haircut=='lady':
+        is_womens = True
+    elif haircut=='gent':
+        is_womens = False
+    else:
+        #send them a form to choose their haircut type.
+        is_womens = False
+        haircut="please select your haircut"
+
+    list_of_salons = [] #Salons to show
+    salons = Salon.objects.all()
+
+    # In the future haircuts may be a seperate table, but at the moment male and female cuts are hardcoded into the salon table (KISS)
+    for salon in salons:
+        if haircut == 'lady' and salon.womens_standard_price:
+            list_of_salons.append(salon)
+        elif haircut == 'gent' and salon.mens_standard_price:
+            list_of_salons.append(salon)
+
+    if list_of_salons == []:
+        #No salons foudn :(
+        pass
+
+    return render_to_response('salons.html', {'haircut' : haircut, 'is_womens' : is_womens, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+
+# Page to show current status of requests
+def customer_status(request):
+    if request.method == 'POST':
+        haircut_type = request.POST['haircut_type']
+        salon_id = request.POST['salon_id']
+        salon = Salon.objects.get(id = salon_id)
+        user = request.user #THIS User object that's making the request
+        # try:
+        handsomely_user = HandsomelyUser.objects.get(django_user = user)
+        new_request = Request(
+            handsomely_user_id = handsomely_user,
+            salon_id = salon,
+            haircut_type = haircut_type,
+            status = 'WAIT',
+            )
+        new_request.save()
+        user_details = request.user
+        requests = Request.objects.filter(handsomely_user_id = handsomely_user).order_by('-start_date_time')[:10]
+        return render_to_response('status_requested.html', {'user_details' : user_details, 'requests': requests, 'salon': salon}, context_instance=RequestContext(request))
+        # except:
+        #     message = 'Please log in or register to continue :)'
+        #     return render_to_response('registration/login.html', {'message': message}, context_instance=RequestContext(request))
+    else:
+            requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
+            hu = HandsomelyUser.objects.get(django_user = requester)
+            requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
+            return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
 
-#This is meant to show your current requests to different salons
-def requests(request, message = None):
+
+#This is temporary meant to show your current requests to different salons
+def requests(request):
     # just show a message to confirm email if logged in but not confirmed.
     c = {'message':'', 'needs_confirming': False}
     django_user = request.user
@@ -319,33 +361,6 @@ def respond_to_notification(request):
         else:
             return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 
-def customer_status(request):
-    if request.method == 'POST':
-        gender = request.POST['gender']
-        salon_to_be_requested = request.POST['salon']
-        #NOTE THAT THIS LINE BELOW NEEDS FIXING AS ONLY TAKING FIRST WORD OF SALON NAME
-        salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
-        requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-        try:
-            hu = HandsomelyUser.objects.get(django_user = requester)
-            new_request = Request(
-                handsomely_user_id = hu,
-                salon_id = salon_for_request,
-                haircut_type = gender,
-                status = 'WAIT',
-                )
-            new_request.save()
-            user_details = request.user
-            requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
-            return render_to_response('status_requested.html', {'user_details' : user_details, 'requests': requests, 'salon_for_request': salon_for_request}, context_instance=RequestContext(request))
-        except:
-            message = 'Please log in or register to continue :)'
-            return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
-    else:
-      	    requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-      	    hu = HandsomelyUser.objects.get(django_user = requester)
-      	    requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
-            return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
 
 def cancel_request_ajax(request):
