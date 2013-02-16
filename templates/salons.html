@@ -8,7 +8,7 @@
     {% if user.is_authenticated %}
       <form action="/status/" method="POST">
     {% else %}
-      <form action="/login/" method="POST">
+      <form action="/register/" method="POST">
     {% endif %}
       {% csrf_token %}
 

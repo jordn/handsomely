@@ -30,12 +30,18 @@
   
   {% block content %}
 
-    <div class="row">
-      <p>{{user_details}}! Your request for {{salon_for_request}} has successfully been processed.</p>
-      <p>Keep your eyes peeled for notifications!</p>
-      <p>You can view the status of your last 10 requests below.</p>
+    {% if needs_confirming %}
+      <div class="alert alert-error">
+        You need to <strong>confirm your email</strong> before you get notifications sent to <strong>{{user.email}}</strong>
+      </div>
+    {% endif %}
 
-    </div>
+
+    {% if new_request %}
+      <div class="alert">
+        Your request for a <strong>{{new_request.haircut_type}}</strong> haircut at <strong>{{new_request.salon}}</strong> has been added. You will be emailed at <strong>{{user.email}}</strong>.
+      </div>
+    {% endif %}
 
     <div class="row">
       {% if user.is_authenticated %}

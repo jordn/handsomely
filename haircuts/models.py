@@ -14,7 +14,7 @@ class HandsomelyUser(models.Model):
 		return self.django_user.email
 	
 class Salon(models.Model):
-	handsomely_user_id = models.ForeignKey('HandsomelyUser')
+	handsomely_user = models.ForeignKey('HandsomelyUser')
 	salon_name = models.CharField(max_length=50)
 	address_line_1 = models.CharField(max_length=100, blank = True, null = True)
 	address_line_2 = models.CharField(max_length=100, blank = True, null = True)

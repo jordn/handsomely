@@ -64,31 +64,38 @@ def salons(request):
 
 # Page to show current status of requests
 def customer_status(request):
-    user = request.user #This current User object that's making the request
-    handsomely_user = HandsomelyUser.objects.get(django_user = user)
+    django_user = request.user
+    c = {'needs_confirming': False}
+    c['user_details'] = django_user
+    if django_user.is_authenticated():
+        try:
+            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
+            if not handsomely_user.confirmed:
+                c['needs_confirming'] = True
+        except (ValueError, HandsomelyUser.DoesNotExist):
+            user = None
+            #most liekly admin account!
 
-    if request.method == 'POST':
-        # Try and add a new request
-        salon = request.POST['salon']
-        salon = Salon.objects.get(id = salon)
+        if request.method == 'POST':
+            # Try and add a new request
+            salon = request.POST['salon']
+            salon = Salon.objects.get(id = salon)
 
-        haircut_type = request.POST['haircut_type'] # M, F or U
+            haircut_type = request.POST['haircut_type'] # M, F or U
+            new_request = Request(
+                handsomely_user = handsomely_user,
+                salon = salon,
+                haircut_type = haircut_type,
+                status = 'WAIT',
+                )
+            new_request.save()
+            c['new_request'] = new_request
 
-        new_request = Request(
-            handsomely_user = handsomely_user,
-            salon = salon,
-            haircut_type = haircut_type,
-            status = 'WAIT',
-            )
-
-        new_request.save()    
-
-    haircut_requests = Request.objects.filter(handsomely_user = handsomely_user).order_by('-start_date_time')[:10]
-    print haircut_requests[0]
-    return render_to_response('status.html', {'user_details' : user, 'haircut_requests': haircut_requests}, context_instance=RequestContext(request))
-    # # except:
-    #     #     message = 'Please log in or register to continue :)'
-    #     #     return render_to_response('registration/login.html', {'message': message}, context_instance=RequestContext(request))
+        haircut_requests = Request.objects.filter(handsomely_user = handsomely_user).order_by('-start_date_time')[:10]
+        c['haircut_requests'] = haircut_requests
+        return render_to_response('status.html', c, context_instance=RequestContext(request))
+    else:
+        return redirect('/login/', context_instance=RequestContext(request))
     # else:
     #         requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
     #         hu = HandsomelyUser.objects.get(django_user = requester)
@@ -96,7 +103,7 @@ def customer_status(request):
     #         return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
 
-#This is temporary meant to show your current requests to different salons
+#This is temporary meant to show your current requests to different salons.
 def requests(request):
     django_user = request.user
     form = RequestForm
@@ -162,7 +169,7 @@ def register(request):
                  )
 
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
-            return redirect('/requests', context_instance=RequestContext(request))
+            return redirect('/status', context_instance=RequestContext(request))
     else:
         form = RegisterForm()
     return render_to_response("registration/register.html", {

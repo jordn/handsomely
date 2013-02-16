@@ -9,9 +9,11 @@
     <h1>Log in</h1>
     <form action="" method="POST" class="form-very-large">
       {% csrf_token %}
-      <input type="text" name="username" value="" id="username" autofocus="autofocus" placeholder="email@address.com">
+      <input type="text" name="username" value="" id="username" autofocus="autofocus" placeholder="email@address.com"><br>
       <input type="password" name="password" value="" id="password" placeholder="password">
       <br>
+      <strong><small><a href="/register">Register</a></small></strong>
+      <small><a href="/forgot">Forgot password?</a></small>
       <input type="submit"  value="login" class="btn btn-large btn-primary"  />
       {% if next %}
         <input type="hidden" name="next" value="{{ next|escape }}" />
