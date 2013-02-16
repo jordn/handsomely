@@ -52,23 +52,25 @@ def salon_list(request):
 #This is meant to show your current requests to different salons
 def requests(request, message = None):
     # just show a message to confirm email if logged in but not confirmed.
+    c = {'message':'', 'needs_confirming': False}
     django_user = request.user
     print django_user
     if django_user.is_authenticated():
         # Do something for authenticated users.
         try:
             handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
-            message = "logged in"
+            c['message'] += "logged in"
             if handsomely_user.confirmed:
-                message += "he's confirmed"
+                c['message'] += "he's confirmed"
             else:
-                message = "logged in but you need to confirm your email before you get notifications"
+                c['message'] += "logged in but you need to confirm your email before you get notifications"
+                c['needs_confirming'] = True
         except (ValueError, HandsomelyUser.DoesNotExist):
             user = None
             #most liekly admin account!
     else:
         message = "not inside"
-    return render_to_response('requests.html', {'message' : message}, context_instance=RequestContext(request))
+    return render_to_response('requests.html', c, context_instance=RequestContext(request))
 
 
 #Registration form.

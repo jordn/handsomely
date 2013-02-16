@@ -6,6 +6,12 @@
 
 <section>
 
+{% if needs_confirming %}
+  <div class="alert alert-error">
+    You need to confirm your email before you get notifications
+  </div>
+{% endif %}
+
   <span="subtitle">THESE ARE YOUR HAIR CUT REQUESTS</span>
 
   {{message}}
