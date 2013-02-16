@@ -1,16 +1,15 @@
-{% load i18n %}{% load url from future %}{% autoescape off %}
-{% blocktrans %}You're receiving this e-mail because you requested a password reset for your user account at {{ site_name }}.{% endblocktrans %}
+{% load url from future %}{% autoescape off %}
 
-{% trans "Please go to the following page and choose a new password:" %}
-{% block reset_link %}
-{{ protocol }}://handsome.ly{% url 'django.contrib.auth.views.password_reset_confirm' uidb36=uid token=token %}
-{% endblock %}
-WELCOME TO HANDSOME.LY
-PLEASE CONFIRM YOUR EMAIL!
-{% trans "Your username, in case you've forgotten:" %} {{ user.username }}
+Hello!
 
-{% trans "Thanks for using our site!" %}
+This email ({{user.email}}) has just been signed up to be notified of your selected discounted haircut appointments in Camrbidge.
 
-{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+Before we send you deals, please confirm your email address by clicking here: {{ protocol }}://handsome.ly{% url 'django.contrib.auth.views.password_reset_confirm' uidb36=uid token=token %}
 
+All the best,
+
+Team Handsome.ly
+
+
+P.S. We hope everything is working for you. On the slightest whim, whether to tell us of something broken or even just to say "hello", you can just reply to this or any other email you get from us.
 {% endautoescape %}
