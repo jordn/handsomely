@@ -7,7 +7,7 @@ class RegisterForm(forms.Form):
     A form that creates a user, with no privileges, yet to be validated.
     """
     error_messages = {
-        'duplicate_username': ("That email has already been registered. Would you like to <a>recover the password?</a>")
+        'duplicate_username': ("That email has already been registered.")
     }
 
     email = forms.EmailField(required=True, label='', max_length=30, widget=forms.TextInput( \
