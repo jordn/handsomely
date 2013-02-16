@@ -6,8 +6,7 @@
       <p class="error">Sorry, that's not a valid username or password</p>
     {% endif %}
 
-    {% url 'haircuts.views.index' %}
-
+    <h1>Log in</h1>
     <form action="" method="post" class="form-very-large">
       {% csrf_token %}
       <input type="text" name="username" value="" id="username" autofocus="autofocus" placeholder="email@address.com">

@@ -18,7 +18,7 @@
         <a href="/">handsome.ly</a>
         </span>
         {% if user.is_authenticated %}
-          You are logged in as {{ request.user }}
+          You are logged in as <strong>{{ user.username }}</strong>. <a href="/logout">Logout</a>
         {% else %}
           <!-- NB. for salons should be shown regardless -->
           <a href = "/login">Login</a> | <a href = "/register">Register</a> | <a href = "/notify/">For Salons</a>

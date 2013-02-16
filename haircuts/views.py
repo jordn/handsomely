@@ -25,10 +25,8 @@ def index (request):
     return render_to_response('index.html', {'path': request.path}, context_instance=RequestContext(request))
 
 def coming_soon (request):
-    return render_to_response('coming_soon.html', {'path': request.path})
+    return render_to_response('coming_soon.html', {'path': request.path}, context_instance=RequestContext(request))
 
-def thanks(request):
-    return render_to_response('thanks.html', {}, context_instance=RequestContext(request))
 
 def salon_list(request):
     if request.method == 'GET':
@@ -54,18 +52,20 @@ def salon_list(request):
 #This is meant to show your current requests to different salons
 def requests(request, message = None):
     # just show a message to confirm email if logged in but not confirmed.
-    if request.user.is_authenticated():
+    django_user = request.user
+    print django_user
+    if django_user.is_authenticated():
         # Do something for authenticated users.
-        message = "logged in"
         try:
-            email_confirmed_group = Group.objects.get(name='email_confirmed')
-            user_groups = request.user.groups.all()
-            if email_confirmed_group in user_groups:
-                print "he's confirmed"
-        except:
-            pass
-        else:
-            message = "logged in but you need to confirm your email before you get notifications"
+            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
+            message = "logged in"
+            if handsomely_user.confirmed:
+                message += "he's confirmed"
+            else:
+                message = "logged in but you need to confirm your email before you get notifications"
+        except (ValueError, HandsomelyUser.DoesNotExist):
+            user = None
+            #most liekly admin account!
     else:
         message = "not inside"
     return render_to_response('requests.html', {'message' : message}, context_instance=RequestContext(request))
@@ -119,7 +119,7 @@ def register(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
-
+# Once registered, emails link through to this, which sends them on to the defaut django password reset thing.
 def register_email_confirm(request, uidb36=None, token=None,
                            template_name='registration/password_reset_confirm.html',
                            token_generator=default_token_generator,
@@ -135,13 +135,13 @@ def register_email_confirm(request, uidb36=None, token=None,
         user = None
 
     if user is not None and token_generator.check_token(user, token):
-        # valid link
+        # valid link. confirm the email.
         handsomely_user = HandsomelyUser.objects.get(django_user=user)
         handsomely_user.confirmed = True
         handsomely_user.save()
 
-    # Go to the set password page.
-    return password_reset_confirm(request, uidb36, token)
+    # Go to the set password page to let it handle the rest (even if link is invalid)
+    return password_reset_confirm(request, uidb36, token, template_name="registration/register_password.html", post_reset_redirect="/requests")
 
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
 def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):

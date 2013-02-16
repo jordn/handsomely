@@ -21,7 +21,6 @@ urlpatterns += patterns('haircuts.views',
     
     url(r'^status/$', 'customer_status'),
     url(r'^requests/$', 'requests'),
-    url(r'^thanks/$', 'thanks'),
 
     url(r'^notify/$', 'notify'), 
     url(r'^success/$', 'success'),
