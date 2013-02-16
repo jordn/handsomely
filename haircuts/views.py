@@ -50,64 +50,6 @@ def salon_list(request):
             list_of_salons = 'No salons were found :('
         return render_to_response('salon_list.html', {'sex' : sex, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
 
-def register(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            #Email looks legit and unique. New user! (they still need to confirm email). Send them a confirmation email and send them on to the requests.
-            email_address = form.clean_email()
-            random_password = User.objects.make_random_password()
-            new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
-            #Confirmation code is stored in first_name as it's not used at this point and is an encryption of their email address
-            confirmation_code = make_confirmation_code(email_address)
-            new_user.first_name = confirmation_code #THIS IS TOO BIG FOR THE FIRST NAME FIELD!!
-            user_id = str(new_user.id)
-            new_user.save()
-
-            #Send them an email to confirm their email address.
-            message = "Hello! \n\
-            This email was just registered to be informed of any discounted haircuts in Cambridge.\n\n\
-            Before we can send you notice of any appointments, Please confirm your email address by clicking here: http://www.handsome.ly/confirm?code=" + confirmation_code + "&id=" + user_id \
-            + "\nThanks,\n\
-            Team Handsome.ly"
-            send_mail(subject="Confirm your email to get your haircut deals | Handsome.ly",
-            message=message, from_email='team@handsome.ly', recipient_list=[email_address], fail_silently=False)
-
-
-            # Send the team an email to notify them of this momentous occasion.
-            send_mail(subject='New customer signup (' + email_address + ') on Handsome.ly' ,
-            message='Hey Team,\n\
-             Great news! A new customer has signed up, and has been sent a confirmation email to: ' + email_address,
-            from_email='team@handsome.ly', recipient_list=['team@handsome.ly'], fail_silently=False)
-
-            return HttpResponseRedirect('/thanks/')
-    else:
-        form = RegisterForm()
-    return render_to_response("registration/register.html", {
-        'form': form,
-    }, context_instance=RequestContext(request))
-
-def register_email_confirm(request, uidb36=None, token=None,
-                           template_name='registration/password_reset_confirm.html',
-                           token_generator=default_token_generator,
-                           set_password_form=SetPasswordForm,
-                           post_reset_redirect=None,
-                           current_app=None, extra_context=None):
-    # Mostly copied from django auth views
-    assert uidb36 is not None and token is not None # checked by URLconf
-    try:
-        uid_int = base36_to_int(uidb36)
-        user = User.objects.get(id=uid_int)
-    except (ValueError, User.DoesNotExist):
-        user = None
-
-    if user is not None and token_generator.check_token(user, token):
-        # valid link
-        handsomely_user = HandsomelyUser.objects.get(django_user=user)
-        handsomely_user.confirmed = True
-
-    # Go to the set password page.
-    return password_reset_confirm(request, uidb36, token)
 
 #This is meant to show your current requests to different salons
 def requests(request, message = None):
@@ -177,6 +119,29 @@ def register(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
+
+def register_email_confirm(request, uidb36=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    # Mostly copied from django auth views
+    assert uidb36 is not None and token is not None # checked by URLconf
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = User.objects.get(id=uid_int)
+    except (ValueError, User.DoesNotExist):
+        user = None
+
+    if user is not None and token_generator.check_token(user, token):
+        # valid link
+        handsomely_user = HandsomelyUser.objects.get(django_user=user)
+        handsomely_user.confirmed = True
+        handsomely_user.save()
+
+    # Go to the set password page.
+    return password_reset_confirm(request, uidb36, token)
 
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
 def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
