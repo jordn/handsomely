@@ -4,14 +4,14 @@ from django.contrib.auth.models import User
 import datetime
 
 class HandsomelyUser(models.Model): 
-	django_user_id = models.OneToOneField(User, related_name='profile') 
+	django_user = models.OneToOneField(User, related_name='profile') 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
 	is_salon = models.BooleanField(default=False)
 	confirmed = models.BooleanField(default=False)
 	
 	def __unicode__(self):
-		return self.django_user_id.email
+		return self.django_user.email
 	
 class Salon(models.Model):
 	handsomely_user_id = models.ForeignKey('HandsomelyUser')

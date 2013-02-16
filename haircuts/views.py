@@ -7,11 +7,13 @@ from haircuts.forms import RegisterForm, LoginForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import auth
-from django.contrib.auth.models import User, Group
-from django.contrib.auth.forms import UserCreationForm, PasswordResetForm
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.views import password_reset
+from django.contrib.auth.models import User, Group
+from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
+from django.contrib.auth.views import password_reset, password_reset_confirm
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import base36_to_int
 
 from models import *
 from forms import NotifyForm
@@ -85,6 +87,27 @@ def register(request):
         'form': form,
     }, context_instance=RequestContext(request))
 
+def register_email_confirm(request, uidb36=None, token=None,
+                           template_name='registration/password_reset_confirm.html',
+                           token_generator=default_token_generator,
+                           set_password_form=SetPasswordForm,
+                           post_reset_redirect=None,
+                           current_app=None, extra_context=None):
+    # Mostly copied from django auth views
+    assert uidb36 is not None and token is not None # checked by URLconf
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = User.objects.get(id=uid_int)
+    except (ValueError, User.DoesNotExist):
+        user = None
+
+    if user is not None and token_generator.check_token(user, token):
+        # valid link
+        handsomely_user = HandsomelyUser.objects.get(django_user=user)
+        handsomely_user.confirmed = True
+
+    # Go to the set password page.
+    return password_reset_confirm(request, uidb36, token)
 
 #This is meant to show your current requests to different salons
 def requests(request, message = None):
@@ -158,7 +181,7 @@ def register(request):
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
 def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
     handsomely_user = HandsomelyUser(
-        django_user_id = django_user,
+        django_user = django_user,
         gender = gender,
         confirmed = email_confirmed,
         is_salon = is_salon,
@@ -169,7 +192,7 @@ def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_sa
 def notify(request):
     form = NotifyForm()
     salon_logged_in = request.user
-    hu = HandsomelyUser.objects.get(django_user_id = salon_logged_in)
+    hu = HandsomelyUser.objects.get(django_user = salon_logged_in)
     salon_desired = Salon.objects.get(handsomely_user_id = hu.id)	
     requesters = Request.objects.filter(salon_id = salon_desired)
     male_requesters = requesters.filter(haircut_type = 'M')
@@ -183,7 +206,7 @@ def notify(request):
 def success(request):
     if request.method == 'POST':
         submitting_salon = request.user
-        hu = HandsomelyUser.objects.get(django_user_id = submitting_salon)
+        hu = HandsomelyUser.objects.get(django_user = submitting_salon)
         salon_desired = Salon.objects.get(handsomely_user_id = hu.id)
         #Get date:
         if request.POST['day'] == 'TODAY':
@@ -215,9 +238,9 @@ def success(request):
         requests_to_send = requests_to_send.filter(status = 'WAIT')
         requests_to_send = requests_to_send.filter(haircut_type = request.POST['gender'])
         for requester in requests_to_send:
-            person_to_send_to = HandsomelyUser.objects.get(django_user_id = requester.handsomely_user_id)
+            person_to_send_to = HandsomelyUser.objects.get(django_user = requester.handsomely_user_id)
             message ='Hello there my friend. ' + str(submitting_salon) + ' has a free appointment at ' + str(datetime_of_appointment) + '. Usual price is ' + str(request.POST['original_price']) + '. Price through handsome.ly is ' + str(request.POST['discounted_price']) + '. The following additional information is given: ' + str(request.POST['notes']) + '. Do you fancy it? Hurry, because it is first-come; first-served!'
-            send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user_id.email], fail_silently=False)
+            send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user.email], fail_silently=False)
         return render_to_response('success.html', {}, context_instance=RequestContext(request))
 
 def notify_customers(request):
@@ -232,7 +255,7 @@ def notify_customers(request):
 	discounted_price = request.GET['discounted_price']
 	additionalInfoFromForm = request.GET['notes']
 	djangoUser = User.objects.get(id=userIDFromForm)
-	handsomely_user = HandsomelyUser.objects.get(django_user_id=djangoUser)
+	handsomely_user = HandsomelyUser.objects.get(django_user=djangoUser)
 	salon = Salon.objects.get(handsomely_user_id=djangoUser)
 	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="WAIT"))
 	subject = 'Handsomely Notification'
@@ -253,7 +276,7 @@ def notify_customers(request):
 		req.status = "HOL"
 		req.save()
 		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id.id)
-		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user_id.id)
+		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user.id)
 		to_email = recipientDjangoUser.email
 		# content
 		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
@@ -337,7 +360,7 @@ def customer_status(request):
         salon_for_request = Salon.objects.get(salon_name__contains = salon_to_be_requested)
         requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
         try:
-            hu = HandsomelyUser.objects.get(django_user_id = requester)
+            hu = HandsomelyUser.objects.get(django_user = requester)
             new_request = Request(
                 handsomely_user_id = hu,
                 salon_id = salon_for_request,
@@ -353,7 +376,7 @@ def customer_status(request):
             return render_to_response('login.html', {'message': message}, context_instance=RequestContext(request))
     else:
       	    requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-      	    hu = HandsomelyUser.objects.get(django_user_id = requester)
+      	    hu = HandsomelyUser.objects.get(django_user = requester)
       	    requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
             return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
 
