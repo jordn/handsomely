@@ -30,17 +30,10 @@
   
   {% block content %}
 
-    {% if needs_confirming %}
-      <div class="alert alert-error">
-        You need to <strong>confirm your email</strong> before you get notifications sent to <strong>{{user.email}}</strong>
-      </div>
-    {% endif %}
-
-
-    {% if new_request %}
-      <div class="alert">
-        Your request for a <strong>{{new_request.haircut_type}}</strong> haircut at <strong>{{new_request.salon}}</strong> has been added. You will be emailed at <strong>{{user.email}}</strong>.
-      </div>
+    {% if messages %}
+      {% for message in messages %}
+      <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+      {% endfor %}
     {% endif %}
 
     <div class="row">

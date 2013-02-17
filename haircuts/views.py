@@ -6,7 +6,7 @@ from django import forms
 from haircuts.forms import RegisterForm, LoginForm, RequestForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, SetPasswordForm
@@ -26,6 +26,8 @@ def coming_soon (request):
 
 #front page and haircut type selection
 def index (request):
+    c = {'logged_out': False}
+
     return render_to_response('index.html', context_instance=RequestContext(request))
 
 #After choosing haircut type. Choose which salons you'd like to hear form.
@@ -44,7 +46,7 @@ def salons(request):
         #send them a form to choose their haircut type.
         is_womens = False
         haircut="please select your haircut"
-        return render_to_response('index.html', context_instance=RequestContext(request))
+        return redirect('/index', context_instance=RequestContext(request))
 
     list_of_salons = [] #Salons to show
     salons = Salon.objects.all()
@@ -71,7 +73,7 @@ def customer_status(request):
         try:
             handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
             if not handsomely_user.confirmed:
-                c['needs_confirming'] = True
+                messages.error(request, 'You need to <strong>confirm your email</strong> before you receive notifications')
         except (ValueError, HandsomelyUser.DoesNotExist):
             user = None
             return redirect('/admin')
@@ -90,7 +92,7 @@ def customer_status(request):
                 status = 'WAIT',
                 )
             new_request.save()
-            c['new_request'] = new_request
+            messages.info(request, 'Your request for a <strong>' + new_request.haircut_type +'</strong> haircut at <strong>' + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong>.')
 
         haircut_requests = Request.objects.filter(handsomely_user = handsomely_user).order_by('-start_date_time')[:10]
         c['haircut_requests'] = haircut_requests
