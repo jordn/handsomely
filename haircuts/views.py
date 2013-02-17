@@ -74,6 +74,7 @@ def customer_status(request):
                 c['needs_confirming'] = True
         except (ValueError, HandsomelyUser.DoesNotExist):
             user = None
+            return redirect('/admin')
             #most liekly admin account!
 
         if request.method == 'POST':
