@@ -10,7 +10,7 @@
   <h1>Where shall we send the notifcations to?</h1>
   <span="subtitle">Enter the email address where you'd like to receive notifications of any haircut deals</span>
   <a href="/login">Log in</a>
-  <form action="" method="post" class="form-inline form-very-large">
+  <form action="" method="POST" class="form-inline form-very-large">
     {% csrf_token %}      
     <ul class="unstyled">
     {% for error in form.email.errors %}

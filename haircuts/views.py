@@ -67,22 +67,28 @@ def salons(request):
 
 def add_haircut_request(request):
     django_user = request.user
-    c = {'needs_confirming': False}
-    c['user_details'] = django_user
     if django_user.is_authenticated():
         try:
             handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
         except (ValueError, HandsomelyUser.DoesNotExist):
-            return redirect('/admin')  #most likely admin account! Should it just fail silently?
+            return redirect('/status/')  #most likely admin account! Should it just fail silently?
 
-        if request.method == 'POST':
-            # Try to add a new request
+        print "is_authenticated"
+        if ('haircut_type' in request.POST and request.POST['haircut_type']
+            and 'salon' in request.POST and request.POST['salon']):
+            print "has post info"
             salon = request.POST['salon']
-            salon = Salon.objects.get(id = salon)
-            messages.debug(request, ' Post')
+            haircut_type = request.POST['haircut_type'] # M or F
+            try:
+                salon = Salon.objects.get(id = salon)
+                assert haircut_type in ('M', 'F')
+            except (ValueError, Salon.DoesNotExist):
+                messages.error(request, "Salon doesnt exist")
+                return redirect('/status/')
+            except(AssertionError):
+                messages.error(request, "Haircut doesnt exist")
+                return redirect('/status/')
 
-
-            haircut_type = request.POST['haircut_type'] # M, F or U
             new_request = Request(
                 handsomely_user = handsomely_user,
                 salon = salon,
@@ -93,7 +99,9 @@ def add_haircut_request(request):
             messages.info(request, ('Your request for a <strong>' + new_request.haircut_type +'</strong> haircut at <strong>'
              + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong>.'))
 
-            return redirect('/status')
+        return redirect('/status')
+    else:
+        return redirect('/')
 
 # Page to show current status of requests
 def customer_status(request):
@@ -169,6 +177,7 @@ def register(request):
     else:
         form = RegisterForm()
 
+    #Send the user to 
     if ('haircut_type' in request.GET and request.GET['haircut_type']
         and 'salon' in request.GET and request.GET['salon']):
         haircut_type, salon = request.GET['haircut_type'], request.GET['salon']
@@ -203,7 +212,7 @@ def register_email_confirm(request, uidb36=None, token=None,
         handsomely_user.save()
 
     # Go to the set password page to let it handle the rest (even if link is invalid)
-    return password_reset_confirm(request, uidb36, token, template_name="registration/register_password.html", post_reset_redirect="/requests")
+    return password_reset_confirm(request, uidb36, token, template_name="registration/register_password.html", post_reset_redirect="/status")
 
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
 def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
