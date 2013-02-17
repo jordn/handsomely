@@ -6,11 +6,11 @@
     hey {{haircut}}
 
     {% if user.is_authenticated %}
-      <form action="/status/" method="POST">
+      <form action="/haircut_request/" method="POST">
+        {% csrf_token %}
     {% else %}
-      <form action="/register/" method="POST">
+      <form action="/register/" method="GET">
     {% endif %}
-      {% csrf_token %}
 
         {% if is_womens %}
           <input type="hidden" value="F" name="haircut_type">

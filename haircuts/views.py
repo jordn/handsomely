@@ -64,25 +64,23 @@ def salons(request):
 
     return render_to_response('salons.html', {'haircut' : haircut, 'is_womens' : is_womens, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
 
-# Page to show current status of requests
-def customer_status(request):
+
+def add_haircut_request(request):
     django_user = request.user
     c = {'needs_confirming': False}
     c['user_details'] = django_user
     if django_user.is_authenticated():
         try:
             handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
-            if not handsomely_user.confirmed:
-                messages.error(request, 'You need to <strong>confirm your email</strong> before you receive notifications')
         except (ValueError, HandsomelyUser.DoesNotExist):
-            user = None
-            return redirect('/admin')
-            #most liekly admin account!
+            return redirect('/admin')  #most likely admin account! Should it just fail silently?
 
         if request.method == 'POST':
-            # Try and add a new request
+            # Try to add a new request
             salon = request.POST['salon']
             salon = Salon.objects.get(id = salon)
+            messages.debug(request, ' Post')
+
 
             haircut_type = request.POST['haircut_type'] # M, F or U
             new_request = Request(
@@ -92,43 +90,30 @@ def customer_status(request):
                 status = 'WAIT',
                 )
             new_request.save()
-            messages.info(request, 'Your request for a <strong>' + new_request.haircut_type +'</strong> haircut at <strong>' + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong>.')
+            messages.info(request, ('Your request for a <strong>' + new_request.haircut_type +'</strong> haircut at <strong>'
+             + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong>.'))
+
+            return redirect('/status')
+
+# Page to show current status of requests
+def customer_status(request):
+    django_user = request.user
+    c = {'needs_confirming': False}
+    c['user_details'] = django_user
+    if django_user.is_authenticated():
+        try:
+            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
+            if not handsomely_user.confirmed:
+                messages.error(request, 'You need to <strong>confirm your email ('+ django_user.email +')</strong> before you receive notifications. Please check your inbox.')
+        except (ValueError, HandsomelyUser.DoesNotExist):
+            user = None
+            return redirect('/admin') #Most likely an admin account!
 
         haircut_requests = Request.objects.filter(handsomely_user = handsomely_user).order_by('-start_date_time')[:10]
         c['haircut_requests'] = haircut_requests
         return render_to_response('status.html', c, context_instance=RequestContext(request))
     else:
         return redirect('/login/', context_instance=RequestContext(request))
-    # else:
-    #         requester = request.user #THIS DETERMINES THE ID OF WHO IS ASKING FOR A REQUEST
-    #         hu = HandsomelyUser.objects.get(django_user = requester)
-    #         requests = Request.objects.filter(handsomely_user_id = hu).order_by('-start_date_time')[:10]
-    #         return render_to_response('status.html', {'user_details' : requester, 'requests': requests}, context_instance=RequestContext(request))
-
-
-#This is temporary meant to show your current requests to different salons.
-def requests(request):
-    django_user = request.user
-    form = RequestForm
-    # just show a message to confirm email if logged in but not confirmed.
-    c = {'message':'', 'needs_confirming': False, 'form' : form}
-    print django_user
-    if django_user.is_authenticated():
-        # Do something for authenticated users.
-        try:
-            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
-            c['message'] += "logged in"
-            if handsomely_user.confirmed:
-                c['message'] += "he's confirmed"
-            else:
-                c['message'] += "logged in but you need to confirm your email before you get notifications"
-                c['needs_confirming'] = True
-        except (ValueError, HandsomelyUser.DoesNotExist):
-            user = None
-            #most liekly admin account!
-    else:
-        message = "not inside"
-    return render_to_response('requests.html', c, context_instance=RequestContext(request))
 
 
 #Registration form.
@@ -171,10 +156,27 @@ def register(request):
                  subject_template_name='registration/new_user_confirm_email_subject.txt'
                  )
 
+            #If they've come with a haircut request add it.
+            if ('haircut_type' in request.GET and request.GET['haircut_type']
+                and 'salon' in request.GET and request.GET['salon']):
+                add_haircut_request(request)
+
+            messages.success(request, 'came from register.')
+
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
             return redirect('/status', context_instance=RequestContext(request))
+
     else:
         form = RegisterForm()
+
+    if ('haircut_type' in request.GET and request.GET['haircut_type']
+        and 'salon' in request.GET and request.GET['salon']):
+        haircut_type, salon = request.GET['haircut_type'], request.GET['salon']
+
+        return render_to_response("registration/register_and_request.html", {
+        'form': form, 'haircut_type':haircut_type, 'salon':salon
+        }, context_instance=RequestContext(request))
+
     return render_to_response("registration/register.html", {
         'form': form,
     }, context_instance=RequestContext(request))

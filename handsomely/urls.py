@@ -19,8 +19,8 @@ urlpatterns += patterns('haircuts.views',
     
     url(r'^salons/$', 'salons'),
 
+    url(r'^haircut_request/$', 'add_haircut_request'), #not for the public view.
     url(r'^status/$', 'customer_status'),
-    url(r'^requests/$', 'requests'),
 
     url(r'^notify/$', 'notify'), 
     url(r'^success/$', 'success'),

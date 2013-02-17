@@ -6,7 +6,8 @@
 
 <section>
 
-  <h1>Register</h1>
+
+  <h1>Where shall we send the notifcations to?</h1>
   <span="subtitle">Enter the email address where you'd like to receive notifications of any haircut deals</span>
   <a href="/login">Log in</a>
   <form action="" method="post" class="form-inline form-very-large">
@@ -16,8 +17,12 @@
         <li class="text-error"><strong>{{ error }}</strong></li>
     {% endfor %}
     </ul>
+
+    {{haircut_type}} {{salon}}
+      <input type="hidden" name="haircut_type" value="{{ haircut_type}}" />
+      <input type="hidden" name="salon" value="{{ salon }}" />
       {{ form.email }}
-    <input class="btn btn-large btn-primary" type="submit" value="Register">
+    <input class="btn btn-large btn-primary" type="submit" value="Request haircut">
   </form>
 
 </section>
