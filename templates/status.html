@@ -56,7 +56,12 @@
                 <td>{{haircut_request.salon}}</td>
                 <td>{{haircut_request.start_date_time}}</td>
                 <td>{{haircut_request.get_status_display}}</td>
-                <td id="td-req-id-{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }}, {{ user.id }});">Cancel</a></td></tr>
+				{% if haircut_request.get_status_display == 'Cancelled' %}
+					<td id="td-req-id-{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }}, {{ user.id }});">Cancel</a></td>
+				{% else %}
+					<td id="td-req-id-{{ haircut_request.id }}"> - </td>
+				{% endif %}
+				</tr>
             {% endfor %}
 
             </table>
