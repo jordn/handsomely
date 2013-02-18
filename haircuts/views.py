@@ -102,6 +102,33 @@ def add_haircut_request(request):
     else:
         return redirect('/')
 
+
+def cancel_haircut_request(request):
+    # print request
+    django_user = request.user
+    if django_user.is_authenticated():
+        try:
+            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
+        except (ValueError, HandsomelyUser.DoesNotExist):
+            return redirect('/status/')  #most likely admin account! Should it just fail silently?
+
+        if ('reqID' in request.POST and request.POST['reqID']):
+            request_id = request.POST['reqID']
+            request = Request.objects.get(id=request_id)
+
+            if request.handsomely_user == handsomely_user:
+                print "the right user"    
+                request.status = 'CANC'
+                request.save() 
+                result = request.id
+                response = HttpResponse(result) 
+                return response   
+
+        return redirect('/status')
+    else:
+        return redirect('/')
+
+
 # Page to show current status of requests
 def customer_status(request):
     django_user = request.user
@@ -391,12 +418,3 @@ def respond_to_notification(request):
         else:
             return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 
-
-
-def cancel_request_ajax(request):
-    requestID = request.POST['reqID']
-    req = Request.objects.get(id=requestID)
-    req.delete()
-    result = req.id
-    response = HttpResponse(result)
-    return response

@@ -2,8 +2,6 @@
 {% load staticfiles %}
   
   {% block content %}
-    
-    hey {{haircut}}
 
     {% if user.is_authenticated %}
       <form action="/haircut_request/" method="POST">

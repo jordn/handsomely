@@ -16,11 +16,12 @@ urlpatterns = patterns('',
 urlpatterns += patterns('haircuts.views',
     url(r'^$', 'coming_soon'),
     url(r'^index/$', 'index'),
-    
     url(r'^salons/$', 'salons'),
 
     url(r'^haircut_request/$', 'add_haircut_request'), #not for the public view.
     url(r'^status/$', 'customer_status'),
+    url(r'^cancel_request/$', 'cancel_haircut_request'), #not for the public view.
+
 
     url(r'^notify/$', 'notify'), 
     url(r'^success/$', 'success'),

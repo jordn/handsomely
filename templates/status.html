@@ -22,7 +22,7 @@
 
 	  function cancelRequestAjax(reqID, userID){
 	    var csrftoken = getCookie('csrftoken'); 
-	    jQuery.post('/cancel_request/', {reqID : reqID, userID : userID, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('reqtd'+reqID).innerHTML="Cancelled &#10004;"; }); 
+	    jQuery.post('/cancel_request/', {reqID : reqID, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('reqtd'+reqID).innerHTML="Cancelled &#10004;"; }); 
 	  }
 
   </script>
@@ -65,7 +65,7 @@
           {% endif %}
         
       {% else %} 
-          <p><b>Please <a href="/login">log in</a> or <a href="../register">register</a>!</b></p>
+          <p><b>Please <a href="/login">log in</a> or <a href="/register">register</a>!</b></p>
       {% endif %}
 
     </div>
