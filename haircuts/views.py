@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext, Context, loader
 from django.template.loader import get_template
 from django import forms
-from haircuts.forms import RegisterForm, LoginForm, RequestForm
+from haircuts.forms import RegisterForm, LoginForm, RequestForm, NotificationForm, NotifyForm
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import auth, messages
@@ -16,7 +16,6 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import base36_to_int
 
 from models import *
-from forms import NotifyForm
 import datetime
 import time
 
@@ -241,6 +240,9 @@ def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_sa
     handsomely_user.save()
     return handsomely_user
 
+def notifications(request):
+    form = NotificationForm()
+    return render_to_response('notifications.html', {'form': form}, context_instance=RequestContext(request))
 
 
 def notify(request):
@@ -297,62 +299,6 @@ def success(request):
             send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user.email], fail_silently=False)
         return render_to_response('success.html', {}, context_instance=RequestContext(request))
 
-def notify_customers(request):
-    #DO NOT USE THIS- USE NOTIFY ABOVE AS IT WORKS fa 02.02.13
-    # ?? ma 02.02.13
-    #I mean success, not notify
-	userIDFromForm = request.GET['duid']
-	gender = request.GET['gender']
-	day = request.GET['day']
-	time = request.GET['time']
-	original_price_fromForm = request.GET['original_price']
-	discounted_price = request.GET['discounted_price']
-	additionalInfoFromForm = request.GET['notes']
-	djangoUser = User.objects.get(id=userIDFromForm)
-	handsomely_user = HandsomelyUser.objects.get(django_user=djangoUser)
-	salon = Salon.objects.get(handsomely_user_id=djangoUser)
-	requestsList = Request.objects.filter(salon_id=salon.id).filter(Q(status="WAIT"))
-	subject = 'Handsomely Notification'
-	from_email = 'team@handsome.ly' 
-	date_and_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
-	date_and_time.replace(hour = time.hour)
-	date_and_time.replace(hour = time.minute)
-	if day == "TOMORROW":
-		date_and_time += datetime.timedelta(days=1)
-	elif day == "TDA": 
-		date_and_time += datetime.timedelta(days=2)
-	notif = Notification(salon_id=salon, status='OPEN', appointment_date_time=date_and_time, appointment_price=discounted_price, original_price=original_price_fromForm, haircut_type=gender, additional_info=additionalInfoFromForm)
-	notif.save()	
-	for req in requestsList:
-		notif.request_ids.add(req.id)
-	notif.save()
-	for req in requestsList:
-		req.status = "HOL"
-		req.save()
-		recipientHandsomelyUser = HandsomelyUser.objects.get(id = req.handsomely_user_id.id)
-		recipientDjangoUser = User.objects.get(id = recipientHandsomelyUser.django_user.id)
-		to_email = recipientDjangoUser.email
-		# content
-		contextMap = Context({ "users_first_name" : recipientDjangoUser.first_name, 
-				       "salon_name" : salon.salon_name, 
-				       "additional_info_from_salon" : additionalInfoFromForm, 
-				       "notification_id" : str(notif.id),
-				       "user_email" : to_email
-				     })
-		notification_email_text = get_template('emails/notify.txt')
-		notification_email_html = get_template('emails/notify.html')
-		text_content = notification_email_text
-		html_content = notification_email_html
-		# send email
-		msg = EmailMultiAlternatives (subject, text_content, from_email, [to_email])
-		msg.attach_alternative(html_content, "text/html")
-		msg.send()
-		msg = EmailMultiAlternatives(subject, text_content, 'team@handsome.ly', ['team@handsome.ly'])
-		msg.attach_alternative(html_content, "text/html")
-		msg.send()
-	result = 'done'
-	response = HttpResponse(result)
-	return response
 		
 def respond_to_notification(request):
     djangoUser = request.user

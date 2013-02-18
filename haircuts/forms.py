@@ -1,3 +1,4 @@
+# This python file uses the following encoding: utf-8 # Needed to have a pound sign show up
 from django import forms
 from models import Notification, Request
 from django.contrib.auth.models import User
@@ -8,7 +9,7 @@ class RegisterForm(Form):
     A form that creates a (django) user, which is yet to be validated. Nb. to create a handsomely user at the same time.
     """
     error_messages = {
-        'duplicate_username': ("That email has already been registered.")
+        'duplicate_username': ("That email has already been registered."),
     }
 
     email = forms.EmailField(required=True, label='', max_length=30, widget=forms.TextInput( \
@@ -18,7 +19,10 @@ class RegisterForm(Form):
         # Since User.username is unique, this check is redundant,
         # but it sets a nicer error message than the ORM. See #13147.
         username = self.cleaned_data["email"]
-        print username
+        try: #£ sign after @ is slipping through the net
+            assert(pound not in username)
+        except AssertionError:
+            raise forms.ValidationError(self.error_messages['pound_sign_found'])
         try:
             User.objects.get(username=username)
         except User.DoesNotExist:
@@ -35,7 +39,6 @@ class RequestForm(ModelForm):
     """Handles taking in the request by a certain user for a certain haircut at a certain salon"""
     class Meta:
         model = Request
-                  
 
 
 class NotifyForm(Form):
