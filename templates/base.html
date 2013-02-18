@@ -9,7 +9,7 @@
     <link href='http://fonts.googleapis.com/css?family=Sacramento' rel='stylesheet' type='text/css'>
 
     <link href="{% static 'css/site.css' %}" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="{% static 'img/h.png' %}"/>
 
     {% block page_specific_headers %}{% endblock %}
   </head>
@@ -24,7 +24,7 @@
 
       <div class="row span9 offset3">
         {% if user.is_authenticated %}
-          You are logged in as <strong>{{ user.username }}</strong>. <a href="/logout">Logout</a>
+          You are logged in as <strong>{{ user.username }}</strong> | <a href="/logout">Logout</a> | <a href = "/notify/">For Salons</a>
         {% else %}
           <!-- NB. for salons should be shown regardless -->
           <a href = "/login">Login</a> | <a href = "/register">Register</a> | <a href = "/notify/">For Salons</a>

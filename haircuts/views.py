@@ -247,7 +247,7 @@ def notify(request):
     form = NotifyForm()
     salon_logged_in = request.user
     hu = HandsomelyUser.objects.get(django_user = salon_logged_in)
-    salon_desired = Salon.objects.get(handsomely_user_id = hu.id)	
+    salon_desired = Salon.objects.get(django_user = salon_logged_in)	
     requesters = Request.objects.filter(salon_id = salon_desired)
     male_requesters = requesters.filter(haircut_type = 'M')
     female_requesters = requesters.filter(haircut_type = 'F')
@@ -261,7 +261,7 @@ def success(request):
     if request.method == 'POST':
         submitting_salon = request.user
         hu = HandsomelyUser.objects.get(django_user = submitting_salon)
-        salon_desired = Salon.objects.get(handsomely_user_id = hu.id)
+        salon_desired = Salon.objects.get(django_user = submitting_salon)
         #Get date:
         if request.POST['day'] == 'TODAY':
             date = datetime.datetime.now()
@@ -292,7 +292,7 @@ def success(request):
         requests_to_send = requests_to_send.filter(status = 'WAIT')
         requests_to_send = requests_to_send.filter(haircut_type = request.POST['gender'])
         for requester in requests_to_send:
-            person_to_send_to = HandsomelyUser.objects.get(django_user = requester.handsomely_user_id)
+            person_to_send_to = HandsomelyUser.objects.get(django_user = requester.django_user)
             message ='Hello there my friend. ' + str(submitting_salon) + ' has a free appointment at ' + str(datetime_of_appointment) + '. Usual price is ' + str(request.POST['original_price']) + '. Price through handsome.ly is ' + str(request.POST['discounted_price']) + '. The following additional information is given: ' + str(request.POST['notes']) + '. Do you fancy it? Hurry, because it is first-come; first-served!'
             send_mail('Handsomely - Appointment Available', message, 'team@handsome.ly', [person_to_send_to.django_user.email], fail_silently=False)
         return render_to_response('success.html', {}, context_instance=RequestContext(request))
