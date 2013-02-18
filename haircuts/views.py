@@ -81,12 +81,13 @@ def add_haircut_request(request):
             except(AssertionError):
                 messages.error(request, "Haircut doesnt exist")
                 return redirect('/status/')
-			
-	    similar_requests_from_this_user = Request.objects.filter(django_user=django_user).filter(salon=salon).filter(haircut_type=haircut_type).filter(status='WAIT')
-	    if len(similar_requests_from_this_user) > 0:
-		messages.error(request, "Duplicate haircut request")
-                return redirect('/status/')	
-			
+
+            active_similar_requests = Request.objects.filter(django_user=django_user, salon=salon, haircut_type=haircut_type, status='WAIT')
+
+            if active_similar_requests:
+                messages.info(request, 'A request already existed')
+                return redirect('/status/')
+
             new_request = Request(
                 django_user = django_user,
                 salon = salon,
