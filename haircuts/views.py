@@ -73,10 +73,9 @@ def add_haircut_request(request):
         except (ValueError, HandsomelyUser.DoesNotExist):
             return redirect('/status/')  #most likely admin account! Should it just fail silently?
 
-        print "is_authenticated"
         if ('haircut_type' in request.POST and request.POST['haircut_type']
             and 'salon' in request.POST and request.POST['salon']):
-            print "has post info"
+
             salon = request.POST['salon']
             haircut_type = request.POST['haircut_type'] # M or F
             try:
@@ -124,8 +123,8 @@ def customer_status(request):
         return redirect('/login/', context_instance=RequestContext(request))
 
 
-#Registration form.
-# Username is email, password is random and confirmation email uses the forgot password defaults with different template.
+# Registration form.
+# Username is email, password is random and confirmation email comes from the 'forgot password' default with different templates.
 def register(request):
     #form gets submitted by email. If it's new a new user is created (with random password) and a password reset form is sent to the user's email.
     if request.method == 'POST':
@@ -165,11 +164,11 @@ def register(request):
                  )
 
             #If they've come with a haircut request add it.
-            if ('haircut_type' in request.GET and request.GET['haircut_type']
-                and 'salon' in request.GET and request.GET['salon']):
+            if ('haircut_type' in request.POST and request.POST['haircut_type']
+                and 'salon' in request.POST and request.POST['salon']):
                 add_haircut_request(request)
 
-            messages.success(request, 'came from register.')
+            messages.success(request, 'Came from register.')
 
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
             return redirect('/status', context_instance=RequestContext(request))
@@ -177,7 +176,7 @@ def register(request):
     else:
         form = RegisterForm()
 
-    #Send the user to 
+    #If we've got haircut detaisl we've got a slightly different form.
     if ('haircut_type' in request.GET and request.GET['haircut_type']
         and 'salon' in request.GET and request.GET['salon']):
         haircut_type, salon = request.GET['haircut_type'], request.GET['salon']
@@ -189,6 +188,7 @@ def register(request):
     return render_to_response("registration/register.html", {
         'form': form,
     }, context_instance=RequestContext(request))
+
 
 # Once registered, emails link through to this, which sends them on to the defaut django password reset thing.
 def register_email_confirm(request, uidb36=None, token=None,
@@ -214,6 +214,7 @@ def register_email_confirm(request, uidb36=None, token=None,
     # Go to the set password page to let it handle the rest (even if link is invalid)
     return password_reset_confirm(request, uidb36, token, template_name="registration/register_password.html", post_reset_redirect="/status")
 
+
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
 def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
     handsomely_user = HandsomelyUser(
@@ -224,6 +225,8 @@ def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_sa
         )
     handsomely_user.save()
     return handsomely_user
+
+
 
 def notify(request):
     form = NotifyForm()
