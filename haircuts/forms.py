@@ -10,6 +10,7 @@ class RegisterForm(Form):
     """
     error_messages = {
         'duplicate_username': ("That email has already been registered."),
+        'pound_sign_found': ("Please enter a valid e-mail address."),   
     }
 
     email = forms.EmailField(required=True, label='', max_length=30, widget=forms.TextInput( \
@@ -19,7 +20,9 @@ class RegisterForm(Form):
         # Since User.username is unique, this check is redundant,
         # but it sets a nicer error message than the ORM. See #13147.
         username = self.cleaned_data["email"]
+
         try: #£ sign after @ is slipping through the net
+            pound = u'\u00A3' 
             assert(pound not in username)
         except AssertionError:
             raise forms.ValidationError(self.error_messages['pound_sign_found'])
@@ -40,6 +43,12 @@ class RequestForm(ModelForm):
     class Meta:
         model = Request
 
+
+
+class NotificationForm(ModelForm): 
+    """Handles the info of sending out free appointments"""
+    class Meta:
+        model = Notification
 
 class NotifyForm(Form):
     gender_choices = (('M', 'Male'), ('F','Female'))
