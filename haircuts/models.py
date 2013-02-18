@@ -44,12 +44,12 @@ class Request(models.Model):
 
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
-	salon_id = models.ForeignKey('Salon')
-	request_ids = models.ManyToManyField(Request, related_name='request_notification')
-	filled_by = models.ForeignKey('Request', blank=True, null=True)
+	salon = models.ForeignKey('Salon')
+	offered_to = models.ManyToManyField(Request, related_name='request_notification')
 	status_choices = ( ('FILL', 'Filled'), ('OPEN', 'Open') )
 	status = models.CharField(max_length=4, choices=status_choices) 
-	appointment_date_time = models.DateTimeField()
+	filled_by = models.ForeignKey('Request', blank=True, null=True) #which request took the booking
+	appointment_datetime = models.DateTimeField()
 	appointment_price = models.DecimalField(max_digits=4, decimal_places=2)
 	original_price = models.DecimalField(max_digits=4, decimal_places=2, blank = True, null = True)
 	haircut_choices = ( ('M', 'Male'), ('F', 'Female'), ('U', 'Unspecified') )

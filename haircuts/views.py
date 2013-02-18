@@ -239,9 +239,31 @@ def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_sa
     handsomely_user.save()
     return handsomely_user
 
-def notifications(request):
+# Salon dashboard
+def salon_dashboard(request):
+    django_user = request.user
+    c = {'user': django_user}
+    if django_user.is_authenticated():
+        # try:
+        salon = Salon.objects.get(django_user = django_user)
+        c['salon'] = salon
+
+        requests_for_salon = Request.objects.filter(salon=salon)
+        c['requests_for_salon'] = requests_for_salon
+
+        requests_for_salon
+
     form = NotificationForm()
-    return render_to_response('notifications.html', {'form': form}, context_instance=RequestContext(request))
+    c['form'] = form
+    return render_to_response('notifications.html', c, context_instance=RequestContext(request))
+
+def send_notification(request):
+    django_user = request.user
+    c = {'user': django_user}
+    if django_user.is_authenticated():
+        salon = Salon.objects.get(django_user = django_user)
+        c['salon'] = salon
+        return render_to_response('notifications.html', c, context_instance=RequestContext(request))
 
 
 def notify(request):
@@ -249,7 +271,7 @@ def notify(request):
     salon_logged_in = request.user
     hu = HandsomelyUser.objects.get(django_user = salon_logged_in)
     salon_desired = Salon.objects.get(django_user = salon_logged_in)	
-    requesters = Request.objects.filter(salon_id = salon_desired)
+    requesters = Request.objects.filter(salon = salon_desired)
     male_requesters = requesters.filter(haircut_type = 'M')
     female_requesters = requesters.filter(haircut_type = 'F')
     number_male = len(male_requesters)

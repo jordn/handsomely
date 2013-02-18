@@ -4,6 +4,19 @@
 
 {% block content %}
 
-hey
-{{form}}
+Hey {{salon}}.
+Normal price {{salon.mens_standard_price}}
+<ul>
+{% for haircut_request in requests_for_salon %}
+<li>{{haircut_request}} </li>
+{% endfor %}
+
+<form action="/send_notification/" method="POST">
+
+{{form.offered_to}}
+{{form.appointment_datetime}}
+{{form.original_price}}
+{{form.appointment_price}}
+
+</form>
 {% endblock %}
