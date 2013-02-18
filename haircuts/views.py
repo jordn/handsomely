@@ -68,11 +68,6 @@ def salons(request):
 def add_haircut_request(request):
     django_user = request.user
     if django_user.is_authenticated():
-        try:
-            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
-        except (ValueError, HandsomelyUser.DoesNotExist):
-            return redirect('/status/')  #most likely admin account! Should it just fail silently?
-
         if ('haircut_type' in request.POST and request.POST['haircut_type']
             and 'salon' in request.POST and request.POST['salon']):
 
@@ -107,22 +102,15 @@ def cancel_haircut_request(request):
     # print request
     django_user = request.user
     if django_user.is_authenticated():
-        try:
-            handsomely_user = HandsomelyUser.objects.get(django_user=django_user)
-        except (ValueError, HandsomelyUser.DoesNotExist):
-            return redirect('/status/')  #most likely admin account! Should it just fail silently?
 
         if ('reqID' in request.POST and request.POST['reqID']):
             request_id = request.POST['reqID']
             request = Request.objects.get(id=request_id)
 
-            if request.django_user == django_user:
-                print "the right user"    
+            if request.django_user == django_user: 
                 request.status = 'CANC'
                 request.save() 
-                result = request.id
-                response = HttpResponse(result) 
-                return response   
+                return HttpResponse(request.id) 
 
         return redirect('/status')
     else:
