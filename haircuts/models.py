@@ -14,7 +14,7 @@ class HandsomelyUser(models.Model):
 		return self.django_user.email
 	
 class Salon(models.Model):
-	handsomely_user = models.ForeignKey('HandsomelyUser')
+	django_user = models.ForeignKey(User)
 	salon_name = models.CharField(max_length=50)
 	address_line_1 = models.CharField(max_length=100, blank = True, null = True)
 	address_line_2 = models.CharField(max_length=100, blank = True, null = True)
@@ -31,7 +31,7 @@ class Salon(models.Model):
 		return self.salon_name
 	
 class Request(models.Model):
-	handsomely_user = models.ForeignKey('HandsomelyUser')
+	django_user = models.ForeignKey(User)
 	salon = models.ForeignKey('Salon')
 	haircut_choices = ( ('M', 'Male'), ('F', 'Female'), ('U', 'Unspecified') )
 	haircut_type = models.CharField(max_length=1, choices=haircut_choices) 
@@ -40,8 +40,7 @@ class Request(models.Model):
 	start_date_time = models.DateTimeField(default=datetime.datetime.now) 
 	
 	def __unicode__(self):
-		# return str(self.id + ' ' + self.handsomely_user + ' for ' + self.haircut_type + ' @ ' + self.salon)
-		return str(self.id) + ' ' + str(self.handsomely_user) + ' for ' + self.haircut_type + ' @ ' + str(self.salon)
+		return str(self.id) + ' ' + str(self.django_user) + ' for ' + self.haircut_type + ' @ ' + str(self.salon)
 
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)

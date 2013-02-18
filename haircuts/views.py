@@ -89,7 +89,7 @@ def add_haircut_request(request):
                 return redirect('/status/')
 
             new_request = Request(
-                handsomely_user = handsomely_user,
+                django_user = django_user,
                 salon = salon,
                 haircut_type = haircut_type,
                 status = 'WAIT',
@@ -116,7 +116,7 @@ def cancel_haircut_request(request):
             request_id = request.POST['reqID']
             request = Request.objects.get(id=request_id)
 
-            if request.handsomely_user == handsomely_user:
+            if request.django_user == django_user:
                 print "the right user"    
                 request.status = 'CANC'
                 request.save() 
@@ -143,7 +143,7 @@ def customer_status(request):
             user = None
             return redirect('/admin') #Most likely an admin account!
 
-        haircut_requests = Request.objects.filter(handsomely_user = handsomely_user).order_by('-start_date_time')[:10]
+        haircut_requests = Request.objects.filter(django_user = django_user).order_by('-start_date_time')[:10]
         c['haircut_requests'] = haircut_requests
         return render_to_response('status.html', c, context_instance=RequestContext(request))
     else:
