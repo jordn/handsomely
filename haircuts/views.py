@@ -98,14 +98,13 @@ def add_haircut_request(request):
 
 
 def cancel_haircut_request(request):
-    # print request
     django_user = request.user
     if django_user.is_authenticated():
 
         if ('reqID' in request.POST and request.POST['reqID']):
             request_id = request.POST['reqID']
             request = Request.objects.get(id=request_id)
-
+            print "POST"
             if request.django_user == django_user: 
                 request.status = 'CANC'
                 request.save() 

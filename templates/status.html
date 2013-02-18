@@ -22,7 +22,7 @@
 
 	  function cancelRequestAjax(reqID, userID){
 	    var csrftoken = getCookie('csrftoken'); 
-	    jQuery.post('/cancel_request/', {reqID : reqID, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('reqtd'+reqID).innerHTML="Cancelled &#10004;"; }); 
+	    jQuery.post('/cancel_request/', {reqID : reqID, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('td-req-id-'+reqID).innerHTML="Cancelled &#10004;"; }); 
 	  }
 
   </script>
@@ -56,7 +56,7 @@
                 <td>{{haircut_request.salon}}</td>
                 <td>{{haircut_request.start_date_time}}</td>
                 <td>{{haircut_request.get_status_display}}</td>
-                <td id="reqtd{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }}, {{ user.id }});">Cancel</a></td></tr>
+                <td id="td-req-id-{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }}, {{ user.id }});">Cancel</a></td></tr>
             {% endfor %}
 
             </table>
