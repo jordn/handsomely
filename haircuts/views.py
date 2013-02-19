@@ -25,8 +25,6 @@ def coming_soon (request):
 
 #front page and haircut type selection
 def index (request):
-    c = {'logged_out': False}
-
     return render_to_response('index.html', context_instance=RequestContext(request))
 
 def about (request):
@@ -48,7 +46,7 @@ def salons(request):
         #send them a form to choose their haircut type.
         is_womens = False
         haircut="please select your haircut"
-        return redirect('/index', context_instance=RequestContext(request))
+        return redirect('/', context_instance=RequestContext(request))
 
     list_of_salons = [] #Salons to show
     salons = Salon.objects.all()
@@ -161,7 +159,7 @@ def register(request):
             new_user = User.objects.create_user(username=email_address, email=email_address, password=random_password)
 
             #Create a handsomely profile for them. Is_confirmed set to FALSE.
-            create_handsomely_user(new_user, email_confirmed=False, is_salon=False)
+            create_handsomely_user(new_user, email_confirmed=False)
 
             #log them in (they won't get notified of appointments until email is confirmed hopefully. NB. log in BEFORE password reset as password reset code uses last login date)
             login_user = authenticate(username=email_address, password=random_password)
@@ -239,12 +237,11 @@ def register_email_confirm(request, uidb36=None, token=None,
 
 
 # Function that is used to extend the user table to have some handsomely required fields. django_user is a User Object
-def create_handsomely_user(django_user, gender='U', email_confirmed=False, is_salon=False):
+def create_handsomely_user(django_user, gender='U', email_confirmed=False):
     handsomely_user = HandsomelyUser(
         django_user = django_user,
         gender = gender,
         confirmed = email_confirmed,
-        is_salon = is_salon,
         )
     handsomely_user.save()
     return handsomely_user
