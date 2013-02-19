@@ -62,7 +62,7 @@ def salons(request):
         #No salons foudn :(
         pass
 
-    return render_to_response('salons.html', {'haircut' : haircut, 'is_womens' : is_womens, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
+    return render_to_response('salon_list.html', {'haircut' : haircut, 'is_womens' : is_womens, 'list_of_salons' : list_of_salons}, context_instance=RequestContext(request))
 
 
 def add_haircut_request(request):
