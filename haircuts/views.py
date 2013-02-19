@@ -25,8 +25,6 @@ def coming_soon (request):
 
 #front page and haircut type selection
 def index (request):
-    c = {'logged_out': False}
-
     return render_to_response('index.html', context_instance=RequestContext(request))
 
 def about (request):
@@ -48,7 +46,7 @@ def salons(request):
         #send them a form to choose their haircut type.
         is_womens = False
         haircut="please select your haircut"
-        return redirect('/index', context_instance=RequestContext(request))
+        return redirect('/', context_instance=RequestContext(request))
 
     list_of_salons = [] #Salons to show
     salons = Salon.objects.all()
