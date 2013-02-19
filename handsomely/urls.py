@@ -29,6 +29,8 @@ urlpatterns += patterns('haircuts.views',
     url(r'^success/$', 'success'),
 
     url(r'^about/$', 'about'), 
+	url(r'^response/$', 'respond_to_notification'), 
+	
 )
 
 #registration etc.
