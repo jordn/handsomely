@@ -1,10 +1,10 @@
-Hi! {{users_first_name}} \n\
-The salon {{salon_name}} is now free, why not head down now to avoid a queue?\n\
-Additional info from salon:" {{additional_info_from_salon}} "\n\n\
-Your response: \n\
-- Yes: http://www.handsome.ly/response?ans=YES&notifID={{notification_id}} \n\
-- No: http://www.handsome.ly/response?ans=NO&notifID={{notification_id}} \n\
-- Cancel: http://www.handsome.ly/response?ans=CANCEL&notifID={{notification_id}} \n\
-Thanks,\n\n\
+Hi! {{users_email}}
+The salon {{salon_name}} has a {{haircut_type}} appointment available at {{appointment_date_time}} for £{{appointment_price}} (usual price £{{original_price}})!
+Additional info from salon: 
+"{{additional_info_from_salon}}"
+Your response: 
+- YES: http://www.handsome.ly/response?ans=YES&notifID={{notification_id}} 
+- NO: http://www.handsome.ly/response?ans=NO&notifID={{notification_id}} 
+- CANCEL: http://www.handsome.ly/response?ans=CANCEL&notifID={{notification_id}} 
+Thanks,
 the Handsome.ly Team
-\n - Customer email: {{user_email}}
