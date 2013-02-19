@@ -18,7 +18,6 @@
 
 
       {% for salon in list_of_salons %}
-          <br>
           <button name="salon" class="span4 offset4 btn btn-large" type="submit" value={{salon.id}} data-toggle="button">
             <span class="span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}</span><br>
             {% if is_womens %}
@@ -27,6 +26,7 @@
               <span class="span1"><del>£{{salon.mens_standard_price}}</del> £{{salon.mens_handsomely_price}}</span>
             {% endif %}
         </button>
+        <br>
       {% endfor %}
       </form>
 
