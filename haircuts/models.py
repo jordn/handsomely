@@ -7,7 +7,7 @@ class HandsomelyUser(models.Model):
 	django_user = models.OneToOneField(User, related_name='profile') 
 	gender_choices = ( ('M', 'Male'), ('F','Female'), ('U', 'Unspecified') )
 	gender = models.CharField(max_length=1, choices=gender_choices)
-	is_salon = models.BooleanField(default=False)
+	is_salon = models.BooleanField(default=False) #Should probably remove this and just check salons that they have this Django_user instead. Much less error prone.
 	confirmed = models.BooleanField(default=False)
 	
 	def __unicode__(self):

@@ -251,26 +251,60 @@ def salon_dashboard(request):
     django_user = request.user
     c = {'user': django_user}
     if django_user.is_authenticated():
-        # try:
-        salon = Salon.objects.get(django_user = django_user)
-        c['salon'] = salon
+        try:
+            salon = Salon.objects.get(django_user = django_user)
+            c['salon'] = salon
+        except (ValueError, Salon.DoesNotExist):
+            messages.error(request, 'Please log in as a salon to be able to send requests')
+            return redirect('/')
 
-        requests_for_salon = Request.objects.filter(salon=salon)
+        requests_for_salon = Request.objects.filter(salon=salon, status="WAIT")
         c['requests_for_salon'] = requests_for_salon
 
-        requests_for_salon
+        num_male_requests = len(requests_for_salon.filter(haircut_type= 'M'))
+        num_female_requests = len(requests_for_salon.filter(haircut_type= 'F'))
 
-    form = NotificationForm()
-    c['form'] = form
-    return render_to_response('notifications.html', c, context_instance=RequestContext(request))
+        c['num_male_requests'] = num_male_requests
+        c['num_female_requests'] = num_female_requests
+    
+        form = NotificationForm()
+        c['form'] = form
+        return render_to_response('notifications.html', c, context_instance=RequestContext(request))
+    return redirect('/')
 
 def send_notification(request):
     django_user = request.user
-    c = {'user': django_user}
     if django_user.is_authenticated():
         salon = Salon.objects.get(django_user = django_user)
-        c['salon'] = salon
-        return render_to_response('notifications.html', c, context_instance=RequestContext(request))
+        if request.method == 'POST':
+            form = NotificationForm(request.POST)
+            if form.is_valid():
+                cd = form.clean()
+                # print cd {'original_price': None, 'discounted_price': 21.0, 'notes': u'', 'time': datetime.time(12, 12), 'day': u'TODAY', 'haircut_type': u'M'}
+
+                new_notification = Notification(
+                salon = salon,
+                status = 'OPEN',
+                appointment_datetime = datetime.datetime.now() + datetime.timedelta(days=1),
+                appointment_price = cd['discounted_price'],
+                original_price = cd['original_price'],
+                haircut_type = cd['haircut_type'],
+                additional_info = cd['notes']
+                )
+                new_notification.save() 
+                print "callabunga"
+                print form
+                return redirect('/notifications/')
+
+            print "poop"
+            print form
+
+
+        return redirect('/notifications/')
+    else:
+        return redirect('/')
+
+
 
 
 def notify(request):

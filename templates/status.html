@@ -20,7 +20,7 @@
 	    return cookieValue;
 	    }
 
-	  function cancelRequestAjax(reqID, userID){
+	  function cancelRequestAjax(reqID){
 	    var csrftoken = getCookie('csrftoken'); 
 	    jQuery.post('/cancel_request/', {reqID : reqID, csrfmiddlewaretoken : csrftoken}, function(data){ document.getElementById('td-req-id-'+reqID).innerHTML="Cancelled &#10004;"; }); 
 	  }
@@ -41,7 +41,7 @@
 
           <h3>Recent requests</h3>
           {% if haircut_requests %}
-            <table border="1" cellpadding="5" class="table table-striped">
+            <table class="table table-striped table-bordered">
             <tr>
               <th>Haircut</th>
               <th>Salon</th>
@@ -52,14 +52,14 @@
 
             {% for haircut_request in haircut_requests %}
               <tr>
-                <td>{{haircut_request.haircut_type}}</td>
+                <td>{{haircut_request.get_haircut_type_display}}</td>
                 <td>{{haircut_request.salon}}</td>
                 <td>{{haircut_request.start_date_time}}</td>
                 <td>{{haircut_request.get_status_display}}</td>
 				{% if haircut_request.get_status_display == 'Cancelled' %}
 					<td id="td-req-id-{{ haircut_request.id }}"> N/A </td>
 				{% else %}
-					<td id="td-req-id-{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }}, {{ user.id }});">Cancel</a></td>
+					<td id="td-req-id-{{ haircut_request.id }}"><a href="#" onclick="cancelRequestAjax({{ haircut_request.id }});">Cancel</a></td>
 				{% endif %}
 				</tr>
             {% endfor %}
