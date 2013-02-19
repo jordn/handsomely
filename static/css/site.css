@@ -1,6 +1,10 @@
+.page {
+  margin-bottom:30px;
+}
+
 .slogan {
   margin: 20px 0;
-  width: 800px;
+  width: 750px;
 }
 
 .center-container {
@@ -80,11 +84,6 @@
   text-decoration: underline;
   background-color: #e6e6e6;
   *background-color: #d9d9d9;
-}
-
-.delicious { 
-  font-family: 'Marko One', serif;
-  font-weight: 400; 
 }
 
 

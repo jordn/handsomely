@@ -2,6 +2,9 @@
 {% load staticfiles %}
   
   {% block content %}
+<div class="center-container">
+  <div class="centered">
+    <h3>Select a salon</h3>
 
     {% if user.is_authenticated %}
       <form action="/haircut_request/" method="POST">
@@ -29,6 +32,9 @@
 
       {% endfor %}
       </form>
+
+ </div>
+</div>
 
 
   {% endblock %}
