@@ -29,6 +29,9 @@ def index (request):
 
     return render_to_response('index.html', context_instance=RequestContext(request))
 
+def about (request):
+    return render_to_response('about.html', context_instance=RequestContext(request))
+
 #After choosing haircut type. Choose which salons you'd like to hear form.
 def salons(request):
     if 'haircut' in request.GET and request.GET['haircut']:

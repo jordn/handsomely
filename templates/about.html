@@ -1,0 +1,45 @@
+{% extends "base.html" %}  
+{% load staticfiles %}
+  
+{% block content %}
+
+
+
+<div class = "span12">
+	<div class="row well" style="margin-top: 20px; margin-left: 0px !important;">
+		<h3>So, what is handsome.ly?</h3>
+		<h4>In 10 words...</h4>
+		<p>handsome.ly gives you cheaper haircuts by going at off-peak times.</p> 
+		<h4>In 50 words...</h5>
+		<p>handsome.ly allows your favourite hair salons in Cambridge to offer out reduced-price haircuts at times when they otherwise wouldn't have any customers. This means that you get a stylish haircut for less dolla, and gives salons the opportunity to maximise their capacity. Everyone is a winner.</p>
+		<h4>In 100 words...</h4>
+		<p>
+			handsome.ly offers you the best deals at the nicest hair salons in Cambridge, by offering appointments at periods of lower demand. To kick things off, you select the salons you would like a haircut at. Next, sit back and wait! You will receive emails detailing any discounted and available hair appointments at the salons of your choice. Respond by either accepting the haircut, holding off on this one, or cancelling all future notifications. Handsome.ly allows you to get the best haircuts at the best prices; whilst allows salons to maximise their capacity. 
+		</p>
+	</div>
+</div>
+
+<div class = "span6">
+	<div class="row well" style="margin-top: 20px; margin-left: 0px !important;">
+		<h3>How do I get in touch?</h3>
+		<p>Fire an email to <a href="mailto:team@handsome.ly">team@handsome.ly</a></p>
+		<p>We will be back to you in no time. Genuinely.</p>
+	</div>
+</div>
+<div class = "span5">
+	<form method="link" action="/">
+		<center>
+			<br>
+			<br>
+			<br>
+			<br>
+			<button class="btn-man btn-large  btn-primary"><img style="height:20px" src="{% static 'img/scissors.png' %}" alt=""> Get going with handsome.ly now! <img style="height:20px" src="{% static 'img/scissors.png' %}" alt=""></button>
+		</center>
+	</form>
+</div>
+
+
+
+
+
+{% endblock %}
