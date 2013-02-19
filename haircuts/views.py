@@ -85,7 +85,8 @@ def add_haircut_request(request):
             active_similar_requests = Request.objects.filter(django_user=django_user, salon=salon, haircut_type=haircut_type, status='WAIT')
 
             if active_similar_requests:
-                messages.info(request, 'A request already existed')
+                messages.info(request, ('Your request for a <strong>' + haircut_type +'</strong> haircut at <strong>'
+                 + str(salon) + '</strong> is still waiting. You will be emailed at <strong>' + django_user.email +'</strong> when an appointment becomes available.'))
                 return redirect('/status/')
 
             new_request = Request(
@@ -96,7 +97,7 @@ def add_haircut_request(request):
                 )
             new_request.save()
             messages.info(request, ('Your request for a <strong>' + new_request.haircut_type +'</strong> haircut at <strong>'
-             + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong>.'))
+             + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong> any available appointments.'))
 
         return redirect('/status')
     else:
