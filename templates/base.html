@@ -23,12 +23,16 @@
         </span>
       </div>
 
-      <div class="row span9 offset3">
+      <div class="row span6 offset3">
         {% if user.is_authenticated %}
-          You are logged in as <strong>{{ user.username }}</strong> | <a href="/logout">Logout</a> | <a href = "/notify/">For Salons</a>
+          <center>
+            You are logged in as <strong>{{ user.username }}</strong> | <a href="/logout">Logout</a> | <a href = "/notify/">For Salons</a>
+          </center>
         {% else %}
           <!-- NB. for salons should be shown regardless -->
-          <a href = "/login">Login</a> | <a href = "/register">Register</a>
+          <center>
+            <a href = "/login">Login</a> | <a href = "/register">Register</a>
+          </center>
         {% endif %}
       </div>
       <div class="row span12">

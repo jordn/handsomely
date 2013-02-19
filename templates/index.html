@@ -5,32 +5,47 @@
 
 
       <div class="row" style="margin: 20px 0 20px 0;">
-
+        <div class="row well" style="margin-top: 20px; margin-left: 0px !important;">
+          <center>
+              <h2>Reduced price haircuts in Cambridge at off-peak times.</h2>
+          </center>
+        </div>
         <div class="span6 offset3">
             <p class="lead">
-              Reduced price haircuts in Cambridge at off-peak times.
+              <i>Select the type of haircut you'd like to get started. </i>
             </p>
-            <p class="lead">
-              Select the type of haircut you'd like to get started. <a href="/about">Learn more.</a>
-            </p>
-            <br>
          </div>
 
-        <div class="row span9 offset2"> 
+        <div class = "span2 offset4">
+          <img style="height:110px" src="{% static 'img/purple_arrow.PNG' %}" alt="" >
+        </div>
+        <div class = "span2">
+          <img style="height:110px" src="{% static 'img/blue_arrow.PNG' %}" alt="" >
+        </div>
+
+        <div class="row"> 
             <form action="/salons/" method="GET">
-              <div class="span4">
-                <button name="haircut" class="btn-lady btn-large btn-primary" type="submit" value="lady">
+              <div class="span4 offset2">
+                <br>
+                <button name="haircut" class="btn-lady btn-large btn-block btn-primary" type="submit" value="lady">
                   <span class="big-register">Ladies' Haircut ></span><br>
                 </button>
               </div>
 
               <div class="span4">
-                <button name="haircut" class="btn-man btn-large btn-primary" type="submit" value="gent">
+                <br>
+                <button name="haircut" class="btn-man btn-large btn-block  btn-primary" type="submit" value="gent">
                   <span class="big-register">Gentlemen's Haircut ></span><br>
                 </button>
               </div>
 
-
+              <div class = "span4 offset4">
+                <div class="row well" style="margin-top: 20px; margin-left: 0px !important;">
+                <center>
+                  <h4>...or <a href="/about">Learn more.</a></h4>
+                </center>
+              </div>
+              </div>
             </form>
         </div>
 
