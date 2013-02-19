@@ -4,55 +4,57 @@
   {% block content %}
 
 
-      <div class="row" style="margin: 20px 0 20px 0;">
-        <div class="row well" style="margin-top: 20px; margin-left: 0px !important;">
-          <center>
-              <h2>Reduced price haircuts in Cambridge at off-peak times.</h2>
-          </center>
-        </div>
-        <div class="span6 offset3">
-            <p class="lead">
-              <i>Select the type of haircut you'd like to get started. </i>
-            </p>
-         </div>
+    <div class="center-container">
+      <div class="centered">
 
-        <div class = "span2 offset4">
-          <img style="height:110px" src="{% static 'img/purple_arrow.PNG' %}" alt="" >
-        </div>
-        <div class = "span2">
-          <img style="height:110px" src="{% static 'img/blue_arrow.PNG' %}" alt="" >
+        <div class="row center-container">
+          <div class="slogan well well-small centered">
+            <h2>Cut-price haircuts in Cambridge at off-peak times.</h2>
+          </div>
+
+          <div class="span6 offset3">
+            <p class="lead"><em>Select the type of haircut you'd like to get started.</em></p>
+          </div>
         </div>
 
-        <div class="row"> 
-            <form action="/salons/" method="GET">
-              <div class="span4 offset2">
-                <br>
-                <button name="haircut" class="btn-lady btn-large btn-block btn-primary" type="submit" value="lady">
-                  <span class="big-register"><img style="height:20px" src="{% static 'img/woman.png' %}" alt=""> Ladies' Haircut ></span><br>
-                </button>
-              </div>
+        <div class="arrows row">
+          <div class="span2 offset4">
+            <img style="height:100px" src="{% static 'img/purple_arrow.PNG' %}" alt="" >
+          </div>
 
-              <div class="span4">
-                <br>
-                <button name="haircut" class="btn-man btn-large btn-block  btn-primary" type="submit" value="gent">
-                  <span class="big-register"><img style="height:20px" src="{% static 'img/man.png' %}" alt=""> Gentlemen's Haircut ></span><br>
-                </button>
-              </div>
+          <div class="span2">
+            <img style="height:100px" src="{% static 'img/blue_arrow.PNG' %}" alt="" >
+          </div>
+        </div>
+      
 
-              <div class = "span4 offset4">
-                <div class="row well" style="margin-top: 20px; margin-left: 0px !important;">
-                <center>
-                  <h4>...or <a href="/about">Learn more.</a></h4>
-                </center>
-              </div>
-              </div>
-            </form>
+        <form action="/salons/" method="GET">
+          <div class="haircut-options row"> 
+            <div class="span4 offset2">
+              <button name="haircut" class="btn-lady btn-haircut btn-large btn-block" type="submit" value ="lady">
+                <img style="height:20px" src="{% static 'img/woman.png' %}" alt=""> Ladies' Haircut
+              </button>
+            </div>
+
+            <div class="span4">
+              <button name="haircut" class="btn-man btn-haircut btn-large btn-block" type="submit" value="gent">
+                <img style="height:20px" src="{% static 'img/man.png' %}" alt=""> Gentlemen's Haircut
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="about row" style="text-align:center">
+          <div class="about-text">
+            <h4>...or <a href="/about">learn more</a>.</h4>
+          </div>
         </div>
 
       </div>
+    </div>
 
 
-      <div class="row-fluid" style="margin:20px 0px 30px;">
+      <div class="row" style="margin:20px 0px 30px;">
         <div class = "span8 offset2">
           <center>
             <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small>

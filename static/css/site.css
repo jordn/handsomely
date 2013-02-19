@@ -1,7 +1,42 @@
+.page {
+  margin-bottom:30px;
+}
+
+.slogan {
+  margin: 20px 0;
+  width: 750px;
+}
+
+.price-disclaimer {
+  margin: 40px auto auto 30px
+}
+
+.center-container {
+  text-align:center;
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .btn-salon {
   margin-top:20px;
 }
 
+.btn-haircut {
+  min-height: 60px;
+  font-size:18px;
+}
+
+.about-text {
+  width:240px; 
+  margin: 20px auto;
+}
+
+.haircut-options {
+  margin-top: 20px;
+}
 
 .btn-lady {
   background-color: hsl(307, 100%, 21%) !important;
@@ -55,11 +90,6 @@
   *background-color: #d9d9d9;
 }
 
-.delicious { 
-  font-family: 'Marko One', serif;
-  font-weight: 400; 
-}
-
 
 .form-very-large #username, #password {
   font-size: 24px;
@@ -69,3 +99,9 @@
 }
 
 .header-login {text-align:left}
+
+.alert-section {
+  margin-top: 20px;
+}
+
+

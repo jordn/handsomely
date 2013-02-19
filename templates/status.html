@@ -31,10 +31,12 @@
   {% block content %}
 
     {% if messages %}
+    <div class="alert-section">
       {% for message in messages %}
       <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
       {% endfor %}
     {% endif %}
+  </div>
 
     <div class="row">
       {% if user.is_authenticated %}
