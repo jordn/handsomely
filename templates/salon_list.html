@@ -6,6 +6,7 @@
   <div class="centered">
     <h3>Select a salon</h3>
 
+    <div class="row">
     {% if user.is_authenticated %}
       <form action="/haircut_request/" method="POST">
         {% csrf_token %}
@@ -24,15 +25,22 @@
           <button name="salon" class="span4 offset4 btn btn-large btn-salon" type="submit" value={{salon.id}} data-toggle="button">
             <span class="span2"><b>{{salon.salon_name}}</b><br><br>{{salon.address_line_1}}</span><br>
             {% if is_womens %}
-              <span class="span1"><del>£{{salon.womens_standard_price}}</del> £{{salon.womens_handsomely_price}}</span>
+              <span class="span1"><del>£{{salon.womens_standard_price}}</del> £{{salon.womens_handsomely_price}}*</span>
             {% else %}
-              <span class="span1"><del>£{{salon.mens_standard_price}}</del> £{{salon.mens_handsomely_price}}</span>
+              <span class="span1"><del>£{{salon.mens_standard_price}}</del> £{{salon.mens_handsomely_price}}*</span>
             {% endif %}
         </button>
 
       {% endfor %}
       </form>
+    </div>
 
+      <div class="row">
+        <div class="price-disclaimer">
+          <small>*Discounted prices will change depending on availability and demand and cannot be guaranteed.</small> 
+        </div>
+      </div>
+      
  </div>
 </div>
 

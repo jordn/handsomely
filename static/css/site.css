@@ -7,6 +7,10 @@
   width: 750px;
 }
 
+.price-disclaimer {
+  margin: 40px auto auto 30px
+}
+
 .center-container {
   text-align:center;
 }
