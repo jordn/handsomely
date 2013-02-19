@@ -87,7 +87,7 @@ def add_haircut_request(request):
 
             if active_similar_requests:
                 messages.info(request, ('Your request for a <strong>' + haircut_type +'</strong> haircut at <strong>'
-                 + str(salon) + '</strong> is still waiting. You will be emailed at <strong>' + django_user.email +'</strong> when an appointment becomes available.'))
+                 + str(salon) + '</strong> is still waiting. Any available appointments will be sent to you at <strong>' + django_user.email +'</strong>.'))
                 return redirect('/status/')
 
             new_request = Request(
@@ -98,7 +98,7 @@ def add_haircut_request(request):
                 )
             new_request.save()
             messages.info(request, ('Your request for a <strong>' + new_request.haircut_type +'</strong> haircut at <strong>'
-             + str(new_request.salon) + '</strong> has been added. You will be emailed at <strong>' + django_user.email +'</strong> any available appointments.'))
+             + str(new_request.salon) + '</strong> has been added.  Any available appointments will be sent to you at <strong>' + django_user.email +'</strong>.'))
 
         return redirect('/status')
     else:
@@ -189,7 +189,7 @@ def register(request):
                 and 'salon' in request.POST and request.POST['salon']):
                 add_haircut_request(request)
 
-            messages.success(request, 'Came from register.')
+            messages.debug(request, 'Came from register.')
 
             #Push them on their way. They can go anywhere they just need to be notified that they need to confirm their email.
             return redirect('/status', context_instance=RequestContext(request))
