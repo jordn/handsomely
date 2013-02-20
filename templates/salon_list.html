@@ -1,10 +1,11 @@
 {% extends "base.html" %}  
 {% load staticfiles %}
   
-  {% block content %}
+{% block content %}
 <div class="center-container">
   <div class="centered">
-    <h3>Select a salon</h3>
+    <h1>Select a salon</h1>
+    <p class="lead request-help">Select the Cambridge salon you would like to get this haircut.</p>    
 
     <div class="row">
     {% if user.is_authenticated %}

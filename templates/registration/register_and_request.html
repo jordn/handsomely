@@ -4,24 +4,32 @@
 
 {% block content %}
 
-<section>
+<div class="row center-container">
+  <div class="centered">
 
+    <h1> Enter your email</h1>
+    <div class="row">
 
-  <h1> Enter your email</h1>
-  <span="subtitle">We use email to notify you of any available appointments and deals for your selected haircut. We won't bother you with anything else.</span>
-  <form action="" method="POST" class="form-inline form-very-large">
-    {% csrf_token %}      
-    <ul class="unstyled">
-    {% for error in form.email.errors %}
-        <li class="text-error"><strong>{{ error }}</strong></li>
-    {% endfor %}
-    </ul>
-      <input type="hidden" name="haircut_type" value="{{ haircut_type}}" />
-      <input type="hidden" name="salon" value="{{ salon }}" />
-      {{ form.email }}
-    <input class="btn btn-large btn-primary" type="submit" value="Request haircut">
-  </form>
+      <p class="lead request-help">We use email to notify you of any available appointments and deals for your selected haircut. We won't bother you with anything else.</p>
 
-</section>
+      <span class="span8 offset2">
+        <form action="" method="POST" class="form-inline form-very-large">
+          {% csrf_token %}      
+          <ul class="unstyled">
+          {% for error in form.email.errors %}
+              <li class="text-error"><strong>{{ error }}</strong></li>
+          {% endfor %}
+          </ul>
+            <input type="hidden" name="haircut_type" value="{{ haircut_type}}" />
+            <input type="hidden" name="salon" value="{{ salon }}" />
+
+              <input name="email" maxlength="30" placeholder="email@address.com" autofocus="autofocus" type="text" id="id_email" />
+              <input class="btn btn-xlarge btn-primary " type="submit" value="Request haircut">
+
+        </form>
+      </span>
+
+  </div>
+</div>
 
 {% endblock %}
