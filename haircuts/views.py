@@ -367,7 +367,8 @@ def success(request):
 						   "appointment_date_time" : new_notification.appointment_datetime,
 						   "appointment_price" : new_notification.appointment_price,
 						   "original_price" : new_notification.original_price,
-						   "haircut_type" : new_notification.get_haircut_type_display
+						   "haircut_type" : new_notification.get_haircut_type_display,
+						   "user_id" : requester.django_user.id
 						 }) 
 			text_content = get_template('emails/notify.txt').render(contextMap)
 			html_content = get_template('emails/notify.html').render(contextMap)
@@ -382,51 +383,52 @@ def respond_to_notification(request):
     djangoUser = request.user
     answer = request.GET['ans']
     notifID = request.GET['notifID']
-    salonMessage = request.GET['message']
+    userID = request.GET['userID']
     if djangoUser.is_anonymous():
-        return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID, 'message' : salonMessage}, context_instance=RequestContext(request))
+        return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
     else: 
         notif = Notification.objects.get(id=notifID)
-        handsomelyUserFromNotification = HandsomelyUser.objects.get(customerID=notif.customerID)
-        if (handsomelyUserFromNotification.djangoUserID.id == djangoUser.id):
+	django_user = User.objects.get(id=userID)
+        handsomelyUserFromNotification = HandsomelyUser.objects.get(django_user=django_user)
+        if (django_user.id == djangoUser.id):
             notif = Notification.objects.get(id=notifID)
-            salonID = notif.salonID
-            salonEmail = SalonDetails.objects.get(salonID = salonID).contactEmail
-            customerName = Customer.objects.get(id=notif.customerID).firstName
-            customerPhone = Customer.objects.get(id=notif.customerID).mobile
+            salonID = notif.salon
+            salonEmail = Salon.objects.get(id = salonID.id).django_user.email
+            customerEmail = User.objects.get(id=userID).email
             detailsNeeded = False
             if answer == "NO":
-                notif.status = 'POS' 
-                notif.save()
+            #    notif.status = 'POS' 
+            #    notif.save()
                 return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
             if answer == "CANCEL":
-                notif.status = 'CAN'
-                notif.save()
+            #    notif.status = 'CAN'
+            #    notif.save()
                 return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
             if answer == "YES":
-                if notif.status == "POS":
+                if notif.status == "FILL":
                     return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
                 else: 
-                    if ( (len(customerPhone) == 0) or (len(customerName) == 0) or ("a" in customerName) ):
-                        return render_to_response('details_needed.html', { 'number' : customerPhone, 'name' : customerName, 'answer' : answer, 'notifID' : notifID, 'message' : message }, context_instance=RequestContext(request))
-                    else:
-                        notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
-                        for notification in notificationsList:
-                            notification.status = "POS"
-                            notification.save()
-                        message = "Hi! \n\n A customer has responded to your notification and accepted the appointment."
-                        message += "\n\nCustomer name: " + customerName
-                        message += "\n\nCustomer number: " + customerPhone
-                        message += "\n\nDetails of the appointment: " + salonMessage
-                        message += "\n\nthanks,\nthe Handsome.ly team"
-                        send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail, 'team@handsome.ly'], fail_silently=False)
-                        notif.status = 'ACC'
-                        notif.save()
-                        requests = Request.objects.filter(customerID = notif.customerID)
-                        for req in requests:
-                            req.status = 'FUL'
-                            req.save()
-                        return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerName }, context_instance=RequestContext(request))
+                    #if ( (len(customerPhone) == 0) or (len(customerName) == 0) or ("a" in customerName) ):
+                    #    return render_to_response('details_needed.html', { 'number' : customerPhone, 'name' : customerName, 'answer' : answer, 'notifID' : notifID, 'message' : message }, context_instance=RequestContext(request))
+                    #else:
+                    #notificationsList = Notification.objects.filter(salonID=salonID).filter(status="PEN")
+                    #for notification in notificationsList:
+                    #    notification.status = "FILL"
+                    #    notification.save()
+                    notif.status = "FILL"
+                    req = Request.objects.filter(django_user=django_user).filter(salon=salonID).filter(haircut_type=notif.haircut_type).filter(status='WAIT')[0]
+                    notif.filled_by = req
+                    notif.save()
+                    req.status = "FULF"
+                    req.save()
+                    message = "Hi! \n\nA customer has responded to your notification and accepted the appointment."
+                    message += "\n\nCustomer: " + customerEmail
+                    message += "\n\nAppointment time: " + str(notif.appointment_datetime.strftime("%A, %d. %B %Y %I:%M%p")) 
+		    message += "\n\nAppointment price: GBP" + str(notif.appointment_price) 
+		    message += "\n\nAppointment type: " + notif.get_haircut_type_display() 
+                    message += "\n\nthanks,\nthe Handsome.ly team"
+                    send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail, 'team@handsome.ly'], fail_silently=False)
+                    return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerEmail }, context_instance=RequestContext(request))
         else:
-            return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'message' : salonMessage, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
+            return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 
