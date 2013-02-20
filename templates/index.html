@@ -3,7 +3,6 @@
   
   {% block content %}
 
-
     <div class="center-container">
       <div class="centered">
 
@@ -30,38 +29,35 @@
 
         <form action="/salons/" method="GET">
           <div class="haircut-options row"> 
+
             <div class="span4 offset2">
               <button name="haircut" class="btn-lady btn-haircut btn-large btn-block" type="submit" value ="lady">
-                <img style="height:20px" src="{% static 'img/woman.png' %}" alt=""> Ladies' Haircut
+                <img style="height:25px" src="{% static 'img/woman.png' %}" alt=""> Ladies' Haircut
               </button>
             </div>
 
             <div class="span4">
               <button name="haircut" class="btn-man btn-haircut btn-large btn-block" type="submit" value="gent">
-                <img style="height:20px" src="{% static 'img/man.png' %}" alt=""> Gentlemen's Haircut
+                <img style="height:25px" src="{% static 'img/man.png' %}" alt=""> Gentlemen's Haircut
               </button>
             </div>
+
           </div>
         </form>
 
-        <div class="about row" style="text-align:center">
+        <div class="about row">
           <div class="about-text">
             <h4>...or <a href="/about">learn more</a>.</h4>
           </div>
         </div>
 
+
+      <div class="row made-by" style="margin:20px 0px 30px;">
+            <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small>
+      </div>
+
       </div>
     </div>
-
-
-      <div class="row" style="margin:20px 0px 30px;">
-        <div class = "span8 offset2">
-          <center>
-            <small class="muted">Made by some Cambridge engineers that bloody love efficiency and demand management</small>
-          </center>
-        </div>
-      </div>
-
 
 
   {% endblock %}

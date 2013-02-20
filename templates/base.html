@@ -17,29 +17,29 @@
 
   <body>
     <div class="page container">
-      <div class="row" style="margin:20px;">
-        <span class="logo span9 offset3 " style="font-family: 'Sacramento', sans-serif; font-size:120px; line-height:120px">
-        <a href="/">handsome.ly</a>
-        </span>
-      </div>
 
-      <div class="row span6 offset3">
-        {% if user.is_authenticated %}
-          <center>
+      <div id="header">
+        <div id="logo" class="row center-container">
+          <span class="logo centered" style="font-family: 'Sacramento', sans-serif; font-size:120px; line-height:120px">
+          <a href="/">handsome.ly</a>
+          </span>
+        </div>
+
+        <div id="nav-bar" class="row center-container">
+          <div class="centered">
+          {% if user.is_authenticated %}
             You are logged in as <strong>{{ user.username }}</strong> | <a href="/logout">Logout</a> | <a href = "/notify/">For Salons</a>
-          </center>
-        {% else %}
-          <!-- NB. for salons should be shown regardless -->
-          <center>
+          {% else %}
             <a href = "/login">Login</a> | <a href = "/register">Register</a>
-          </center>
-        {% endif %}
+          {% endif %}
+          </div>
+        </div>
       </div>
-      <div class="row span12">
 
-    {% block content %}{% endblock %}
-      
+      <div id="page-content" class="row">
+        {% block content %}{% endblock %}
       </div>
+
     </div>
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

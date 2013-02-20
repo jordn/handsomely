@@ -1,5 +1,18 @@
 .page {
-  margin-bottom:30px;
+  margin-bottom:50px;
+  /*background-color: #ddd;*/
+}
+
+.row {
+  margin-left:0px;
+}
+
+div #logo {
+  margin:20px 0 30px 0;
+}
+
+div #nav-bar {
+  margin
 }
 
 .slogan {
