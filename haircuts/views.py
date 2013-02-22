@@ -246,6 +246,7 @@ def create_handsomely_user(django_user, gender='U', email_confirmed=False):
     handsomely_user.save()
     return handsomely_user
 
+
 # Salon dashboard
 def salon_dashboard(request):
     django_user = request.user
@@ -255,7 +256,7 @@ def salon_dashboard(request):
             salon = Salon.objects.get(django_user = django_user)
             c['salon'] = salon
         except (ValueError, Salon.DoesNotExist):
-            messages.error(request, 'Please log in as a salon to be able to send requests')
+            # messages.error(request, 'Please log in as a salon to be able to send requests')
             return redirect('/')
 
         requests_for_salon = Request.objects.filter(salon=salon, status="WAIT")
@@ -266,11 +267,15 @@ def salon_dashboard(request):
 
         c['num_male_requests'] = num_male_requests
         c['num_female_requests'] = num_female_requests
+
+        notifications = Notification.objects.filter(salon = salon)
+        c['notifications'] = notifications
     
         form = NotificationForm()
         c['form'] = form
         return render_to_response('notifications.html', c, context_instance=RequestContext(request))
     return redirect('/')
+
 
 def send_notification(request):
     django_user = request.user
@@ -292,8 +297,6 @@ def send_notification(request):
                 additional_info = cd['notes']
                 )
                 new_notification.save() 
-                print "callabunga"
-                print form
                 return redirect('/notifications/')
 
             print "poop"

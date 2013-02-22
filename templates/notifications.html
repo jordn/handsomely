@@ -6,7 +6,7 @@
 
 <h1>Welcome <em>{{salon}}</em></h1>
 
-<h3>You have {{num_male_requests}} m{{num_male_requests|pluralize:"an,en" }} and {{num_female_requests}} wom{{num_female_requests|pluralize:"an,en" }} waiting</h3>
+<p class="lead">You have <strong>{{num_male_requests}} m{{num_male_requests|pluralize:"an,en" }}</strong> and <strong>{{num_female_requests}} wom{{num_female_requests|pluralize:"an,en" }}</strong> waiting for haircuts</p>
 
 
     {% if messages %}
@@ -16,53 +16,98 @@
     {% endif %}
 
 
-<section id="offer-section" class="well">
+<div id="offer-section" class="well">
+  <h3>Offer an appointment</h3>
   <form action="/send_notification/" method="POST" class="form-inline" style="font-size:16px;">
-    {% csrf_token %}  
+    {% csrf_token %} 
 
-    <div class="input-prepend">
-      <span class="add-on"><img src="{% static 'img/glyphicons/png/glyphicons_288_scissors.png' %}" style="height:14px;"></span>
-      <select name="haircut_type" id="id_haircut" style="width:200px">
-        <option value="M">{{num_male_requests}} Mens' Haircut</option>
-        <option value="F">{{num_female_requests}} Womens' Haircut</option>
-      </select>&nbsp;&nbsp;&nbsp;
-    </div>
+    <div class="row">
+      <div class="input-prepend">
+        <span class="add-on"><img src="{% static 'img/glyphicons/png/glyphicons_288_scissors.png' %}" style="height:14px;"></span>
+        <select name="haircut_type" id="id_haircut" style="width:220px">
+          <option value="M">Mens' Haircut ({{num_male_requests}} waiting)</option>
+          <option value="F">Womens' Haircut ({{num_female_requests}} waiting) </option>
+        </select>&nbsp;&nbsp;&nbsp;
+      </div>
 
-    <div class="input-prepend">
-      <span class="add-on"><i class="icon-calendar"></i></span>
-      <select name="day" id="id_day" class="input-small" style="width:140px">
-        <option value="TODAY">Today</option>
-        <option value="TOMORROW">Tomorrow</option>
-        <option value="TDA">The Day After</option>
-      </select>
-    </div>
+      <div class="input-prepend">
+        <span class="add-on"><i class="icon-calendar"></i></span>
+        <select name="day" id="id_day" class="input-small" style="width:140px">
+          <option value="TODAY">Today</option>
+          <option value="TOMORROW">Tomorrow</option>
+          <option value="TDA">The Day After</option>
+        </select>
+      </div>
 
-    <div class="input-prepend">
-      <span class="add-on"><i class="icon-time"></i></span>
-      <input type="text" class="input-small" placeholder="HH:MM" name="time" id="id_time" />
-    </div>
-  for
-    <div class="input-prepend">
-      <span class="add-on"><strong>£</strong></span>
-      <input type="text" class="input-small" autofocus="autofocus" placeholder="Discount Price" name="discounted_price" id="id_discounted_price" />
-    </div>
+      <div class="input-prepend">
+        <span class="add-on"><i class="icon-time"></i></span>
+        <input type="text" class="input-small" placeholder="HH:MM" name="time" id="id_time" />
+      </div>
+      for
+      <div class="input-prepend">
+        <span class="add-on"><strong>£</strong></span>
+        <input type="text" class="input-small" autofocus="autofocus" placeholder="Discount Price" name="discounted_price" id="id_discounted_price" style="width:100px"/>
+      </div>
 
       <input class="btn btn-primary" type="submit" value="Offer haircut">
 
-    <br>
-    Optional<h4>Original Price?</h4>
-    <div class="input-prepend">
-      <span class="add-on"><strong>£</strong></span>
-      <input type="text" class="input-small" autofocus="autofocus" placeholder="Original Price" name="original_price" id="id_original_price" />
     </div>
-    {{form.notes}}
 
+    <div class="row">
+      <h5>Optional</h5>
+      <div class="input-prepend">
+        <span class="add-on"><i class="icon-info-sign"></i></span>
+        <input name="notes" maxlength="100" placeholder="Optional haircut info" autofocus="autofocus" type="text" id="id_notes" />
+      </div>
 
-    <br><br>
-    MESSAGE PREVIEW
-    <br>
+      <div class="input-prepend">
+        <span class="add-on"><strong>£</strong></span>
+        <input type="text" class="input-small" autofocus="autofocus" placeholder="Original Price" name="original_price" id="id_original_price" style="width:100px"/>
+      </div>
 
+    </div>
 
   </form>
-</section>
+</div>
+
+<div class="row">
+  <h3>Recent appointment offers</h3>
+  {% if notifications %}
+    <table class="table table-striped table-bordered">
+    <tr>
+      <th>Haircut</th>
+      <th>Appointment Time</th>
+      <th>Price</th>
+      <th>Offered to</th>
+      <th>Date offered</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    {% for notification in notifications %}
+      <tr>
+        <td>{{notification.get_haircut_type_display}}</td>
+        <td>{{notification.appointment_datetime}}</td>
+        <td>{{notification.appointment_price}}</td>
+        <td>{% for offered_to in notification.offered_to.all %}
+              {{offered_to}}<br>
+              {% endfor %}</td>
+        <td>{{notification.issue_date_time}}</td>
+        <td>{{notification.get_status_display}}</td>
+  {% if notification.get_status_display == 'Cancelled' %}
+  <td id="td-req-id-{{ notification.id }}"> N/A </td>
+  {% else %}
+  <td id="td-req-id-{{ notification.id }}"><a href="#" onclick="cancelRequestAjax({{ notification.id }});">Cancel</a></td>
+  {% endif %}
+  </tr>
+    {% endfor %}
+
+    </table>
+  {% else %}
+    <b>None</b>
+  {% endif %}
+
+</div>
+
+
 {% endblock %}
