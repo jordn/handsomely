@@ -248,7 +248,7 @@ def create_handsomely_user(django_user, gender='U', email_confirmed=False):
 
 
 # Salon dashboard
-def salon_dashboard(request):
+def salon_dashboard(request, form=NotificationForm()):
     django_user = request.user
     c = {'user': django_user}
     if django_user.is_authenticated():
@@ -270,8 +270,7 @@ def salon_dashboard(request):
 
         notifications = Notification.objects.filter(salon = salon)
         c['notifications'] = notifications
-    
-        form = NotificationForm()
+
         c['form'] = form
         return render_to_response('notifications.html', c, context_instance=RequestContext(request))
     return redirect('/')
@@ -303,7 +302,7 @@ def send_notification(request):
             print form
 
 
-        return redirect('/notifications/')
+        return salon_dashboard(request, form)
     else:
         return redirect('/')
 

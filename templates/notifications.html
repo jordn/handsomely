@@ -14,13 +14,12 @@
       <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
       {% endfor %}
     {% endif %}
-
-
+ 
 <div id="offer-section" class="well">
   <h3>Offer an appointment</h3>
   <form action="/send_notification/" method="POST" class="form-inline" style="font-size:16px;">
     {% csrf_token %} 
-
+    {{ form.errors}}
     <div class="row">
       <div class="input-prepend">
         <span class="add-on"><img src="{% static 'img/glyphicons/png/glyphicons_288_scissors.png' %}" style="height:14px;"></span>
@@ -41,12 +40,12 @@
 
       <div class="input-prepend">
         <span class="add-on"><i class="icon-time"></i></span>
-        <input type="text" class="input-small" placeholder="HH:MM" name="time" id="id_time" />
+        <input type="text" class="input-small" placeholder="HH:MM" name="time" id="id_time" {% if form.discounted_time.value %}value="{{form.discounted_time.value}}"{% endif %}  />
       </div>
       for
       <div class="input-prepend">
         <span class="add-on"><strong>£</strong></span>
-        <input type="text" class="input-small" autofocus="autofocus" placeholder="Discount Price" name="discounted_price" id="id_discounted_price" style="width:100px"/>
+        <input type="text" class="input-small" placeholder="Discount Price" name="discounted_price" id="id_discounted_price" {% if form.discounted_price.value %}value="{{form.discounted_price.value}}"{% endif %} style="width:100px"/>
       </div>
 
       <input class="btn btn-primary" type="submit" value="Offer haircut">
@@ -57,12 +56,12 @@
       <h5>Optional</h5>
       <div class="input-prepend">
         <span class="add-on"><i class="icon-info-sign"></i></span>
-        <input name="notes" maxlength="100" placeholder="Optional haircut info" autofocus="autofocus" type="text" id="id_notes" />
+        <input name="notes" maxlength="100" placeholder="Optional haircut info" type="text" id="id_notes" />
       </div>
 
       <div class="input-prepend">
         <span class="add-on"><strong>£</strong></span>
-        <input type="text" class="input-small" autofocus="autofocus" placeholder="Original Price" name="original_price" id="id_original_price" style="width:100px"/>
+        <input type="text" class="input-small" placeholder="Original Price" name="original_price" id="id_original_price" style="width:100px"/>
       </div>
 
     </div>
