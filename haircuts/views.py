@@ -20,9 +20,6 @@ import datetime
 import time
 
 
-def coming_soon (request):
-    return render_to_response('coming_soon.html', context_instance=RequestContext(request))
-
 #front page and haircut type selection
 def index (request):
     return render_to_response('index.html', context_instance=RequestContext(request))
