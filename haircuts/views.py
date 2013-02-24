@@ -280,7 +280,7 @@ def salon_dashboard(request, form=NotificationForm()):
     return redirect('/')
 
 
-
+#SEnd out offers to emails
 def send_notification(request):
     django_user = request.user
     if django_user.is_authenticated():
