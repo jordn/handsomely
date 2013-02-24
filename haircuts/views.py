@@ -4,6 +4,7 @@ from django.template import RequestContext, Context, loader
 from django.template.loader import get_template
 from django import forms
 from haircuts.forms import RegisterForm, LoginForm, RequestForm, NotificationForm, NotifyForm
+from haircuts.models import *
 from django.db.models import Q
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib import auth, messages
@@ -15,10 +16,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import base36_to_int
 
-from models import *
 import datetime
 import time
-
 
 #front page and haircut type selection
 def index (request):
@@ -257,20 +256,29 @@ def salon_dashboard(request, form=NotificationForm()):
             return redirect('/')
 
         requests_for_salon = Request.objects.filter(salon=salon, status="WAIT")
-        c['requests_for_salon'] = requests_for_salon
+        valid_requests = requests_for_salon #init
+        #Removing any requests from unconfirmed users 
+        for haircut_request in requests_for_salon:
+            handsomely_requesting_user = HandsomelyUser.objects.get(django_user = haircut_request.django_user)
+            if handsomely_requesting_user.confirmed == False:
+                #May be very bad practice to remove from the list it's iterating over.
+                valid_requests = valid_requests.exclude(django_user = haircut_request.django_user)
 
-        num_male_requests = len(requests_for_salon.filter(haircut_type= 'M'))
-        num_female_requests = len(requests_for_salon.filter(haircut_type= 'F'))
+        c['requests_for_salon'] = valid_requests
+
+        num_male_requests = len(valid_requests.filter(haircut_type= 'M'))
+        num_female_requests = len(valid_requests.filter(haircut_type= 'F'))
 
         c['num_male_requests'] = num_male_requests
         c['num_female_requests'] = num_female_requests
 
-        notifications = Notification.objects.filter(salon = salon)
+        notifications = Notification.objects.filter(salon = salon).order_by('-issue_date_time')
         c['notifications'] = notifications
 
         c['form'] = form
         return render_to_response('notifications.html', c, context_instance=RequestContext(request))
     return redirect('/')
+
 
 
 def send_notification(request):
@@ -279,44 +287,73 @@ def send_notification(request):
         salon = Salon.objects.get(django_user = django_user)
         if request.method == 'POST':
             form = NotificationForm(request.POST)
+            print request.POST
+
             if form.is_valid():
                 cd = form.clean()
-                # print cd {'original_price': None, 'discounted_price': 21.0, 'notes': u'', 'time': datetime.time(12, 12), 'day': u'TODAY', 'haircut_type': u'M'}
+                day = cd['day']
+                if day == 'TODAY':
+                    date = datetime.datetime.now()
+                elif day == 'TOMORROW':
+                    date = datetime.datetime.now() + datetime.timedelta(days=1)
+                elif day == 'TDA':
+                    date = datetime.datetime.now() + datetime.timedelta(days=2)
+
+                time = str(cd['time'])
+                hour, minute, seconds = time.split(':')
+
+                datetime_of_appointment = date.replace(hour = int(hour), minute=int(minute), second = 0)
+
+
+                haircut_type = cd['haircut_type']
+                haircut_requests = Request.objects.filter(salon_id = salon, status = 'WAIT', haircut_type = haircut_type)
+                print haircut_requests
+                offered_to = haircut_requests
+                #Removing any notifications to unconfirmed users 
+                for haircut_request in haircut_requests:
+                    handsomely_requesting_user = HandsomelyUser.objects.get(django_user = haircut_request.django_user)
+                    if handsomely_requesting_user.confirmed == False:
+                        offered_to = offered_to.exclude(django_user = haircut_request.django_user)
+                print "O/T: ", offered_to, "H/R:", haircut_requests
 
                 new_notification = Notification(
-                salon = salon,
-                status = 'OPEN',
-                appointment_datetime = datetime.datetime.now() + datetime.timedelta(days=1),
-                appointment_price = cd['discounted_price'],
-                original_price = cd['original_price'],
-                haircut_type = cd['haircut_type'],
-                additional_info = cd['notes']
+                    salon = salon,
+                    status = 'OPEN',
+                    appointment_datetime = datetime_of_appointment,
+                    appointment_price = cd['discounted_price'],
+                    original_price = cd['original_price'],
+                    haircut_type = cd['haircut_type'],
+                    additional_info = cd['notes'],
                 )
-                new_notification.save() 
+                new_notification.save()
+                for haircut_request in offered_to:
+                    new_notification.offered_to.add(haircut_request.id)
+
+                    # # load content
+                    # contextMap = Context({ "users_email" : haircut_request.django_user.email, 
+                    #                "salon_name" : salon.salon_name, 
+                    #                "additional_info_from_salon" : new_notification.additional_info, 
+                    #                "notification_id" : new_notification.id,
+                    #                "appointment_datetime" : new_notification.appointment_datetime,
+                    #                "appointment_price" : new_notification.appointment_price,
+                    #                "original_price" : new_notification.original_price,
+                    #                "haircut_type" : new_notification.get_haircut_type_display,
+                    #                "user_id" : haircut_request.django_user.id
+                    #              }) 
+                    # text_content = get_template('emails/notify.txt').render(contextMap)
+                    # html_content = get_template('emails/notify.html').render(contextMap)
+                    # from_email = 'team@handsome.ly'
+                    # # send email
+                    # msg = EmailMultiAlternatives('Handsome.ly - Appointment Available', text_content, from_email, [haircut_request.django_user.email], bcc=[from_email])
+                    # msg.attach_alternative(html_content, "text/html")
+                    # msg.send()
+
                 return redirect('/notifications/')
-
-            print "poop"
-            print form
-
 
         return salon_dashboard(request, form)
     else:
         return redirect('/')
 
-
-
-
-def notify(request):
-    form = NotifyForm()
-    salon_logged_in = request.user
-    hu = HandsomelyUser.objects.get(django_user = salon_logged_in)
-    salon_desired = Salon.objects.get(django_user = salon_logged_in)	
-    requesters = Request.objects.filter(salon = salon_desired)
-    male_requesters = requesters.filter(haircut_type = 'M')
-    female_requesters = requesters.filter(haircut_type = 'F')
-    number_male = len(male_requesters)
-    number_female = len(female_requesters)
-    return render_to_response('notify_customers.html', {'form': form, 'number_male': number_male, 'number_female': number_female, 'salon_desired': salon_desired}, context_instance=RequestContext(request))
 
 
 # What does this function do exactly? 

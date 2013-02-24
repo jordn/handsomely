@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load staticfiles %} 
+{% extends 'base.html' %}{% load staticfiles %}{% load humanize %}
 
 {% block title %}Notify Customers | Handsome.ly{% endblock %}
 
@@ -14,37 +14,43 @@
 <p class="lead">You have <strong>{{num_male_requests}} m{{num_male_requests|pluralize:"an,en" }}</strong> and <strong>{{num_female_requests}} wom{{num_female_requests|pluralize:"an,en" }}</strong> waiting for haircuts</p>
 
 
-    {% if messages %}
-      {% for message in messages %}
-      <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
-      {% endfor %}
-    {% endif %}
+{% if messages %}
+  {% for message in messages %}
+  <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>{{ message|safe }}</div>
+  {% endfor %}
+{% endif %}
  
 <div id="offer-section" class="well">
   <h3>Offer an appointment</h3>
   <form action="/send_notification/" method="POST" class="form-inline" style="font-size:16px;">
     {% csrf_token %} 
-    {{ form.errors}}
-    <div class="row">
+
+    <ul class="unstyled">
+      {% for key, value in form.errors.items %}
+            <li class="text-error"><strong>{{ key }}{{ value }}</strong></li>
+      {% endfor %}
+    </ul>
+
+    <div class="row" style="margin-left:30px">
       <div class="input-prepend">
         <span class="add-on"><img src="{% static 'img/glyphicons/png/glyphicons_288_scissors.png' %}" style="height:14px;"></span>
         <select name="haircut_type" id="id_haircut" style="width:220px">
-          <option value="M">Mens' Haircut ({{num_male_requests}} waiting)</option>
-          <option value="F">Womens' Haircut ({{num_female_requests}} waiting) </option>
+          <option value="M" {% if form.haircut_type.value == "M" %} selected="selected"{% endif %}>Mens' Haircut ({{num_male_requests}} waiting)</option>
+          <option value="F" {% if form.haircut_type.value == "F" %} selected="selected"{% endif %}>Womens' Haircut ({{num_female_requests}} waiting) </option>
         </select>
       </div>&nbsp;&nbsp;&nbsp;
 
       <div class="input-prepend">
         <span class="add-on"><i class="icon-calendar"></i></span>
         <select name="day" id="id_day" class="input-small" style="width:140px">
-          <option value="TODAY">Today</option>
-          <option value="TOMORROW">Tomorrow</option>
-          <option value="TDA">The Day After</option>
+          <option value="TODAY" {% if form.day.value == "TODAY" %} selected="selected"{% endif %}>Today</option>
+          <option value="TOMORROW" {% if form.day.value == "TOMORROW" %} selected="selected"{% endif %}>Tomorrow</option>
+          <option value="TDA" {% if form.day.value == "TDA" %} selected="selected"{% endif %}>The Day After</option>
         </select>
       </div>
 
       <div class="input-append bootstrap-timepicker">
-        <input id="timepicker1" type="text" class="input-small"  {% if form.time.value %}value="{{form.time.value}}"{% endif %}>
+        <input id="timepicker" type="text" class="input-small" name="time" {% if form.time.value %}value="{{form.time.value}}"{% endif %} style="width:50px">
         <span class="add-on"><i class="icon-time"></i></span>
       </div>
 
@@ -60,16 +66,16 @@
     </div>
 
     <div class="row">
-      <div class="align-right" style="float:right; margin-right:159px; margin-top:20px;" >
+      <div class="align-right" style="float:right; margin-right:169px; margin-top:20px;" >
       <span style="margin-right:12px;">(Optional)</span>
       <div class="input-prepend">
         <span class="add-on"><i class="icon-info-sign"></i></span>
-        <input name="notes" maxlength="100" placeholder="Optional haircut info" type="text" id="id_notes" style="width:262px; margin-right: 31px" />
+        <input name="notes" maxlength="100" placeholder="Optional haircut info" type="text" id="id_notes" {% if form.notes.value %}value="{{form.notes.value}}"{% endif %} style="width:221px; margin-right: 31px" />
       </div>
 
       <div class="input-prepend">
         <span class="add-on"><strong>£</strong></span>
-        <input type="text" class="input-small" placeholder="Original Price" name="original_price" id="id_original_price" style="width:100px"/>
+        <input type="text" class="input-small" placeholder="Original Price" name="original_price" id="id_original_price" {% if form.original_price.value %}value="{{form.original_price.value}}"{% endif %} style="width:100px"/>
       </div>
     </div>
 
@@ -95,10 +101,10 @@
     {% for notification in notifications %}
       <tr>
         <td>{{notification.get_haircut_type_display}}</td>
-        <td>{{notification.appointment_datetime}}</td>
-        <td>{{notification.appointment_price}}</td>
+        <td>{{notification.appointment_datetime|date:"l jS M, g:i A"}}</td>
+        <td>£{{notification.appointment_price}}</td>
         <td>{{notification.offered_to.all|length}} Customer{{notification.offered_to.all|pluralize}}</td>
-        <td>{{notification.issue_date_time}}</td>
+        <td>{{notification.issue_date_time|naturaltime}}</td>
         <td>{{notification.get_status_display}}</td>
   {% if notification.get_status_display == 'Cancelled' %}
   <td id="td-apt-id-{{ notification.id }}"> N/A </td>
@@ -116,7 +122,9 @@
 </div>
 
     <script type="text/javascript">
-        $('#timepicker1').timepicker();
+        $('#timepicker').timepicker({
+          showMeridian: false,
+        });
     </script>
 
 {% endblock %}

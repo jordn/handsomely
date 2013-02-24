@@ -45,8 +45,8 @@ class Request(models.Model):
 class Notification(models.Model):
 	issue_date_time = models.DateTimeField(default=datetime.datetime.now)
 	salon = models.ForeignKey('Salon')
-	offered_to = models.ManyToManyField(Request, related_name='request_notification')
-	status_choices = ( ('FILL', 'Filled'), ('OPEN', 'Open') )
+	offered_to = models.ManyToManyField(Request, related_name='notification+')
+	status_choices = ( ('FILL', 'Filled'), ('OPEN', 'Open'), ('FILL', 'Filled') )
 	status = models.CharField(max_length=4, choices=status_choices) 
 	filled_by = models.ForeignKey('Request', blank=True, null=True) #which request took the booking
 	appointment_datetime = models.DateTimeField()

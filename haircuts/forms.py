@@ -44,25 +44,17 @@ class RequestForm(ModelForm):
         model = Request
 
 
-
 class NotificationForm(Form): 
     haircut_choices = (('M', "Mens' Cut"), ('F',"Womens' cut"))
     haircut_type = forms.ChoiceField(haircut_choices, required=True)
     day_choices = (('TODAY', 'Today'), ('TOMORROW','Tomorrow'), ('TDA','The Day After'))
     day = forms.ChoiceField(day_choices, required=True)
     time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs= {'placeholder': 'In format HH:MM'}))
-    original_price = forms.FloatField(required=False, label='', widget=forms.TextInput(attrs={'placeholder': 'Original Price', 'autofocus': 'autofocus'}))
-    discounted_price = forms.FloatField(required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'Discounted Price', 'autofocus': 'autofocus'}))
+    original_price = forms.DecimalField(max_digits=4, decimal_places=2, required=False, label='', widget=forms.TextInput(attrs={'placeholder': 'Original Price', 'autofocus': 'autofocus'}))
+    discounted_price = forms.DecimalField(max_digits=4, decimal_places=2, required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'Discounted Price', 'autofocus': 'autofocus'}))
     notes = forms.CharField(required=False, max_length = 100 , widget=forms.TextInput(attrs={'placeholder': '100 characters maximum', 'autofocus': 'autofocus'}))
 
 
-
-class NotifyForm(Form):
-    gender_choices = (('M', 'Male'), ('F','Female'))
-    gender = forms.ChoiceField(gender_choices, required=True)
-    day_choices = (('TODAY', 'Today'), ('TOMORROW','Tomorrow'), ('TDA','The Day After'))
-    day = forms.ChoiceField(day_choices, required=True)
-    time = forms.TimeField(widget=forms.TimeInput(format='%H:%M', attrs= {'placeholder': 'In format HH:MM'}))
-    original_price = forms.FloatField(required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'Original Price', 'autofocus': 'autofocus'}))
-    discounted_price = forms.FloatField(required=True, label='', widget=forms.TextInput(attrs={'placeholder': 'Discounted Price', 'autofocus': 'autofocus'}))
-    notes = forms.CharField(max_length = 100 , widget=forms.TextInput(attrs={'placeholder': '100 characters maximum', 'autofocus': 'autofocus'}))
+class NotifyForm(ModelForm):
+    class Meta:
+        model = Notification
