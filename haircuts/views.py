@@ -326,6 +326,8 @@ def send_notification(request):
                     additional_info = cd['notes'],
                 )
                 new_notification.save()
+
+                #add the requests this applies to
                 for haircut_request in offered_to:
                     new_notification.offered_to.add(haircut_request.id)
 
