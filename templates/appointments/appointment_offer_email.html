@@ -672,11 +672,6 @@ input[type="button"].btn-block {
         /*@editable*/ text-align:left;
       }
 
-      #monkeyRewards img{
-        display:inline;
-        height:auto;
-        max-width:280px;
-      }
     </style>
   </head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
@@ -684,27 +679,6 @@ input[type="button"].btn-block {
           <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
               <tr>
                   <td align="center" valign="top">
-                        <!-- // Begin Template Preheader \\ -->
-                        <table border="0" cellpadding="10" cellspacing="0" width="320" id="templatePreheader">
-                            <tr>
-                                <td valign="top" class="preheaderContent">
-                                
-                                  <!-- // Begin Module: Standard Preheader \\ -->
-                                    <table border="0" cellpadding="10" cellspacing="0" width="100%">
-                                      <tr>
-                                          <td valign="top">
-                                              <div mc:edit="std_preheader_content">
-                                                   Appointment at {{salon_name}} at {{notification.appointment_datetime}} for £{{notification.appointment_price}}. Respond to claim it before anyone else.
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                  <!-- // End Module: Standard Preheader \\ -->
-                                
-                                </td>
-                            </tr>
-                        </table>
-                        <!-- // End Template Preheader \\ -->
                       <table border="0" cellpadding="0" cellspacing="0" width="320" id="templateContainer">
                           <tr>
                               <td align="center" valign="top">
@@ -712,10 +686,8 @@ input[type="button"].btn-block {
                                   <table border="0" cellpadding="0" cellspacing="0" width="320" id="templateHeader">
                                         <tr>
                                             <td class="headerContent">
-                                            
-                                              <!-- // Begin Module: Standard Header Image \\ -->
-                                              <img src="http://handsome.ly/static/img/handsomelylogo320.png' %}" style="max-width:320px;" id="headerImage campaign-icon" alt="Handsome.ly" />
-                                              <!-- // End Module: Standard Header Image \\ -->
+
+                                              <img src="http://handsome.ly/static/img/handsomelylogo320.png" style="max-width:320px;" id="headerImage campaign-icon" alt="Handsome.ly" />
                                             
                                             </td>
                                         </tr>
@@ -735,7 +707,7 @@ input[type="button"].btn-block {
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_content00">
-                                                                <h3 class="h3">Appointment at {{salon_name}} at {{notification.appointment_datetime}} for £{{notification.appointment_price}}.</h3>
+                                                                <h4 class="h4">Appointment at {{salon_name}} at {{notification.appointment_datetime}} for £{{notification.appointment_price}}.</h4>
                                                                 <p>Hey {{users_email}}</p>
                                                                 <p>The salon <strong>{{salon_name}}</strong> has a {{notification.get_haircut_type_display}} appointment available at {{notification.appointment_datetime}} for £{{notification.appointment_price}} {% if notification.original_price %}(usual price £{{notification.original_price}})!{% endif %}</p>
 
@@ -743,14 +715,14 @@ input[type="button"].btn-block {
                                                                 "{{notification.additional_info}}"
                                                                 {% endif %}
 
-                                                                <p>Your response: </p>
+                                                                <p>Respond to this offer before anyone else to claim it:</p>
                                                                 <center>
                                                                 
-                                                                  <p><a href="http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}"><button class="btn btn-primary">Accept Appointment</button></a> </p>
+                                                                  <p><a href="http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}"><button class="btn btn-primary" style="min-height: 40px; min-width: 220px; padding:12px 5px;">Accept Appointment</button></a> </p>
                                                                  
-                                                                  <p><a href="http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}"><button class="btn btn-info">Not this one</button></a> </p>
+                                                                  <p><a href="http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}"><button class="btn btn-info" style="min-height: 40px; min-width: 220px; padding:12px 5px;">Not this one</button></a> </p>
                                                                   
-                                                                  <p><a href="http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}}"><button class="btn btn-danger">Cancel haircut request</button></a> 
+                                                                  <p><a href="http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}}"><button class="btn btn-danger" style="min-height: 40px; min-width: 220px; padding:12px 5px;">Cancel haircut request</button></a> 
                                                                   </p>
                                                                 </center>
                                                                 <br>

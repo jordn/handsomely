@@ -6,10 +6,10 @@ The salon {{salon_name}} has a {{notification.get_haircut_type_display}} appoint
   "{{notification.additional_info}}"
 {% endif %}
 
-Your response: 
-- YES: http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}"
-- NO: http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}
-- CANCEL: http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}} 
+Respond before anyone else to claim it: 
+- YES, accept appointment: http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}"
+- NOT THIS ONE, postpone appointment: http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}
+- CANCEL, stop receiving haircut deals: http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}} 
 
 Thanks,
 the Handsome.ly team :)
