@@ -1,0 +1,802 @@
+{% load staticfiles %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <!-- Facebook sharing information tags -->
+        <meta property="og:title" content="Appointment available at {{salon_name}} |  Handsome.ly" />
+        
+        <title>Appointment available at {{salon_name}} |  Handsome.ly</title>
+    <style type="text/css">
+      /* Client-specific Styles */
+      #outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
+      body{width:100% !important;} .ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail to display emails at full width */
+      body{-webkit-text-size-adjust:none;} /* Prevent Webkit platforms from changing default text sizes. */
+
+      /* Reset Styles */
+      body{margin:0; padding:0;}
+      img{border:0; height:auto; line-height:100%; outline:none; text-decoration:none;}
+      table td{border-collapse:collapse;}
+      #backgroundTable{height:100% !important; margin:0; padding:0; width:100% !important;}
+
+      /* Template Styles */
+
+      /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: COMMON PAGE ELEMENTS /\/\/\/\/\/\/\/\/\/\ */
+
+      /**
+      * @tab Page
+      * @section background color
+      * @tip Set the background color for your email. You may want to choose one that matches your company's branding.
+      * @theme page
+      */
+      body, #backgroundTable{
+        /*@editable*/ background-color:#FAFAFA;
+      }
+
+      /**
+      * @tab Page
+      * @section email border
+      * @tip Set the border for your email.
+      */
+      #templateContainer{
+        /*@editable*/ border: 1px solid #DDDDDD;
+      }
+
+      /**
+      * @tab Page
+      * @section heading 1
+      * @tip Set the styling for all first-level headings in your emails. These should be the largest of your headings.
+      * @style heading 1
+      */
+      h1, .h1{
+        /*@editable*/ color:#202020;
+        display:block;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:34px;
+        /*@editable*/ font-weight:bold;
+        /*@editable*/ line-height:100%;
+        margin-top:0;
+        margin-right:0;
+        margin-bottom:10px;
+        margin-left:0;
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Page
+      * @section heading 2
+      * @tip Set the styling for all second-level headings in your emails.
+      * @style heading 2
+      */
+      h2, .h2{
+        /*@editable*/ color:#202020;
+        display:block;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:30px;
+        /*@editable*/ font-weight:bold;
+        /*@editable*/ line-height:100%;
+        margin-top:0;
+        margin-right:0;
+        margin-bottom:10px;
+        margin-left:0;
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Page
+      * @section heading 3
+      * @tip Set the styling for all third-level headings in your emails.
+      * @style heading 3
+      */
+      h3, .h3{
+        /*@editable*/ color:#202020;
+        display:block;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:26px;
+        /*@editable*/ font-weight:bold;
+        /*@editable*/ line-height:100%;
+        margin-top:0;
+        margin-right:0;
+        margin-bottom:10px;
+        margin-left:0;
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Page
+      * @section heading 4
+      * @tip Set the styling for all fourth-level headings in your emails. These should be the smallest of your headings.
+      * @style heading 4
+      */
+      h4, .h4{
+        /*@editable*/ color:#202020;
+        display:block;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:22px;
+        /*@editable*/ font-weight:bold;
+        /*@editable*/ line-height:100%;
+        margin-top:0;
+        margin-right:0;
+        margin-bottom:10px;
+        margin-left:0;
+        /*@editable*/ text-align:left;
+      }
+
+      /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: PREHEADER /\/\/\/\/\/\/\/\/\/\ */
+
+      /**
+      * @tab Header
+      * @section preheader style
+      * @tip Set the background color for your email's preheader area.
+      * @theme page
+      */
+      #templatePreheader{
+        /*@editable*/ background-color:#FAFAFA;
+      }
+
+      /**
+      * @tab Header
+      * @section preheader text
+      * @tip Set the styling for your email's preheader text. Choose a size and color that is easy to read.
+      */
+      .preheaderContent div{
+        /*@editable*/ color:#505050;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:10px;
+        /*@editable*/ line-height:100%;
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Header
+      * @section preheader link
+      * @tip Set the styling for your email's preheader links. Choose a color that helps them stand out from your text.
+      */
+      .preheaderContent div a:link, .preheaderContent div a:visited, /* Yahoo! Mail Override */ .preheaderContent div a .yshortcuts /* Yahoo! Mail Override */{
+        /*@editable*/ color:#336699;
+        /*@editable*/ font-weight:normal;
+        /*@editable*/ text-decoration:underline;
+      }
+
+      .preheaderContent img{
+        display:inline;
+        height:auto;
+        margin-bottom:10px;
+        max-width:280px;
+      }
+
+      /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: HEADER /\/\/\/\/\/\/\/\/\/\ */
+
+      /**
+      * @tab Header
+      * @section header style
+      * @tip Set the background color and border for your email's header area.
+      * @theme header
+      */
+      #templateHeader{
+        /*@editable*/ background-color:#FFFFFF;
+        /*@editable*/ border-bottom:0;
+      }
+
+      /**
+      * @tab Header
+      * @section header text
+      * @tip Set the styling for your email's header text. Choose a size and color that is easy to read.
+      */
+      .headerContent{
+        /*@editable*/ color:#202020;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:34px;
+        /*@editable*/ font-weight:bold;
+        /*@editable*/ line-height:100%;
+        /*@editable*/ padding:0;
+        /*@editable*/ text-align:center;
+        /*@editable*/ vertical-align:middle;
+      }
+
+      /**
+      * @tab Header
+      * @section header link
+      * @tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
+      */
+      .headerContent a:link, .headerContent a:visited, /* Yahoo! Mail Override */ .headerContent a .yshortcuts /* Yahoo! Mail Override */{
+        /*@editable*/ color:#336699;
+        /*@editable*/ font-weight:normal;
+        /*@editable*/ text-decoration:underline;
+      }
+
+      #headerImage{
+        height:auto;
+        max-width:320px !important;
+      }
+
+      /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: MAIN BODY /\/\/\/\/\/\/\/\/\/\ */
+
+      /**
+      * @tab Body
+      * @section body style
+      * @tip Set the background color for your email's body area.
+      */
+      #templateContainer, .bodyContent{
+        /*@editable*/ background-color:#FFFFFF;
+      }
+
+      /**
+      * @tab Body
+      * @section body text
+      * @tip Set the styling for your email's main content text. Choose a size and color that is easy to read.
+      * @theme main
+      */
+      .bodyContent div{
+        /*@editable*/ color:#505050;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:12px;
+        /*@editable*/ line-height:150%;
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Body
+      * @section body link
+      * @tip Set the styling for your email's main content links. Choose a color that helps them stand out from your text.
+      */
+      .bodyContent div a:link, .bodyContent div a:visited, /* Yahoo! Mail Override */ .bodyContent div a .yshortcuts /* Yahoo! Mail Override */{
+        /*@editable*/ color:#336699;
+        /*@editable*/ font-weight:normal;
+        /*@editable*/ text-decoration:underline;
+      }
+
+      .bodyContent p{
+        font-size:16px;
+      }
+
+      .bodyContent img{
+        display:inline;
+        height:auto;
+        margin-bottom:10px;
+        max-width:280px;
+      }
+
+.btn {
+  display: inline-block;
+  *display: inline;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  *margin-left: .3em;
+  font-size: 14px;
+  line-height: 20px;
+  color: #333333;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  *background-color: #e6e6e6;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  border: 1px solid #cccccc;
+  *border: 0;
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  *zoom: 1;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn.disabled,
+.btn[disabled] {
+  color: #333333;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
+.btn:active,
+.btn.active {
+  background-color: #cccccc \9;
+}
+
+.btn:first-child {
+  *margin-left: 0;
+}
+
+.btn:hover,
+.btn:focus {
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+     -moz-transition: background-position 0.1s linear;
+       -o-transition: background-position 0.1s linear;
+          transition: background-position 0.1s linear;
+}
+
+.btn:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+.btn.active,
+.btn:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+     -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn.disabled,
+.btn[disabled] {
+  cursor: default;
+  background-image: none;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+     -moz-box-shadow: none;
+          box-shadow: none;
+}
+
+.btn-large {
+  padding: 11px 19px;
+  font-size: 17.5px;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+.btn-large [class^="icon-"],
+.btn-large [class*=" icon-"] {
+  margin-top: 4px;
+}
+
+.btn-small {
+  padding: 2px 10px;
+  font-size: 11.9px;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.btn-small [class^="icon-"],
+.btn-small [class*=" icon-"] {
+  margin-top: 0;
+}
+
+.btn-mini [class^="icon-"],
+.btn-mini [class*=" icon-"] {
+  margin-top: -1px;
+}
+
+.btn-mini {
+  padding: 0 6px;
+  font-size: 10.5px;
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+
+input[type="submit"].btn-block,
+input[type="reset"].btn-block,
+input[type="button"].btn-block {
+  width: 100%;
+}
+
+.btn-primary.active,
+.btn-warning.active,
+.btn-danger.active,
+.btn-success.active,
+.btn-info.active,
+.btn-inverse.active {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.btn-primary {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #006dcc;
+  *background-color: #0044cc;
+  background-image: -moz-linear-gradient(top, #0088cc, #0044cc);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0044cc);
+  background-image: -o-linear-gradient(top, #0088cc, #0044cc);
+  background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+  background-repeat: repeat-x;
+  border-color: #0044cc #0044cc #002a80;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  color: #ffffff;
+  background-color: #0044cc;
+  *background-color: #003bb3;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #003399 \9;
+}
+
+.btn-warning {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #faa732;
+  *background-color: #f89406;
+  background-image: -moz-linear-gradient(top, #fbb450, #f89406);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450), to(#f89406));
+  background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
+  background-image: -o-linear-gradient(top, #fbb450, #f89406);
+  background-image: linear-gradient(to bottom, #fbb450, #f89406);
+  background-repeat: repeat-x;
+  border-color: #f89406 #f89406 #ad6704;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active,
+.btn-warning.active,
+.btn-warning.disabled,
+.btn-warning[disabled] {
+  color: #ffffff;
+  background-color: #f89406;
+  *background-color: #df8505;
+}
+
+.btn-warning:active,
+.btn-warning.active {
+  background-color: #c67605 \9;
+}
+
+.btn-danger {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #da4f49;
+  *background-color: #bd362f;
+  background-image: -moz-linear-gradient(top, #ee5f5b, #bd362f);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));
+  background-image: -webkit-linear-gradient(top, #ee5f5b, #bd362f);
+  background-image: -o-linear-gradient(top, #ee5f5b, #bd362f);
+  background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
+  background-repeat: repeat-x;
+  border-color: #bd362f #bd362f #802420;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active,
+.btn-danger.active,
+.btn-danger.disabled,
+.btn-danger[disabled] {
+  color: #ffffff;
+  background-color: #bd362f;
+  *background-color: #a9302a;
+}
+
+.btn-danger:active,
+.btn-danger.active {
+  background-color: #942a25 \9;
+}
+
+.btn-success {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #5bb75b;
+  *background-color: #51a351;
+  background-image: -moz-linear-gradient(top, #62c462, #51a351);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
+  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
+  background-image: -o-linear-gradient(top, #62c462, #51a351);
+  background-image: linear-gradient(to bottom, #62c462, #51a351);
+  background-repeat: repeat-x;
+  border-color: #51a351 #51a351 #387038;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  color: #ffffff;
+  background-color: #51a351;
+  *background-color: #499249;
+}
+
+.btn-success:active,
+.btn-success.active {
+  background-color: #408140 \9;
+}
+
+.btn-info {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #49afcd;
+  *background-color: #2f96b4;
+  background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f96b4));
+  background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+  background-repeat: repeat-x;
+  border-color: #2f96b4 #2f96b4 #1f6377;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.btn-info.disabled,
+.btn-info[disabled] {
+  color: #ffffff;
+  background-color: #2f96b4;
+  *background-color: #2a85a0;
+}
+
+.btn-info:active,
+.btn-info.active {
+  background-color: #24748c \9;
+}
+
+      .bodyContent button{
+        min-height: 40px;
+        min-width: 220px;
+      }
+
+      /* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\/\/\ */
+
+      /**
+      * @tab Footer
+      * @section footer style
+      * @tip Set the background color and top border for your email's footer area.
+      * @theme footer
+      */
+      #templateFooter{
+        /*@editable*/ background-color:#FFFFFF;
+        /*@editable*/ border-top:0;
+      }
+
+      /**
+      * @tab Footer
+      * @section footer text
+      * @tip Set the styling for your email's footer text. Choose a size and color that is easy to read.
+      * @theme footer
+      */
+      .footerContent div{
+        /*@editable*/ color:#707070;
+        /*@editable*/ font-family:Arial;
+        /*@editable*/ font-size:11px;
+        /*@editable*/ line-height:150%;
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Footer
+      * @section footer link
+      * @tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
+      */
+      .footerContent div a:link, .footerContent div a:visited, /* Yahoo! Mail Override */ .footerContent div a .yshortcuts /* Yahoo! Mail Override */{
+        /*@editable*/ color:#336699;
+        /*@editable*/ font-weight:normal;
+        /*@editable*/ text-decoration:underline;
+      }
+
+      .footerContent img{
+        display:inline;
+      }
+
+      /**
+      * @tab Footer
+      * @section social bar style
+      * @tip Set the background color and border for your email's footer social bar.
+      * @theme footer
+      */
+      #social{
+        /*@editable*/ background-color:#FAFAFA;
+        /*@editable*/ border:0;
+      }
+
+      /**
+      * @tab Footer
+      * @section social bar style
+      * @tip Set the background color and border for your email's footer social bar.
+      */
+      #social div{
+        /*@editable*/ text-align:left;
+      }
+
+      /**
+      * @tab Footer
+      * @section utility bar style
+      * @tip Set the background color and border for your email's footer utility bar.
+      * @theme footer
+      */
+      #utility{
+        /*@editable*/ background-color:#FFFFFF;
+        /*@editable*/ border:0;
+      }
+
+      /**
+      * @tab Footer
+      * @section utility bar style
+      * @tip Set the background color and border for your email's footer utility bar.
+      */
+      #utility div{
+        /*@editable*/ text-align:left;
+      }
+
+      #monkeyRewards img{
+        display:inline;
+        height:auto;
+        max-width:280px;
+      }
+    </style>
+  </head>
+    <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+      <center>
+          <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="backgroundTable">
+              <tr>
+                  <td align="center" valign="top">
+                        <!-- // Begin Template Preheader \\ -->
+                        <table border="0" cellpadding="10" cellspacing="0" width="320" id="templatePreheader">
+                            <tr>
+                                <td valign="top" class="preheaderContent">
+                                
+                                  <!-- // Begin Module: Standard Preheader \\ -->
+                                    <table border="0" cellpadding="10" cellspacing="0" width="100%">
+                                      <tr>
+                                          <td valign="top">
+                                              <div mc:edit="std_preheader_content">
+                                                   Appointment at {{salon_name}} at {{notification.appointment_datetime}} for £{{notification.appointment_price}}. Respond to claim it before anyone else.
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                  <!-- // End Module: Standard Preheader \\ -->
+                                
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- // End Template Preheader \\ -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="320" id="templateContainer">
+                          <tr>
+                              <td align="center" valign="top">
+                                    <!-- // Begin Template Header \\ -->
+                                  <table border="0" cellpadding="0" cellspacing="0" width="320" id="templateHeader">
+                                        <tr>
+                                            <td class="headerContent">
+                                            
+                                              <!-- // Begin Module: Standard Header Image \\ -->
+                                              <img src="http://handsome.ly/static/img/handsomelylogo320.png' %}" style="max-width:320px;" id="headerImage campaign-icon" alt="Handsome.ly" />
+                                              <!-- // End Module: Standard Header Image \\ -->
+                                            
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Header \\ -->
+                                </td>
+                            </tr>
+                          <tr>
+                              <td align="center" valign="top">
+                                    <!-- // Begin Template Body \\ -->
+                                  <table border="0" cellpadding="0" cellspacing="0" width="320" id="templateBody">
+                                      <tr>
+                                            <td valign="top" class="bodyContent">
+                                
+                                                <!-- // Begin Module: Standard Content \\ -->
+                                                <table border="0" cellpadding="20" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <div mc:edit="std_content00">
+                                                                <h3 class="h3">Appointment at {{salon_name}} at {{notification.appointment_datetime}} for £{{notification.appointment_price}}.</h3>
+                                                                <p>Hey {{users_email}}</p>
+                                                                <p>The salon <strong>{{salon_name}}</strong> has a {{notification.get_haircut_type_display}} appointment available at {{notification.appointment_datetime}} for £{{notification.appointment_price}} {% if notification.original_price %}(usual price £{{notification.original_price}})!{% endif %}</p>
+
+                                                                {% if notification.additional_info %}
+                                                                "{{notification.additional_info}}"
+                                                                {% endif %}
+
+                                                                <p>Your response: </p>
+                                                                <center>
+                                                                
+                                                                  <p><a href="http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}"><button class="btn btn-primary">Accept Appointment</button></a> </p>
+                                                                 
+                                                                  <p><a href="http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}"><button class="btn btn-info">Not this one</button></a> </p>
+                                                                  
+                                                                  <p><a href="http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}}"><button class="btn btn-danger">Cancel haircut request</button></a> 
+                                                                  </p>
+                                                                </center>
+                                                                <br>
+                                                                <p>All the best, <br><br>
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;the Handsome.ly team :)</p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- // End Module: Standard Content \\ -->
+                                                
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Body \\ -->
+                                </td>
+                            </tr>
+                          <tr>
+                              <td align="center" valign="top">
+                                    <!-- // Begin Template Footer \\ -->
+                                  <table border="0" cellpadding="10" cellspacing="0" width="320" id="templateFooter">
+                                      <tr>
+                                          <td valign="top" class="footerContent">
+                                            
+                                                <!-- // Begin Module: Standard Footer \\ -->
+                                                <table border="0" cellpadding="10" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td colspan="2" valign="middle" id="social">
+                                                            <div mc:edit="std_social">P.S. Thanks for being one of the first users of Handsome.ly! <br> You can reply to this email and we'll get right back to you.
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- // End Module: Standard Footer \\ -->
+                                            
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- // End Template Footer \\ -->
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                    </td>
+                </tr>
+            </table>
+        </center>
+    </body>
+</html>

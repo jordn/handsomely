@@ -1,19 +1,18 @@
-Hi {{users_email}}!
-<br/>
-The salon <b>{{salon_name}}</b> has a {{haircut_type}} appointment available at {{appointment_date_time}} for £{{appointment_price}} (usual price £{{original_price}})!
-<br/>
-<br/>
-Additional info from salon:
-<br/>
-"{{additional_info_from_salon}}"
-<br/>
-<br/>
-Your response: 
-- <a href="http://www.handsome.ly/response/?ans=YES&notifID={{notification_id}}&userID={{user_id}}">YES</a> 
-- <a href="http://www.handsome.ly/response/?ans=NO&notifID={{notification_id}}&userID={{user_id}}">NO</a> 
-- <a href="http://www.handsome.ly/response/?ans=CANCEL&notifID={notification_id}}&userID={{user_id}}">CANCEL</a> 
-<br/>
-<br/>
-Thanks, 
-<br/>
-the Handsome.ly team.
+Hey {{users_email}}
+
+<p>The salon <strong>{{salon_name}}</strong> has a {{notification.get_haircut_type_display}} appointment available at {{notification.appointment_datetime}} for £{{notification.appointment_price}} {% if notification.original_price %}(usual price £{{notification.original_price}})!{% endif %}</p>
+
+{% if notification.additional_info %}
+  "{{notification.additional_info}}"
+{% endif %}
+
+<p>Your response: 
+- <a href="http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}">YES</a> 
+- <a href="http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}">NO</a> 
+- <a href="http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}}">CANCEL</a> 
+</p>
+
+All the best, <br>
+the Handsome.ly team :)
+
+P.S. Thanks for being one of the first users of Handsome.ly! You can reply to this email and we'll get right back to you. 

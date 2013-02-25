@@ -1,19 +1,26 @@
-{% extends "base.html" %}{% load url from future %}
+{% extends 'base.html' %}
+
+{% block title %}Login | Handsome.ly{% endblock %}
 
 {% block content %}
-  <section>
+<div class="row center-container">
+  <div class="centered">
+    <h1>Login</h1>
+    <div class="row">
+
     {% if form.errors %}
       <p class="error">Sorry, that's not a valid username or password</p>
     {% endif %}
 
-    <h1>Log in</h1>
     <form action="" method="POST" class="form-very-large">
       {% csrf_token %}
+      <p class="lead request-help">Email address:</p>
       <input type="text" name="username" value="" id="username" autofocus="autofocus" placeholder="email@address.com"><br>
+      <p class="lead request-help">Password:</p>
       <input type="password" name="password" value="" id="password" placeholder="password">
       <br>
-      <strong><small><a href="/register">Register</a></small></strong>
-      <small><a href="/forgot">Forgot password?</a></small>
+      <strong><a href="/register">Register</a></strong>
+      <a href="/forgot">Forgot password?</a>
       <input type="submit"  value="login" class="btn btn-large btn-primary"  />
       {% if next %}
         <input type="hidden" name="next" value="{{ next|escape }}" />

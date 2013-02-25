@@ -1,10 +1,17 @@
-Hi! {{users_email}}
-The salon {{salon_name}} has a {{haircut_type}} appointment available at {{appointment_date_time}} for £{{appointment_price}} (usual price £{{original_price}})!
-Additional info from salon: 
-"{{additional_info_from_salon}}"
+Hey {{users_email}}
+
+The salon {{salon_name}} has a {{notification.get_haircut_type_display}} appointment available at {{notification.appointment_datetime}} for £{{notification.appointment_price}} (usual price £{{notification.original_price}})!
+
+{% if notification.additional_info %}
+  "{{notification.additional_info}}"
+{% endif %}
+
 Your response: 
-- YES: http://www.handsome.ly/response?ans=YES&notifID={{notification_id}}&userID={{user_id}} 
-- NO: http://www.handsome.ly/response?ans=NO&notifID={{notification_id}}&userID={{user_id}} 
-- CANCEL: http://www.handsome.ly/response?ans=CANCEL&notifID={{notification_id}}&userID={{user_id}} 
+- YES: http://www.handsome.ly/response/?ans=YES&notifID={{notification.id}}&userID={{user_id}}"
+- NO: http://www.handsome.ly/response/?ans=NO&notifID={{notification.id}}&userID={{user_id}}
+- CANCEL: http://www.handsome.ly/response/?ans=CANCEL&notifID={notification.id}}&userID={{user_id}} 
+
 Thanks,
-the Handsome.ly Team
+the Handsome.ly team :)
+
+P.S. you can reply to this and we'll get right back to you. Thanks for being on e of the first users of Handsome.ly!
