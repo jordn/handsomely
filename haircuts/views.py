@@ -110,13 +110,13 @@ def cancel_haircut_request(request):
     if django_user.is_authenticated():
 
         if ('reqID' in request.POST and request.POST['reqID']):
-            request_id = request.POST['reqID']
-            request = Request.objects.get(id=request_id)
+            haircut_request_id = request.POST['reqID']
+            haircut_request = Request.objects.get(id=haircut_request_id)
             print "POST"
-            if request.django_user == django_user: 
-                request.status = 'CANC'
-                request.save() 
-                return HttpResponse(request.id) 
+            if haircut_request.django_user == django_user: 
+                haircut_request.status = 'CANC'
+                haircut_request.save() 
+                return HttpResponse(haircut_request.id) 
 
         return redirect('/status')
     else:
@@ -360,6 +360,24 @@ def send_notification(request):
     else:
         return redirect('/')
 
+# TO BE DONE
+def cancel_notification(request):
+    django_user = request.user
+    if django_user.is_authenticated():
+        salon = Salon.objects.get(django_user = django_user)
+        if ('notID' in request.POST and request.POST['notID']):
+            # print "good to go"
+            notification_id = request.POST['notID']
+            notification = Notification.objects.get(id=notification_id)
+            if notification.salon.django_user == django_user: 
+                print "going"
+                notification.status = 'CANC'
+                notification.save() 
+                return HttpResponse(request) 
+
+        return redirect('/dashboard/')
+    else:
+        return redirect('/')
 
 
 # What does this function do exactly? 

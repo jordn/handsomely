@@ -24,6 +24,7 @@ urlpatterns += patterns('haircuts.views',
 
     url(r'^dashboard/$', 'salon_dashboard'), 
     url(r'^send_notification/$', 'send_notification'), 
+    url(r'^cancel_notification/$', 'cancel_notification'), 
 
     url(r'^success/$', 'success'),
 
