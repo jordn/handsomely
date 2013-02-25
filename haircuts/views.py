@@ -329,26 +329,26 @@ def send_notification(request):
 
                 #add the requests this applies to
                 for haircut_request in offered_to:
-                    new_notification.offered_to.add(haircut_request.id)
+                    new_notification.offered_to.add(haircut_request.id) #keep account of who it gets sent to
 
-                    # # load content
-                    # contextMap = Context({ "users_email" : haircut_request.django_user.email, 
-                    #                "salon_name" : salon.salon_name, 
-                    #                "additional_info_from_salon" : new_notification.additional_info, 
-                    #                "notification_id" : new_notification.id,
-                    #                "appointment_datetime" : new_notification.appointment_datetime,
-                    #                "appointment_price" : new_notification.appointment_price,
-                    #                "original_price" : new_notification.original_price,
-                    #                "haircut_type" : new_notification.get_haircut_type_display,
-                    #                "user_id" : haircut_request.django_user.id
-                    #              }) 
-                    # text_content = get_template('emails/notify.txt').render(contextMap)
-                    # html_content = get_template('emails/notify.html').render(contextMap)
-                    # from_email = 'team@handsome.ly'
-                    # # send email
-                    # msg = EmailMultiAlternatives('Handsome.ly - Appointment Available', text_content, from_email, [haircut_request.django_user.email], bcc=[from_email])
-                    # msg.attach_alternative(html_content, "text/html")
-                    # msg.send()
+                    # load content
+                    contextMap = Context({ "users_email" : haircut_request.django_user.email, 
+                                   "salon_name" : salon.salon_name, 
+                                   "additional_info_from_salon" : new_notification.additional_info, 
+                                   "notification_id" : new_notification.id,
+                                   "appointment_datetime" : new_notification.appointment_datetime,
+                                   "appointment_price" : new_notification.appointment_price,
+                                   "original_price" : new_notification.original_price,
+                                   "haircut_type" : new_notification.get_haircut_type_display,
+                                   "user_id" : haircut_request.django_user.id
+                                 }) 
+                    text_content = get_template('emails/notify.txt').render(contextMap)
+                    html_content = get_template('emails/notify.html').render(contextMap)
+                    from_email = 'team@handsome.ly'
+                    # send email
+                    msg = EmailMultiAlternatives('Handsome.ly - Appointment Available', text_content, from_email, [haircut_request.django_user.email], bcc=[from_email])
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
 
                 return redirect('/notifications/')
 
