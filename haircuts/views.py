@@ -465,7 +465,7 @@ def respond_to_notification(request):
             #    notif.save()
                 return render_to_response('thank_you_response.html', { 'answer' : answer }, context_instance=RequestContext(request))
             if answer == "YES":
-                if notif.status == "FILL":
+                if notif.status == "FILL" or notif.status == "CANC":
                     return render_to_response('sorry.html', {}, context_instance=RequestContext(request))
                 else: 
                     #if ( (len(customerPhone) == 0) or (len(customerName) == 0) or ("a" in customerName) ):
@@ -488,7 +488,10 @@ def respond_to_notification(request):
 		    message += "\n\nAppointment type: " + notif.get_haircut_type_display() 
                     message += "\n\nthanks,\nthe Handsome.ly team"
                     send_mail('Handsomely - Customer Responded', message, 'team@handsome.ly', [salonEmail, 'team@handsome.ly'], fail_silently=False)
-                    return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerEmail }, context_instance=RequestContext(request))
+
+                    messages.success(request, "Thank you. You've accepted the haircut. Go to " + salonID.salon_name + " at your appointment time.")
+                    return redirect("/status/")
+                    # return render_to_response('thank_you_response.html', { 'answer' : answer, 'name' : customerEmail }, context_instance=RequestContext(request))
         else:
             return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 
