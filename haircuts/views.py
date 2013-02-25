@@ -438,7 +438,7 @@ def success(request):
 			msg.send()
 	return render_to_response('success.html', {}, context_instance=RequestContext(request))
 
-		
+#note
 def respond_to_notification(request):
     djangoUser = request.user
     answer = request.GET['ans']
