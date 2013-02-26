@@ -445,7 +445,8 @@ def respond_to_notification(request):
     notifID = request.GET['notifID']
     userID = request.GET['userID']
     if djangoUser.is_anonymous():
-        return render_to_response('login_response.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
+        # Change this so user logs in then responds!!! Jordan 26 Feb
+        return render_to_response('registration/login.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
     else: 
         notif = Notification.objects.get(id=notifID)
 	django_user = User.objects.get(id=userID)
