@@ -30,7 +30,7 @@ urlpatterns += patterns('haircuts.views',
 
     url(r'^about/$', 'about'), 
 	url(r'^response/$', 'respond_to_notification'), 
-
+	url(r'^logged_in_response/$', 'logged_in_response'), 
     url(r'^test/$', 'test'),
 	
 )

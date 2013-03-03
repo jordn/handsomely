@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Respond | Handsome.ly{% endblock %}
+
+{% block content %}
+<div class="row center-container">
+  <div class="centered">
+    <h1>Respond</h1>
+    <div class="row">
+
+      <p class="error">Please respond to this notification</p>
+
+    <form action="/response/" method="GET" class="form-very-large">
+      {% csrf_token %}
+	  <input type="hidden" name="ans" value="{{answer}}" id="answer" />
+	  <input type="hidden" name="notifID" value="{{notifID}}" id="notifID" />
+	  <input type="hidden" name="userID" value="{{user.id}}" id="notifID" />
+      <input type="submit"  value="Respond with: {{answer}}" class="btn btn-large btn-primary"  />
+    </form>
+</section>
+
+{% endblock %}

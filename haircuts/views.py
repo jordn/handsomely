@@ -262,11 +262,11 @@ def salon_dashboard(request, form=NotificationForm()):
         requests_for_salon = Request.objects.filter(salon=salon, status="WAIT")
         valid_requests = requests_for_salon #init
         #Removing any requests from unconfirmed users 
-        for haircut_request in requests_for_salon:
-            handsomely_requesting_user = HandsomelyUser.objects.get(django_user = haircut_request.django_user)
-            if handsomely_requesting_user.confirmed == False:
+        #for haircut_request in requests_for_salon:
+            #handsomely_requesting_user = HandsomelyUser.objects.get(django_user = haircut_request.django_user)
+            #if handsomely_requesting_user.confirmed == False:
                 #May be very bad practice to remove from the list it's iterating over.
-                valid_requests = valid_requests.exclude(django_user = haircut_request.django_user)
+            #   valid_requests = valid_requests.exclude(django_user = haircut_request.django_user)
 
         c['requests_for_salon'] = valid_requests
 
@@ -446,7 +446,7 @@ def respond_to_notification(request):
     userID = request.GET['userID']
     if djangoUser.is_anonymous():
         # Change this so user logs in then responds!!! Jordan 26 Feb
-        return render_to_response('registration/login.html', {'answer':  answer, 'notifID' : notifID}, context_instance=RequestContext(request))
+        return render_to_response('registration/login_to_respond.html', {'answer':  answer, 'notifID' : notifID, 'userID' : userID}, context_instance=RequestContext(request))
     else: 
         notif = Notification.objects.get(id=notifID)
 	django_user = User.objects.get(id=userID)
@@ -496,3 +496,21 @@ def respond_to_notification(request):
         else:
             return render_to_response('incorrect_user.html', {'answer' : answer, 'notifID' : notifID, 'djuid' : djangoUser.id, 'handsomelyUserFromNotification' :  handsomelyUserFromNotification}, context_instance=RequestContext(request))
 
+def logged_in_response(request):
+	if request.method == 'POST':
+		username = request.POST['username']
+		password = request.POST['password']
+		notifID = request.POST['notifID']
+		answer = request.POST['answer']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				return render_to_response('registration/logged_in_response.html', {'notifID': notifID, 'answer' : answer, 'userID' : user}, context_instance=RequestContext(request))
+			else:
+				pass# Return a 'disabled account' error message, added a PASS to not break the program ~jab
+		else:
+			errorMessage = "Wrong username or password"
+		return render_to_response('login.html', {'emailAdd': email, 'message' : errorMessage}, context_instance=RequestContext(request))
+	else:
+		return render_to_response('login.html', {}, context_instance=RequestContext(request))
