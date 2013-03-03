@@ -262,11 +262,11 @@ def salon_dashboard(request, form=NotificationForm()):
         requests_for_salon = Request.objects.filter(salon=salon, status="WAIT")
         valid_requests = requests_for_salon #init
         #Removing any requests from unconfirmed users 
-        #for haircut_request in requests_for_salon:
-            #handsomely_requesting_user = HandsomelyUser.objects.get(django_user = haircut_request.django_user)
-            #if handsomely_requesting_user.confirmed == False:
+        for haircut_request in requests_for_salon:
+            handsomely_requesting_user = HandsomelyUser.objects.get(django_user = haircut_request.django_user)
+            if handsomely_requesting_user.confirmed == False:
                 #May be very bad practice to remove from the list it's iterating over.
-            #   valid_requests = valid_requests.exclude(django_user = haircut_request.django_user)
+                valid_requests = valid_requests.exclude(django_user = haircut_request.django_user)
 
         c['requests_for_salon'] = valid_requests
 
