@@ -1,4 +1,4 @@
-Django==1.11.28
+Django==1.11.29
 South==0.7.6
 django-registration==3.1.2
 wsgiref==0.1.2
